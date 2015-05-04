@@ -26,3 +26,11 @@ David Sorokin <mailto:david.sorokin@gmail.com>, Yoshkar-Ola, Russia.
 The PDF documentation is available by the following link:
 
 [Aivika 3 User Guide: Version for .NET Framework and Mono] (https://github.com/dsorokin/aivika/wiki/pdf/aivika-user-guide.pdf)
+
+This document describes the simulation API and contains examples for
+the commercial version, although the simulation engine itself
+is fully separated, self-contained and it is defined in this repository.
+
+The simulation library can be actually used without what is called
+in the document as simulation experiments. Only then you will have
+to return and process the results manually.
