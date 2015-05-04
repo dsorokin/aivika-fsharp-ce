@@ -1,0 +1,124 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{ECA8ECAF-15E7-4AB9-B816-F90AA007410B}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyName>Simulation.Aivika</AssemblyName>
+    <TargetFSharpCoreVersion>4.3.0.0</TargetFSharpCoreVersion>
+    <MinimumVisualStudioVersion Condition="'$(MinimumVisualStudioVersion)' == ''">11</MinimumVisualStudioVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Release\Simulation.Aivika.XML</DocumentationFile>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+  <Choose>
+    <When Condition="'$(VisualStudioVersion)' == '11.0'">
+      <PropertyGroup>
+        <FSharpTargetsPath>$(MSBuildExtensionsPath32)\..\Microsoft SDKs\F#\3.0\Framework\v4.0\Microsoft.FSharp.Targets</FSharpTargetsPath>
+      </PropertyGroup>
+    </When>
+    <Otherwise>
+      <PropertyGroup>
+        <FSharpTargetsPath>$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\FSharp\Microsoft.FSharp.Targets</FSharpTargetsPath>
+      </PropertyGroup>
+    </Otherwise>
+  </Choose>
+  <Import Project="$(FSharpTargetsPath)" Condition="Exists('$(FSharpTargetsPath)')" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+	     Other similar extension points exist, see Microsoft.Common.targets.
+	<Target Name="BeforeBuild">
+	</Target>
+	<Target Name="AfterBuild">
+	</Target>
+	-->
+  <ItemGroup>
+    <Reference Include="mscorlib" />
+    <Reference Include="System" />
+    <Reference Include="FSharp.Core">
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="assembly.fs" />
+    <Compile Include="priority-queue.fsi" />
+    <Compile Include="priority-queue.fs" />
+    <Compile Include="generator.fsi" />
+    <Compile Include="generator.fs" />
+    <Compile Include="specs.fsi" />
+    <Compile Include="specs.fs" />
+    <Compile Include="stats.fsi" />
+    <Compile Include="stats.fs" />
+    <Compile Include="arrival.fsi" />
+    <Compile Include="arrival.fs" />
+    <Compile Include="parameter.fsi" />
+    <Compile Include="parameter.fs" />
+    <Compile Include="simulation.fsi" />
+    <Compile Include="simulation.fs" />
+    <Compile Include="dynamics.fsi" />
+    <Compile Include="dynamics.fs" />
+    <Compile Include="table.fsi" />
+    <Compile Include="table.fs" />
+    <Compile Include="system-dynamics.fsi" />
+    <Compile Include="system-dynamics.fs" />
+    <Compile Include="eventive.fsi" />
+    <Compile Include="eventive.fs" />
+    <Compile Include="signal.fsi" />
+    <Compile Include="signal.fs" />
+    <Compile Include="ref.fsi" />
+    <Compile Include="ref.fs" />
+    <Compile Include="var.fsi" />
+    <Compile Include="var.fs" />
+    <Compile Include="agent.fsi" />
+    <Compile Include="agent.fs" />
+    <Compile Include="cont.fsi" />
+    <Compile Include="cont.fs" />
+    <Compile Include="proc.fsi" />
+    <Compile Include="proc.fs" />
+    <Compile Include="task.fsi" />
+    <Compile Include="task.fs" />
+    <Compile Include="wire.fsi" />
+    <Compile Include="wire.fs" />
+    <Compile Include="circuit.fsi" />
+    <Compile Include="circuit.fs" />
+    <Compile Include="queue-strategy.fsi" />
+    <Compile Include="queue-strategy.fs" />
+    <Compile Include="resource.fsi" />
+    <Compile Include="resource.fs" />
+    <Compile Include="preemptible-resource.fsi" />
+    <Compile Include="preemptible-resource.fs" />
+    <Compile Include="queue.fsi" />
+    <Compile Include="queue.fs" />
+    <Compile Include="infinite-queue.fsi" />
+    <Compile Include="infinite-queue.fs" />
+    <Compile Include="stream.fsi" />
+    <Compile Include="stream.fs" />
+    <Compile Include="processor.fsi" />
+    <Compile Include="processor.fs" />
+    <Compile Include="processor-queues.fsi" />
+    <Compile Include="processor-queues.fs" />
+    <Compile Include="round-robbin.fsi" />
+    <Compile Include="round-robbin.fs" />
+    <Compile Include="arrival-timer.fsi" />
+    <Compile Include="arrival-timer.fs" />
+    <Compile Include="server.fsi" />
+    <Compile Include="server.fs" />
+  </ItemGroup>
+</Project>
