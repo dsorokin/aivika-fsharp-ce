@@ -14,11 +14,9 @@ and distribution. You also get additional modules that allow simplifying
 simulation experiments. These modules can plot charts and histograms, 
 collect statistics and save the results in CSV files.
 
-Aivika for .NET is also licensed under GPLv3. In order to preserve the true
-meaning of open development and uphold the spirit of free software, it is
-imperative that the rules and regulations of open source licenses are
-followed. If you use Aivika under open-source license, you need to make sure
-that you comply with all the licenses of the components you use.
+Aivika for .NET is also licensed under GPLv3. If you use Aivika under 
+open-source license, you need to make sure that you comply with all 
+the licenses of the components you use.
 
 Please contact the author of this library for detail of licensing:
 David Sorokin <mailto:david.sorokin@gmail.com>, Yoshkar-Ola, Russia.
