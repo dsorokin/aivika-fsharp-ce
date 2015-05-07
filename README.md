@@ -5,6 +5,14 @@ of the same name by the same author, David Sorokin, who developed
 the original library. It supports discrete event simulation, system
 dynamics and partially agent-based modeling. 
 
+The main idea is that many simulation activities can actually be 
+represented as abstract computations. The functional programming has 
+a developed apparatus for creating such computations, combining them, 
+reasoning about them and so on. This is monads, streams, arrows etc. 
+It is important that F# and Haskell provide an easy-to-use syntactic 
+sugar for working with such computations, which is a clue to practical 
+usability of the method.
+
 Aivika for .NET is available under a dual-license model: GNU GPL License v3 
 (GPLv3) and Commercial.
 
