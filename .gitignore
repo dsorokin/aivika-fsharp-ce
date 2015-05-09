@@ -18,3 +18,7 @@ doc/pdf/**/*.bbl
 doc/pdf/**/*.blg
 doc/pdf/**/*.toc
 doc/pdf/**/*.synctex.gz
+*.nupkg
+nuget/**/content/
+nuget/**/lib/
+nuget/**/tools/
