@@ -60,7 +60,7 @@ let main argv =
     
     let x = model |> Simulation.run specs 
 
-    Console.WriteLine ("The long-run proption of up time (~ 0.66): {0}", x)
+    Console.WriteLine ("The long-run proportion of up time (~ 0.66): {0}", x)
     Console.ReadLine () |> ignore
 
     0
