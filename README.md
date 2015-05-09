@@ -29,6 +29,10 @@ the licenses of the components you use.
 Please contact the author of this library for detail of licensing:
 David Sorokin <mailto:david.sorokin@gmail.com>, Yoshkar-Ola, Russia.
 
+Aivika for .NET can be installed via NuGet after accepting the license:
+
+`PM> Install-Package Simulation.Aivika`
+
 The PDF documentation is available by the following link:
 
 [Aivika 3 User Guide: Version for .NET Framework and Mono] (https://github.com/dsorokin/aivika/wiki/pdf/aivika-user-guide.pdf)
