@@ -34,4 +34,4 @@ open System.Reflection
 do ()
 
 module internal AssemblyVersionInformation =
-    let [<Literal>] Version = "3.0.15.0"
+    let [<Literal>] Version = "3.0.15.1"
