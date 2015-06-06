@@ -147,8 +147,8 @@ module Processor =
     let queueLoopSeq enqueue dequeue cond body =
         queueLoopMerging Stream.merge2 enqueue dequeue cond body
 
-    [<CompiledName ("QueueLoopSimul")>]
-    let queueLoopSimul enqueue dequeue cond body =
+    [<CompiledName ("QueueLoopPar")>]
+    let queueLoopPar enqueue dequeue cond body =
         bufferLoop (fun xs ys ->
                         proc {
                             do! Stream.consume enqueue xs

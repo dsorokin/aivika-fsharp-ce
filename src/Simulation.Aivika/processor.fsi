@@ -141,8 +141,8 @@ module Processor =
                         -> Processor<'a, 'b>
 
     /// Returns a new processor that can be used for modelling the queue with a loop processing unit, where the input streams are merged simultaneously.
-    [<CompiledName ("QueueLoopSimul")>]
-    val queueLoopSimul: enqueue:('a -> Proc<unit>)
+    [<CompiledName ("QueueLoopPar")>]
+    val queueLoopPar: enqueue:('a -> Proc<unit>)
                         -> dequeue:Proc<'c>
                         -> cond:Processor<'c, Choice<'e, 'b>>
                         -> body:Processor<'e, 'a>
