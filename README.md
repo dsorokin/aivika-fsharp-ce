@@ -1,9 +1,11 @@
-Aivika for .NET 
+**Aivika for .NET** 
 
 This is an F# port of the Haskell simulation [library] (http://hackage.haskell.org/package/aivika)
 of the same name by the same author, David Sorokin, who developed
 the original library. It supports discrete event simulation, system
-dynamics and partially agent-based modeling. 
+dynamics and partially agent-based modeling.
+
+### Idea
 
 The main idea is that many simulation activities can actually be 
 represented as abstract computations. Functional programming has 
@@ -13,8 +15,10 @@ It is important that F# and Haskell provide an easy-to-use syntactic
 sugar for working with such computations, which is a clue to practical 
 usability of the method.
 
-Aivika for .NET is available under a dual-license model: GNU GPL License v3 
-(GPLv3) and Commercial.
+### License
+
+Aivika for .NET is available under a dual-license model: GNU GPL
+License v3 (GPLv3) and Commercial.
 
 A Commercial Aivika license keeps your code proprietary where only you can
 control and monetize on your end product’s development, user experience 
@@ -29,9 +33,76 @@ the licenses of the components you use.
 Please contact the author of this library for detail of licensing:
 David Sorokin <mailto:david.sorokin@gmail.com>, Yoshkar-Ola, Russia.
 
+### Features
+
+Aivika for .NET has the following features:
+
+* allows defining recursive stochastic differential equations of 
+  System Dynamics (unordered as in maths);
+
+* supports the event-driven paradigm of DES as a basic core
+  for implementing other paradigms;
+
+* supports extensively the process-oriented paradigm of DES
+  with an ability to resume, suspend and cancel 
+  the discontinuous processes;
+
+* allows working with the resources based on specified queue strategies 
+  (FCFS/FIFO, LCFS/LIFO, SIRO, static priorities and so on);
+
+* allows customizing the infinite and finite queues based on strategies too;
+
+* supports the resource preemption;
+
+* allows defining a queue network based on infinite streams of data
+  and their processors, where we can define a complex enough
+  behaviour just in a few lines of code;
+
+* supports the activity-oriented paradigm of DES;
+
+* supports the basic constructs for the agent-based modeling;
+
+* allows creating combined discrete-continuous models as all parts
+  of the library are well integrated and this is reflected directly in
+  the type system;
+
+* the arrays of simulation variables are inherently supported;
+
+* supports the Monte-Carlo simulation;
+
+* the simulation model can depend on external parameters;
+
+* uses extensively signals for notification;
+
+* allows gathering statistics in time points;
+
+* hides technical details in high-level simulation computations
+  (with the corresponded support on level of the syntax).
+
+The commercial version also has additional features:
+
+* automating simulation experiments;
+
+* saving the results in CSV files;
+
+* plotting the deviation chart by rule 3-sigma, histogram, 
+  time series, XY chart;
+
+* collecting the summary of statistical data;
+
+* parallel execution of the Monte-Carlo simulation;
+
+* has an extensible architecture.
+
+The library was tested on Windows, OS X and Linux.
+
+### Installation
+
 Aivika for .NET can be installed via NuGet after accepting the license:
 
 `PM> Install-Package Simulation.Aivika`
+
+### Documentation
 
 The PDF documentation is available by the following link:
 
