@@ -94,7 +94,8 @@ David Sorokin <mailto:david.sorokin@gmail.com>, Yoshkar-Ola, Russia.
 
 ### Installation
 
-Aivika for .NET can be installed via NuGet after accepting the license:
+Aivika for .NET can be installed (a slightly outdated version without 
+additional modules) via NuGet after accepting the license:
 
 `PM> Install-Package Simulation.Aivika`
 
