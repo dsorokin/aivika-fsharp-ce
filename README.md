@@ -15,24 +15,6 @@ It is important that F# and Haskell provide an easy-to-use syntactic
 sugar for working with such computations, which is a clue to practical 
 usability of the method.
 
-### License
-
-Aivika for .NET is available under a dual-license model: GNU GPL
-License v3 (GPLv3) and Commercial.
-
-A Commercial Aivika license keeps your code proprietary where only you can
-control and monetize on your end product’s development, user experience 
-and distribution. You also get additional modules that allow simplifying 
-simulation experiments. These modules can plot charts and histograms, 
-collect statistics and save the results in CSV files.
-
-Aivika for .NET is also licensed under GPLv3. If you use Aivika under 
-open-source license, you need to make sure that you comply with all 
-the licenses of the components you use.
-
-Please contact the author of this library for detail of licensing:
-David Sorokin <mailto:david.sorokin@gmail.com>, Yoshkar-Ola, Russia.
-
 ### Features
 
 Aivika for .NET has the following features:
@@ -79,7 +61,7 @@ Aivika for .NET has the following features:
 * hides technical details in high-level simulation computations
   (with the corresponded support on level of the syntax).
 
-The commercial version also has additional features:
+Moreover, there are additional modules that allow:
 
 * automating simulation experiments;
 
@@ -90,11 +72,25 @@ The commercial version also has additional features:
 
 * collecting the summary of statistical data;
 
-* parallel execution of the Monte-Carlo simulation;
-
-* has an extensible architecture.
+* parallel execution of the Monte-Carlo simulation.
 
 The library was tested on Windows, OS X and Linux.
+
+### License
+
+Aivika for .NET is available under a dual-license model: GNU GPL
+License v3 (GPLv3) and Commercial.
+
+A Commercial Aivika license keeps your code proprietary where only you can
+control and monetize on your end product’s development, user experience 
+and distribution.
+
+Aivika for .NET is also licensed under GPLv3. If you use Aivika under 
+open-source license, you need to make sure that you comply with all 
+the licenses of the components you use.
+
+Please contact the author of this library for detail of licensing:
+David Sorokin <mailto:david.sorokin@gmail.com>, Yoshkar-Ola, Russia.
 
 ### Installation
 
@@ -108,10 +104,5 @@ The PDF documentation is available by the following link:
 
 [Aivika 3 User Guide: Version for .NET Framework and Mono] (https://github.com/dsorokin/aivika/wiki/pdf/aivika-user-guide.pdf)
 
-This document describes the simulation API and contains examples for
-the commercial version, although the simulation engine itself
-is fully separated, self-contained and it is defined in this repository.
-
-The simulation library can be actually used without what is called
-in the document as simulation experiments. Only then you will have
-to return and process the results manually.
+This document describes the simulation API and contains examples 
+with graphical illustrations.
