@@ -7,9 +7,10 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{ECA8ECAF-15E7-4AB9-B816-F90AA007410B}</ProjectGuid>
     <OutputType>Library</OutputType>
+    <AssemblyName>Simulation.Aivika</AssemblyName>
     <SignAssembly>true</SignAssembly>
     <AssemblyName>Simulation.Aivika</AssemblyName>
-    <AssemblyOriginatorKeyFile>Simulation.Aivika.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>../../Simulation.Aivika.snk</AssemblyOriginatorKeyFile>
     <TargetFSharpCoreVersion>4.3.0.0</TargetFSharpCoreVersion>
     <MinimumVisualStudioVersion Condition="'$(MinimumVisualStudioVersion)' == ''">11</MinimumVisualStudioVersion>
   </PropertyGroup>

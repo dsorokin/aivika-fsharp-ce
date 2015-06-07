@@ -4,7 +4,6 @@ src/**/bin/
 src/**/obj/
 doc/html/output/
 temp/
-*.snk
 *.suo
 *.userprefs
 examples/**/bin/
