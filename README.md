@@ -94,8 +94,13 @@ David Sorokin <mailto:david.sorokin@gmail.com>, Yoshkar-Ola, Russia.
 
 ### Installation
 
-Aivika for .NET can be installed (a slightly outdated version without 
-additional modules) via NuGet after accepting the license:
+To install the library, please download the sources and compile them. 
+There are two solutions. The first one is destined for Windows,
+while another solution with word `Gtk` in the name is destined
+for OS X and Linux.
+
+Also the simulation engine without additional modules can be installed
+via NuGet after accepting the license:
 
 `PM> Install-Package Simulation.Aivika`
 
