@@ -1,4 +1,4 @@
-﻿
+
 (* It corresponds to model MachRep2 described in document 
    Introduction to Discrete-Event Simulation and the SimPy Language
    [http://heather.cs.ucdavis.edu/~matloff/156/PLN/DESimIntro.pdf]. 
@@ -17,9 +17,14 @@
    that a given machine does not have immediate access to the repairperson 
    when the machine breaks down. Output values should be about 0.6 and 0.67. *)
 
+#I "../../bin"
+#r "../../bin/Simulation.Aivika.dll"
+#r "../../bin/Simulation.Aivika.Results.dll"
+
 open System
 
 open Simulation.Aivika
+open Simulation.Aivika.Results
 
 let specs = {
 
@@ -30,7 +35,7 @@ let specs = {
 let meanUpTime = 1.0
 let meanRepairTime = 0.5
 
-let model: Simulation<float * float> = simulation {
+let model = simulation {
 
     // number of times the machines have broken down
     let nRep = ref 0            
@@ -78,17 +83,12 @@ let model: Simulation<float * float> = simulation {
         return (float !nImmedRep) / (float !nRep)
     }
 
-    return! Eventive.zip upTimeProp immedTimeProp
-                |> Eventive.runInStopTime
+    return [ResultSource.From ("upTimeProp", upTimeProp, 
+                "Long-run proportion of up time \
+                (must be about 0.6)");
+            ResultSource.From ("immedTimeProp", immedTimeProp, 
+                "Long-run proportion of the time when \
+                immediate access to the repairperson \
+                (must be about 0.67)")]
+                    |> ResultSet.create
 }
-
-[<EntryPoint>]
-let main argv = 
-
-    let (x, y) = model |> Simulation.run specs
-
-    Console.WriteLine ("The long-run proportion of up time (~ 0.6): {0}", x)
-    Console.WriteLine ("The long-run proportion of the time when immediate access to the repairperson (~ 0.67): {0}", y)
-    Console.ReadLine () |> ignore
-
-    0

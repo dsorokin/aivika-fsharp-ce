@@ -1,4 +1,4 @@
-﻿
+
 (* It corresponds to model MachRep1 described in document 
    Introduction to Discrete-Event Simulation and the SimPy Language
    [http://heather.cs.ucdavis.edu/~matloff/156/PLN/DESimIntro.pdf]. 
@@ -15,9 +15,14 @@
    Output is long-run proportion of up time. Should get value of about
    0.66. *)
 
+#I "../../bin"
+#r "../../bin/Simulation.Aivika.dll"
+#r "../../bin/Simulation.Aivika.Results.dll"
+
 open System
 
 open Simulation.Aivika
+open Simulation.Aivika.Results
 
 let specs = {
 
@@ -28,7 +33,7 @@ let specs = {
 let meanUpTime = 1.0
 let meanRepairTime = 0.5
 
-let model: Simulation<float> = simulation {
+let model = simulation {
 
     // total up time for all machines
     let totalUpTime = ref 0.0
@@ -52,15 +57,9 @@ let model: Simulation<float> = simulation {
             return (!totalUpTime / (2.0 * t))
         }
 
-    return! upTimeProp |> Eventive.runInStopTime
+    return 
+        [ResultSource.From ("upTimeProp", upTimeProp, 
+            "Long-run proportion of up time \
+            (must be about 0.66)")]
+                |> ResultSet.create
 }
-
-[<EntryPoint>]
-let main argv = 
-    
-    let x = model |> Simulation.run specs 
-
-    Console.WriteLine ("The long-run proportion of up time (~ 0.66): {0}", x)
-    Console.ReadLine () |> ignore
-
-    0
