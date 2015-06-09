@@ -1,5 +1,5 @@
 
-***Examples***
+**Examples**
 
 Here are simulation models created with help of Aivika for .NET.
 
