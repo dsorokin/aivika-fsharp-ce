@@ -6,8 +6,8 @@ They are prepared as scripts to be launched from the terminal
 or inside IDE. 
 
 Please compile the Aivika sources and put the received binaries in 
-the `bin` directory. The scripts expect to find the Aivika assemblies 
-in that directory.
+the `bin` directory relative to the root of the project. The scripts 
+expect to find the Aivika assemblies in that directory.
 
 The usual rule is as follows:
 
