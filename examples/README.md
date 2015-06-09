@@ -5,8 +5,9 @@ Here are simulation models created with help of Aivika for .NET.
 They are prepared as scripts to be launched from the terminal
 or inside IDE. 
 
-Please compile the Aivika sources and put them in the `bin` directory.
-The scripts expect to find the Aivika assemblies in that directory.
+Please compile the Aivika sources and put the received binaries in 
+the `bin` directory. The scripts expect to find the Aivika assemblies 
+in that directory.
 
 The usual rule is as follows:
 
