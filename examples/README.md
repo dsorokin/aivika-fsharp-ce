@@ -2,7 +2,6 @@
 **Examples**
 
 Here are simulation models created with help of Aivika for .NET.
-
 They are prepared as scripts to be launched from the terminal
 or inside IDE. 
 
