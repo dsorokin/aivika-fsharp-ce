@@ -47,7 +47,7 @@
     <Compile Include="results.fs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\AivikaCE\src\Simulation.Aivika\Simulation.Aivika.fsproj">
+    <ProjectReference Include="..\Simulation.Aivika\Simulation.Aivika.fsproj">
       <Name>Simulation.Aivika</Name>
       <Project>{eca8ecaf-15e7-4ab9-b816-f90aa007410b}</Project>
       <Private>True</Private>
