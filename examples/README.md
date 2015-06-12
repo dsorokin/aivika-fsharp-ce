@@ -20,4 +20,4 @@ The usual rule is as follows:
   Internet browser;
 
 * script `RunExperimentGtk.fsx` does the same that the script above does,
-  but only the former is destined for OS X and Linux.
+  but only it is destined for OS X and Linux.
