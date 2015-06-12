@@ -52,9 +52,9 @@
     <Compile Include="ExperimentGtk.fs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Simulation.Aivika.Charting\Simulation.Aivika.Charting.Gtk.fsproj">
-      <Name>Simulation.Aivika.Charting</Name>
-      <Project>{d347eca1-93c9-4b93-941d-47e1e5035a65}</Project>
+    <ProjectReference Include="..\..\src\Simulation.Aivika.Charting.Gtk\Simulation.Aivika.Charting.Gtk.fsproj">
+      <Name>Simulation.Aivika.Charting.Gtk</Name>
+      <Project>{a79d654c-0b28-4bb6-a4ce-c45fee350239}</Project>
       <Private>True</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\src\Simulation.Aivika.Experiments\Simulation.Aivika.Experiments.fsproj">
