@@ -194,15 +194,14 @@ module PreemptibleResource =
         Eventive (fun p ->
             if r.Count = 0 then
                 failwithf "The resource exceeded and its count is zero."
-            if r.ActingQueue.IsEmpty then
-                failwithf "The resource acting queue is null."
-            let item0 = r.ActingQueue.FrontValue
-            let p0    = item0.Priority
-            let pid0  = item0.Id 
-            r.ActingQueue.Dequeue ()
-            r.WaitQueue.Enqueue (p0, Choice2Of2 { Priority = p0; Id = pid0 })
-            Proc.beginPreemption pid0 
-                |> invokeEventive p
+            if not r.ActingQueue.IsEmpty then
+                let item0 = r.ActingQueue.FrontValue
+                let p0    = item0.Priority
+                let pid0  = item0.Id 
+                r.ActingQueue.Dequeue ()
+                r.WaitQueue.Enqueue (p0, Choice2Of2 { Priority = p0; Id = pid0 })
+                Proc.beginPreemption pid0 
+                    |> invokeEventive p
             r.Count <- r.Count - 1)
 
     [<CompiledName ("IncCount")>]
