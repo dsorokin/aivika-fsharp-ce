@@ -19,10 +19,11 @@
 // ensure the GNU General Public License version 3 requirements will be
 // met: http://www.gnu.org/licenses/gpl-3.0.html.
 
-namespace Simulation.Aivika
+namespace Simulation.Aivika.Basic
 
 open System
 
+open Simulation.Aivika
 open Simulation.Aivika.Collections
 
 type PreemptibleResourceActingItem =
@@ -59,7 +60,7 @@ module PreemptibleResource =
 
     [<CompiledName ("Create")>]
     let create count =
-        Eventive (fun p ->
+        Simulation (fun r ->
             if count < 0 then
                 failwithf "The resource count cannot be negative."
             let actingQueue = PriorityQueue<_> ()
@@ -71,7 +72,7 @@ module PreemptibleResource =
 
     [<CompiledName ("CreateWithMaxCount")>]
     let createWithMaxCount count maxCount =
-        Eventive (fun p ->
+        Simulation (fun r ->
             if count < 0 then
                 failwithf "The resource count cannot be negative."
             match maxCount with

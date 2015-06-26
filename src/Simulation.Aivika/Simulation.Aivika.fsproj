@@ -108,6 +108,8 @@
     <Compile Include="resource-basic.fs" />
     <Compile Include="preemptible-resource.fsi" />
     <Compile Include="preemptible-resource.fs" />
+    <Compile Include="preemptible-resource-basic.fsi" />
+    <Compile Include="preemptible-resource-basic.fs" />
     <Compile Include="queue.fsi" />
     <Compile Include="queue.fs" />
     <Compile Include="infinite-queue.fsi" />

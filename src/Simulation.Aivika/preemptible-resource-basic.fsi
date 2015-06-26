@@ -19,9 +19,11 @@
 // ensure the GNU General Public License version 3 requirements will be
 // met: http://www.gnu.org/licenses/gpl-3.0.html.
 
-namespace Simulation.Aivika
+namespace Simulation.Aivika.Basic
 
 open System
+
+open Simulation.Aivika
 
 /// Represents a preemptible resource.
 [<Sealed>]
@@ -42,11 +44,11 @@ module PreemptibleResource =
 
     /// Creates a new resource with the specified initial count, where the last value becomes the upper bound as well.
     [<CompiledName ("Create")>]
-    val create: count:int -> Eventive<PreemptibleResource> 
+    val create: count:int -> Simulation<PreemptibleResource> 
 
     /// Creates a new resource with the specified initial and maximum available counts.
     [<CompiledName ("CreateWithMaxCount")>]
-    val createWithMaxCount: count:int -> maxCount:int option -> Eventive<PreemptibleResource> 
+    val createWithMaxCount: count:int -> maxCount:int option -> Simulation<PreemptibleResource> 
 
     /// Requests with the priority for the resource decreasing its count in case of success, or preempting another process with lower priority (less value is higher); otherwise, suspends the discontinuous process until another activity releases the resource.
     [<CompiledName ("RequestWithPriority")>]
