@@ -84,7 +84,9 @@ let model: Simulation<ResultSet> = simulation {
     // create an input stream
     let inputStream = Stream.randomExponential jobArrivingMu
     // create a preemptible resource
-    let! tool = PreemptibleResource.create 1
+    let! tool = 
+        PreemptibleResource.create 1
+            |> Eventive.runInStartTime
     // the machine setting up
     let! machineSettingUp =
         Server.createRandomUniformPreemptible 
