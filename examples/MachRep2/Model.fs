@@ -47,7 +47,9 @@ module Model =
         // total up time for all machines
         let totalUpTime = ref 0.0   
     
-        let! repairPerson = Resource.createUsingFCFS 1
+        let! repairPerson = 
+            Resource.createUsingFCFS 1
+                |> Eventive.runInStartTime
 
         let machine = proc {
     
