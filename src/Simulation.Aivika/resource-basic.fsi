@@ -19,9 +19,11 @@
 // ensure the GNU General Public License version 3 requirements will be
 // met: http://www.gnu.org/licenses/gpl-3.0.html.
 
-namespace Simulation.Aivika
+namespace Simulation.Aivika.Basic
 
 open System
+
+open Simulation.Aivika
 
 /// Represents a limited resource parameterised by the queue strategy.
 [<Sealed>]
@@ -46,43 +48,43 @@ module Resource =
 
     /// Creates a new resource with the specified queue strategy and initial count, where the last value becomes the upper bound as well.
     [<CompiledName ("Create")>]
-    val create: strat:#IQueueStrategy -> count:int -> Eventive<Resource> 
+    val create: strat:#IQueueStrategy -> count:int -> Simulation<Resource> 
 
     /// Creates a new resource with the specified queue strategy, initial and maximum available counts.
     [<CompiledName ("CreateWithMaxCount")>]
-    val createWithMaxCount: strat:#IQueueStrategy -> count:int -> maxCount:int option -> Eventive<Resource> 
+    val createWithMaxCount: strat:#IQueueStrategy -> count:int -> maxCount:int option -> Simulation<Resource> 
 
     /// Creates a new resource with the specified initial count applying strategy FCFS, where the initial count becomes the upper bound as well.
     [<CompiledName ("CreateUsingFCFS")>]
-    val createUsingFCFS: count:int -> Eventive<Resource>
+    val createUsingFCFS: count:int -> Simulation<Resource>
 
     /// Creates a new resource with the specified initial and maximum available counts applying strategy FCFS.
     [<CompiledName ("CreateWithMaxCountUsingFCFS")>]
-    val createWithMaxCountUsingFCFS: count:int -> maxCount:int option -> Eventive<Resource>
+    val createWithMaxCountUsingFCFS: count:int -> maxCount:int option -> Simulation<Resource>
 
     /// Creates a new resource with the specified initial count applying strategy LCFS, where the initial count becomes the upper bound as well.
     [<CompiledName ("CreateUsingLCFS")>]
-    val createUsingLCFS: count:int -> Eventive<Resource>
+    val createUsingLCFS: count:int -> Simulation<Resource>
 
     /// Creates a new resource with the specified initial and maximum available counts applying strategy LCFS.
     [<CompiledName ("CreateWithMaxCountUsingLCFS")>]
-    val createWithMaxCountUsingLCFS: count:int -> maxCount:int option -> Eventive<Resource>
+    val createWithMaxCountUsingLCFS: count:int -> maxCount:int option -> Simulation<Resource>
 
     /// Creates a new resource with the specified initial count applying strategy SIRO, where the initial count becomes the upper bound as well.
     [<CompiledName ("CreateUsingSIRO")>]
-    val createUsingSIRO: count:int -> Eventive<Resource>
+    val createUsingSIRO: count:int -> Simulation<Resource>
 
     /// Creates a new resource with the specified initial and maximum available counts applying strategy SIRO.
     [<CompiledName ("CreateWithMaxCountUsingSIRO")>]
-    val createWithMaxCountUsingSIRO: count:int -> maxCount:int option -> Eventive<Resource>
+    val createWithMaxCountUsingSIRO: count:int -> maxCount:int option -> Simulation<Resource>
 
     /// Creates a new resource with the specified initial count using static priorities, where the initial count becomes the upper bound as well.
     [<CompiledName ("CreateUsingPriorities")>]
-    val createUsingPriorities: count:int -> Eventive<Resource>
+    val createUsingPriorities: count:int -> Simulation<Resource>
 
     /// Creates a new resource with the specified initial and maximum available counts using static priorities.
     [<CompiledName ("CreateWithMaxCountUsingPriorities")>]
-    val createWithMaxCountUsingPriorities: count:int -> maxCount:int option -> Eventive<Resource>
+    val createWithMaxCountUsingPriorities: count:int -> maxCount:int option -> Simulation<Resource>
 
     /// Requests for the resource decreasing its count in case of success; otherwise, suspends the discontinuous process until another activity releases the resource.
     [<CompiledName ("Request")>]

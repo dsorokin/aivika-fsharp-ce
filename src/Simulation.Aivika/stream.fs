@@ -26,6 +26,8 @@ namespace Simulation.Aivika
 open System
 open System.Collections.Generic
 
+open Simulation.Aivika.Basic
+
 type internal StreamItem<'a> =
     | StreamNil
     | StreamCons of 'a * Stream<'a>

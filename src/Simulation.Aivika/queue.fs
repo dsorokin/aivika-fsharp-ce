@@ -23,6 +23,8 @@ namespace Simulation.Aivika
 
 open System
 
+open Simulation.Aivika.Basic
+
 type Queue<'a> =
     { MaxCount: int;
       InputStrategy: IQueueStrategy;

@@ -23,6 +23,8 @@ namespace Simulation.Aivika
 
 open System
 
+open Simulation.Aivika.Basic
+
 type InfiniteQueue<'a> =
     { StoringStrategy: IQueueStrategy;
       OutputStrategy: IQueueStrategy;

@@ -19,9 +19,11 @@
 // ensure the GNU General Public License version 3 requirements will be
 // met: http://www.gnu.org/licenses/gpl-3.0.html.
 
-namespace Simulation.Aivika
+namespace Simulation.Aivika.Basic
 
 open System
+
+open Simulation.Aivika
 
 type Resource =
     { Strategy: IQueueStrategy;
@@ -44,12 +46,12 @@ module Resource =
 
     [<CompiledName ("Create")>]
     let create (strat: 's when 's :> IQueueStrategy) count =
-        Eventive (fun p ->
+        Simulation (fun r ->
             if count < 0 then
                 failwithf "The resource count cannot be negative."
             let waitList = 
                 strat.CreateStorage ()
-                    |> invokeSimulation p.Run
+                    |> invokeSimulation r
             { Strategy = strat;
               MaxCount = Some count;
               Count = count;
@@ -57,7 +59,7 @@ module Resource =
 
     [<CompiledName ("CreateWithMaxCount")>]
     let createWithMaxCount (strat: 's when 's :> IQueueStrategy) count maxCount =
-        Eventive (fun p ->
+        Simulation (fun r ->
             if count < 0 then
                 failwithf "The resource count cannot be negative."
             match maxCount with
@@ -66,7 +68,7 @@ module Resource =
             | _ -> ()
             let waitList = 
                 strat.CreateStorage ()
-                    |> invokeSimulation p.Run
+                    |> invokeSimulation r
             { Strategy = strat;
               MaxCount = maxCount;
               Count = count;
