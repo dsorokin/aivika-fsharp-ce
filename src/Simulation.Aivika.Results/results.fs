@@ -1643,14 +1643,14 @@ type ResourceResultObject (c: ResultContainer<Resource>) =
     override x.Signal     = lazy c.Signal
     override x.Summary () = ResourceResultSummary (c) :> ResultObject |> ResultObjectSource 
     override x.Properties =
-        [ BasicResultProperty.FromInt ("count", c, Resource.count, Resource.countChanged_, ResourceCountId);
-          BasicResultProperty.FromIntTimingStats ("countStats", c, Resource.countStats, Resource.countChanged_, ResourceCountStatsId);
-          BasicResultProperty.FromInt ("utilisationCount", c, Resource.utilisationCount, Resource.utilisationCountChanged_, ResourceUtilisationCountId);
-          BasicResultProperty.FromIntTimingStats ("utilisationCountStats", c, Resource.utilisationCountStats, Resource.utilisationCountChanged_, ResourceUtilisationCountStatsId);
-          BasicResultProperty.FromInt ("queueCount", c, Resource.queueCount, Resource.queueCountChanged_, ResourceQueueCountId);
+        [ BasicResultProperty.FromInt ("queueCount", c, Resource.queueCount, Resource.queueCountChanged_, ResourceQueueCountId);
           BasicResultProperty.FromIntTimingStats ("queueCountStats", c, Resource.queueCountStats, Resource.queueCountChanged_, ResourceQueueCountStatsId);
           BasicResultProperty.FromDouble ("totalWaitTime", c, Resource.totalWaitTime, Resource.waitTimeChanged_, ResourceTotalWaitTimeId);
-          BasicResultProperty.FromDoubleStats ("waitTime", c, Resource.waitTime, Resource.waitTimeChanged_, ResourceWaitTimeId) ]
+          BasicResultProperty.FromDoubleStats ("waitTime", c, Resource.waitTime, Resource.waitTimeChanged_, ResourceWaitTimeId);
+          BasicResultProperty.FromInt ("count", c, Resource.count, Resource.countChanged_, ResourceCountId);
+          BasicResultProperty.FromIntTimingStats ("countStats", c, Resource.countStats, Resource.countChanged_, ResourceCountStatsId);
+          BasicResultProperty.FromInt ("utilisationCount", c, Resource.utilisationCount, Resource.utilisationCountChanged_, ResourceUtilisationCountId);
+          BasicResultProperty.FromIntTimingStats ("utilisationCountStats", c, Resource.utilisationCountStats, Resource.utilisationCountChanged_, ResourceUtilisationCountStatsId) ]
 
 and ResourceResultSummary (c: ResultContainer<Resource>) =
 
@@ -1662,10 +1662,10 @@ and ResourceResultSummary (c: ResultContainer<Resource>) =
     override x.Signal     = lazy c.Signal
     override x.Summary () = ResourceResultSummary (c) :> ResultObject |> ResultObjectSource 
     override x.Properties =
-        [ BasicResultProperty.FromIntTimingStats ("countStats", c, Resource.countStats, Resource.countChanged_, ResourceCountStatsId);
-          BasicResultProperty.FromIntTimingStats ("utilisationCountStats", c, Resource.utilisationCountStats, Resource.utilisationCountChanged_, ResourceUtilisationCountStatsId);
-          BasicResultProperty.FromIntTimingStats ("queueCountStats", c, Resource.queueCountStats, Resource.queueCountChanged_, ResourceQueueCountStatsId);
-          BasicResultProperty.FromDoubleStats ("waitTime", c, Resource.waitTime, Resource.waitTimeChanged_, ResourceWaitTimeId) ]
+        [ BasicResultProperty.FromIntTimingStats ("queueCountStats", c, Resource.queueCountStats, Resource.queueCountChanged_, ResourceQueueCountStatsId);
+          BasicResultProperty.FromDoubleStats ("waitTime", c, Resource.waitTime, Resource.waitTimeChanged_, ResourceWaitTimeId);
+          BasicResultProperty.FromIntTimingStats ("countStats", c, Resource.countStats, Resource.countChanged_, ResourceCountStatsId);
+          BasicResultProperty.FromIntTimingStats ("utilisationCountStats", c, Resource.utilisationCountStats, Resource.utilisationCountChanged_, ResourceUtilisationCountStatsId) ]
 
 type PreemptibleResourceResultObject (c: ResultContainer<PreemptibleResource>) =
 
@@ -1677,14 +1677,14 @@ type PreemptibleResourceResultObject (c: ResultContainer<PreemptibleResource>) =
     override x.Signal     = lazy c.Signal
     override x.Summary () = PreemptibleResourceResultSummary (c) :> ResultObject |> ResultObjectSource 
     override x.Properties =
-        [ BasicResultProperty.FromInt ("count", c, PreemptibleResource.count, PreemptibleResource.countChanged_, ResourceCountId);
-          BasicResultProperty.FromIntTimingStats ("countStats", c, PreemptibleResource.countStats, PreemptibleResource.countChanged_, ResourceCountStatsId);
-          BasicResultProperty.FromInt ("utilisationCount", c, PreemptibleResource.utilisationCount, PreemptibleResource.utilisationCountChanged_, ResourceUtilisationCountId);
-          BasicResultProperty.FromIntTimingStats ("utilisationCountStats", c, PreemptibleResource.utilisationCountStats, PreemptibleResource.utilisationCountChanged_, ResourceUtilisationCountStatsId);
-          BasicResultProperty.FromInt ("queueCount", c, PreemptibleResource.queueCount, PreemptibleResource.queueCountChanged_, ResourceQueueCountId);
+        [ BasicResultProperty.FromInt ("queueCount", c, PreemptibleResource.queueCount, PreemptibleResource.queueCountChanged_, ResourceQueueCountId);
           BasicResultProperty.FromIntTimingStats ("queueCountStats", c, PreemptibleResource.queueCountStats, PreemptibleResource.queueCountChanged_, ResourceQueueCountStatsId);
           BasicResultProperty.FromDouble ("totalWaitTime", c, PreemptibleResource.totalWaitTime, PreemptibleResource.waitTimeChanged_, ResourceTotalWaitTimeId);
-          BasicResultProperty.FromDoubleStats ("waitTime", c, PreemptibleResource.waitTime, PreemptibleResource.waitTimeChanged_, ResourceWaitTimeId) ]
+          BasicResultProperty.FromDoubleStats ("waitTime", c, PreemptibleResource.waitTime, PreemptibleResource.waitTimeChanged_, ResourceWaitTimeId);
+          BasicResultProperty.FromInt ("count", c, PreemptibleResource.count, PreemptibleResource.countChanged_, ResourceCountId);
+          BasicResultProperty.FromIntTimingStats ("countStats", c, PreemptibleResource.countStats, PreemptibleResource.countChanged_, ResourceCountStatsId);
+          BasicResultProperty.FromInt ("utilisationCount", c, PreemptibleResource.utilisationCount, PreemptibleResource.utilisationCountChanged_, ResourceUtilisationCountId);
+          BasicResultProperty.FromIntTimingStats ("utilisationCountStats", c, PreemptibleResource.utilisationCountStats, PreemptibleResource.utilisationCountChanged_, ResourceUtilisationCountStatsId) ]
 
 and PreemptibleResourceResultSummary (c: ResultContainer<PreemptibleResource>) =
 
@@ -1696,10 +1696,10 @@ and PreemptibleResourceResultSummary (c: ResultContainer<PreemptibleResource>) =
     override x.Signal     = lazy c.Signal
     override x.Summary () = PreemptibleResourceResultSummary (c) :> ResultObject |> ResultObjectSource 
     override x.Properties =
-        [ BasicResultProperty.FromIntTimingStats ("countStats", c, PreemptibleResource.countStats, PreemptibleResource.countChanged_, ResourceCountStatsId);
-          BasicResultProperty.FromIntTimingStats ("utilisationCountStats", c, PreemptibleResource.utilisationCountStats, PreemptibleResource.utilisationCountChanged_, ResourceUtilisationCountStatsId);
-          BasicResultProperty.FromIntTimingStats ("queueCountStats", c, PreemptibleResource.queueCountStats, PreemptibleResource.queueCountChanged_, ResourceQueueCountStatsId);
-          BasicResultProperty.FromDoubleStats ("waitTime", c, PreemptibleResource.waitTime, PreemptibleResource.waitTimeChanged_, ResourceWaitTimeId) ]
+        [ BasicResultProperty.FromIntTimingStats ("queueCountStats", c, PreemptibleResource.queueCountStats, PreemptibleResource.queueCountChanged_, ResourceQueueCountStatsId);
+          BasicResultProperty.FromDoubleStats ("waitTime", c, PreemptibleResource.waitTime, PreemptibleResource.waitTimeChanged_, ResourceWaitTimeId);
+          BasicResultProperty.FromIntTimingStats ("countStats", c, PreemptibleResource.countStats, PreemptibleResource.countChanged_, ResourceCountStatsId);
+          BasicResultProperty.FromIntTimingStats ("utilisationCountStats", c, PreemptibleResource.utilisationCountStats, PreemptibleResource.utilisationCountChanged_, ResourceUtilisationCountStatsId) ]
 
 [<AutoOpen>]
 module ResultPropertyExtensions =
