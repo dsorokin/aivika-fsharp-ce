@@ -137,7 +137,9 @@ let model: Simulation<ResultSet> = simulation {
          ResultSource.From ("jobsInterrupted",
             jobsInterrupted, "a counter of the interrupted jobs");
          ResultSource.From ("jobsCompleted",
-            jobsCompleted, "a counter of the completed jobs")]
+            jobsCompleted, "a counter of the completed jobs");
+         ResultSource.From ("tool",
+            tool, "the machine tool")]
                 |> ResultSet.create
 }
 
