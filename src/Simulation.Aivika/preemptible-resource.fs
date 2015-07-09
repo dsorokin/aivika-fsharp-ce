@@ -31,11 +31,13 @@ type PreemptibleResourceActingItem =
 
 type PreemptibleResourceRequestingItem =
     { Priority: Priority;
+      Time: float;
       Id: ProcId;
       Cont: FrozenCont<unit> }
 
 type PreemptibleResourcePreemptedItem =
     { Priority: Priority;
+      Time: float;
       Id: ProcId }
 
 type PreemptibleResourceAwaitingItem = 
@@ -44,6 +46,17 @@ type PreemptibleResourceAwaitingItem =
 type PreemptibleResource =
     { MaxCount: int option;
       mutable Count: int;
+      mutable CountStats: TimingStats<int>;
+      CountSource: SignalSource<int>;
+      mutable UtilisationCount: int;
+      mutable UtilisationCountStats: TimingStats<int>;
+      UtilisationCountSource: SignalSource<int>;
+      mutable QueueCount: int;
+      mutable QueueCountStats: TimingStats<int>;
+      QueueCountSource: SignalSource<int>;
+      mutable TotalWaitTime: float;
+      mutable WaitTime: SamplingStats<float>;
+      WaitTimeSource: SignalSource<unit>;
       ActingQueue: PriorityQueue<PreemptibleResourceActingItem>;
       WaitQueue: PriorityQueue<PreemptibleResourceAwaitingItem> }
 
@@ -57,18 +70,6 @@ module PreemptibleResource =
     [<CompiledName ("Count")>]
     let count r = Eventive (fun p -> r.Count)
 
-    [<CompiledName ("Create")>]
-    let create count =
-        Eventive (fun p ->
-            if count < 0 then
-                failwithf "The resource count cannot be negative."
-            let actingQueue = PriorityQueue<_> ()
-            let waitQueue = PriorityQueue<_> ()
-            { MaxCount = Some count;
-              Count = count;
-              ActingQueue = actingQueue;
-              WaitQueue = waitQueue })
-
     [<CompiledName ("CreateWithMaxCount")>]
     let createWithMaxCount count maxCount =
         Eventive (fun p ->
@@ -78,12 +79,82 @@ module PreemptibleResource =
             | Some maxCount when count > maxCount ->
                 failwithf "The resource count cannot be greater than its maximum value."
             | _ -> ()
+            let countStats =
+                TimingStats.emptyInts 
+                    |> TimingStats.add p.Time count
+            let countSource = 
+                SignalSource.create 
+                    |> invokeSimulation p.Run
+            let utilisationCountSource =
+                SignalSource.create
+                    |> invokeSimulation p.Run
+            let queueCountSource =
+                SignalSource.create
+                    |> invokeSimulation p.Run
+            let waitTimeSource =
+                SignalSource.create
+                    |> invokeSimulation p.Run
             let actingQueue = PriorityQueue<_> ()
             let waitQueue = PriorityQueue<_> ()
             { MaxCount = maxCount;
               Count = count;
+              CountStats = countStats;
+              CountSource = countSource;
+              UtilisationCount = 0;
+              UtilisationCountStats = TimingStats.emptyInts;
+              UtilisationCountSource = utilisationCountSource;
+              QueueCount = 0;
+              QueueCountStats = TimingStats.emptyInts;
+              QueueCountSource = queueCountSource;
+              TotalWaitTime = 0.0;
+              WaitTime = SamplingStats.emptyFloats;
+              WaitTimeSource = waitTimeSource;
               ActingQueue = actingQueue;
               WaitQueue = waitQueue })
+
+    [<CompiledName ("Create")>]
+    let create count =
+        createWithMaxCount count (Some count)
+
+    let private updateCount (r: PreemptibleResource) delta =
+        Eventive (fun p ->
+            let a  = r.Count
+            let a' = a + delta
+            r.Count <- a'
+            r.CountStats <- r.CountStats |> TimingStats.add p.Time a'
+            r.CountSource 
+                |> SignalSource.trigger a'
+                |> invokeEventive p)
+
+    let private updateUtilisationCount (r: PreemptibleResource) delta =
+        Eventive (fun p ->
+            let a  = r.UtilisationCount
+            let a' = a + delta
+            r.UtilisationCount <- a'
+            r.UtilisationCountStats <- r.UtilisationCountStats |> TimingStats.add p.Time a'
+            r.UtilisationCountSource 
+                |> SignalSource.trigger a'
+                |> invokeEventive p)
+
+    let private updateQueueCount (r: PreemptibleResource) delta =
+        Eventive (fun p ->
+            let a  = r.QueueCount
+            let a' = a + delta
+            r.QueueCount <- a'
+            r.QueueCountStats <- r.QueueCountStats |> TimingStats.add p.Time a'
+            r.QueueCountSource 
+                |> SignalSource.trigger a'
+                |> invokeEventive p)
+
+    let private updateWaitTime (r: PreemptibleResource) delta =
+        Eventive (fun p ->
+            let a  = r.TotalWaitTime
+            let a' = a + delta
+            r.TotalWaitTime <- a'
+            r.WaitTime <- r.WaitTime |> SamplingStats.add delta
+            r.WaitTimeSource 
+                |> SignalSource.trigger ()
+                |> invokeEventive p)
 
     [<CompiledName ("RequestWithPriority")>]
     let rec requestWithPriority priority (r: PreemptibleResource) =
@@ -97,7 +168,9 @@ module PreemptibleResource =
                                         |> invokeCont c
                                         |> freezeContReentering c ()
                                         |> invokeEventive p
-                            r.WaitQueue.Enqueue (priority, Choice1Of2 { Priority = priority; Id = pid; Cont = c })
+                            r.WaitQueue.Enqueue (priority, Choice1Of2 { Priority = priority; Time = p.Time; Id = pid; Cont = c })
+                            updateQueueCount r 1 
+                                |> invokeEventive p
                         else
                             let item0 = r.ActingQueue.FrontValue
                             let p0    = item0.Priority
@@ -105,20 +178,32 @@ module PreemptibleResource =
                             if priority < p0 then
                                 r.ActingQueue.Dequeue ()
                                 r.ActingQueue.Enqueue (- priority, { Priority = priority; Id = pid })
-                                r.WaitQueue.Enqueue (p0, Choice2Of2 { Priority = p0; Id = pid0 })
-                                Proc.beginPreemption pid0 |> invokeEventive p
-                                resumeCont c () |> invokeEventive p
+                                r.WaitQueue.Enqueue (p0, Choice2Of2 { Priority = p0; Time = p.Time; Id = pid0 })
+                                updateQueueCount r 1 
+                                    |> invokeEventive p
+                                Proc.beginPreemption pid0 
+                                    |> invokeEventive p
+                                resumeCont c () 
+                                    |> invokeEventive p
                             else 
                                 let c = requestWithPriority priority r
                                             |> invokeProc pid
                                             |> invokeCont c
                                             |> freezeContReentering c ()
                                             |> invokeEventive p
-                                r.WaitQueue.Enqueue (priority, Choice1Of2 { Priority = priority; Id = pid; Cont = c })
+                                r.WaitQueue.Enqueue (priority, Choice1Of2 { Priority = priority; Time = p.Time; Id = pid; Cont = c })
+                                updateQueueCount r 1 
+                                    |> invokeEventive p
                     else
-                        r.Count <- r.Count - 1
                         r.ActingQueue.Enqueue (- priority, { Priority = priority; Id = pid })
-                        resumeCont c () |> invokeEventive p)))
+                        updateWaitTime r 0.0 
+                            |> invokeEventive p
+                        updateCount r (-1) 
+                            |> invokeEventive p
+                        updateUtilisationCount r 1 
+                            |> invokeEventive p
+                        resumeCont c () 
+                            |> invokeEventive p)))
 
     let rec private release' (r: PreemptibleResource) =
         Eventive (fun p ->
@@ -130,12 +215,15 @@ module PreemptibleResource =
             | _ -> ()
             let f = r.WaitQueue.IsEmpty
             if f then
-                r.Count <- a'
+                updateCount r 1 
+                    |> invokeEventive p
             else
                 let item = r.WaitQueue.FrontValue
                 r.WaitQueue.Dequeue ()
+                updateQueueCount r (-1) 
+                    |> invokeEventive p
                 match item with
-                | Choice1Of2 { Priority = priority; Id = pid; Cont = c } ->
+                | Choice1Of2 { Priority = priority; Time = t; Id = pid; Cont = c } ->
                     let c = unfreezeCont c |> invokeEventive p
                     match c with
                     | None ->
@@ -143,10 +231,14 @@ module PreemptibleResource =
                             |> invokeEventive p
                     | Some c ->
                         r.ActingQueue.Enqueue (- priority, { Priority = priority; Id = pid })
+                        updateWaitTime r (p.Time - t) 
+                            |> invokeEventive p
+                        updateUtilisationCount r 1 
+                            |> invokeEventive p
                         resumeCont c ()
                             |> Eventive.enqueue p.Time
                             |> invokeEventive p
-                | Choice2Of2 { Priority = priority; Id = pid } ->
+                | Choice2Of2 { Priority = priority; Time = t; Id = pid } ->
                     let f = Proc.isCancelled pid |> invokeEventive p
                     match f with
                     | true ->
@@ -154,6 +246,10 @@ module PreemptibleResource =
                             |> invokeEventive p
                     | false ->
                         r.ActingQueue.Enqueue (- priority, { Priority = priority; Id = pid })
+                        updateWaitTime r (p.Time - t) 
+                            |> invokeEventive p
+                        updateUtilisationCount r 1 
+                            |> invokeEventive p
                         Proc.endPreemption pid 
                             |> invokeEventive p)
 
@@ -164,6 +260,8 @@ module PreemptibleResource =
                 Eventive (fun p ->
                     let f = r.ActingQueue.RemoveBy (fun item -> pid = item.Id)
                     if f then
+                        updateUtilisationCount r (-1)
+                            |> invokeEventive p
                         release' r
                             |> invokeEventive p
                         resumeCont c ()
@@ -183,6 +281,7 @@ module PreemptibleResource =
                     eventive {
                         let f = r.ActingQueue.RemoveBy (fun item -> pid = item.Id)
                         if f then
+                            do! updateUtilisationCount r (-1)
                             do! release' r
                         else
                             failwithf "The resource was not acquired by this process."
@@ -199,10 +298,15 @@ module PreemptibleResource =
                 let p0    = item0.Priority
                 let pid0  = item0.Id 
                 r.ActingQueue.Dequeue ()
-                r.WaitQueue.Enqueue (p0, Choice2Of2 { Priority = p0; Id = pid0 })
+                r.WaitQueue.Enqueue (p0, Choice2Of2 { Priority = p0; Time = p.Time; Id = pid0 })
                 Proc.beginPreemption pid0 
                     |> invokeEventive p
-            r.Count <- r.Count - 1)
+                updateUtilisationCount r (-1)
+                    |> invokeEventive p
+                updateQueueCount r 1
+                    |> invokeEventive p
+            updateCount r (-1)
+                |> invokeEventive p)
 
     [<CompiledName ("IncCount")>]
     let rec incCount n r =

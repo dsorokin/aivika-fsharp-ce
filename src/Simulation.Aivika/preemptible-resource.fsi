@@ -40,13 +40,13 @@ module PreemptibleResource =
     [<CompiledName ("Count")>]
     val count: resource:PreemptibleResource -> Eventive<int>
 
-    /// Creates a new resource with the specified initial count, where the last value becomes the upper bound as well.
-    [<CompiledName ("Create")>]
-    val create: count:int -> Eventive<PreemptibleResource> 
-
     /// Creates a new resource with the specified initial and maximum available counts.
     [<CompiledName ("CreateWithMaxCount")>]
     val createWithMaxCount: count:int -> maxCount:int option -> Eventive<PreemptibleResource> 
+
+    /// Creates a new resource with the specified initial count, where the last value becomes the upper bound as well.
+    [<CompiledName ("Create")>]
+    val create: count:int -> Eventive<PreemptibleResource> 
 
     /// Requests with the priority for the resource decreasing its count in case of success, or preempting another process with lower priority (less value is higher); otherwise, suspends the discontinuous process until another activity releases the resource.
     [<CompiledName ("RequestWithPriority")>]
