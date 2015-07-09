@@ -27,7 +27,22 @@ type Resource =
     { Strategy: IQueueStrategy;
       MaxCount: int option;
       mutable Count: int;
-      WaitList: IQueueStorage<FrozenCont<unit>> }  
+      mutable CountStats: TimingStats<int>;
+      CountSource: SignalSource<int>;
+      mutable UtilisationCount: int;
+      mutable UtilisationCountStats: TimingStats<int>;
+      UtilisationCountSource: SignalSource<int>;
+      mutable QueueCount: int;
+      mutable QueueCountStats: TimingStats<int>;
+      QueueCountSource: SignalSource<int>;
+      mutable TotalWaitTime: float;
+      mutable WaitTime: SamplingStats<float>;
+      WaitTimeSource: SignalSource<unit>;
+      WaitList: IQueueStorage<ResourceItem> }
+
+and ResourceItem =
+    { Time: float;
+      Cont: FrozenCont<unit> }
 
 [<RequireQualifiedAccess>]
 [<CompilationRepresentation (CompilationRepresentationFlags.ModuleSuffix)>]
@@ -42,19 +57,6 @@ module Resource =
     [<CompiledName ("Count")>]
     let count r = Eventive (fun p -> r.Count)
 
-    [<CompiledName ("Create")>]
-    let create (strat: 's when 's :> IQueueStrategy) count =
-        Eventive (fun p ->
-            if count < 0 then
-                failwithf "The resource count cannot be negative."
-            let waitList = 
-                strat.CreateStorage ()
-                    |> invokeSimulation p.Run
-            { Strategy = strat;
-              MaxCount = Some count;
-              Count = count;
-              WaitList = waitList })
-
     [<CompiledName ("CreateWithMaxCount")>]
     let createWithMaxCount (strat: 's when 's :> IQueueStrategy) count maxCount =
         Eventive (fun p ->
@@ -64,13 +66,43 @@ module Resource =
             | Some maxCount when count > maxCount ->
                 failwithf "The resource count cannot be greater than its maximum value."
             | _ -> ()
+            let countStats =
+                TimingStats.emptyInts 
+                    |> TimingStats.add p.Time count
+            let countSource = 
+                SignalSource.create 
+                    |> invokeSimulation p.Run
+            let utilisationCountSource =
+                SignalSource.create
+                    |> invokeSimulation p.Run
+            let queueCountSource =
+                SignalSource.create
+                    |> invokeSimulation p.Run
+            let waitTimeSource =
+                SignalSource.create
+                    |> invokeSimulation p.Run
             let waitList = 
                 strat.CreateStorage ()
                     |> invokeSimulation p.Run
             { Strategy = strat;
               MaxCount = maxCount;
               Count = count;
+              CountStats = countStats;
+              CountSource = countSource;
+              UtilisationCount = 0;
+              UtilisationCountStats = TimingStats.emptyInts;
+              UtilisationCountSource = utilisationCountSource;
+              QueueCount = 0;
+              QueueCountStats = TimingStats.emptyInts;
+              QueueCountSource = queueCountSource;
+              TotalWaitTime = 0.0;
+              WaitTime = SamplingStats.emptyFloats;
+              WaitTimeSource = waitTimeSource;
               WaitList = waitList })
+
+    [<CompiledName ("Create")>]
+    let create (strat: 's when 's :> IQueueStrategy) count =
+        createWithMaxCount strat count (Some count)
 
     [<CompiledName ("CreateUsingFCFS")>]
     let createUsingFCFS count = 
@@ -104,6 +136,46 @@ module Resource =
     let createWithMaxCountUsingPriorities count maxCount = 
         createWithMaxCount QueueStrategy.staticPriorities count maxCount
 
+    let private updateCount (r: Resource) delta =
+        Eventive (fun p ->
+            let a  = r.Count
+            let a' = a + delta
+            r.Count <- a'
+            r.CountStats <- r.CountStats |> TimingStats.add p.Time a'
+            r.CountSource 
+                |> SignalSource.trigger a'
+                |> invokeEventive p)
+
+    let private updateUtilisationCount (r: Resource) delta =
+        Eventive (fun p ->
+            let a  = r.UtilisationCount
+            let a' = a + delta
+            r.UtilisationCount <- a'
+            r.UtilisationCountStats <- r.UtilisationCountStats |> TimingStats.add p.Time a'
+            r.UtilisationCountSource 
+                |> SignalSource.trigger a'
+                |> invokeEventive p)
+
+    let private updateQueueCount (r: Resource) delta =
+        Eventive (fun p ->
+            let a  = r.QueueCount
+            let a' = a + delta
+            r.QueueCount <- a'
+            r.QueueCountStats <- r.QueueCountStats |> TimingStats.add p.Time a'
+            r.QueueCountSource 
+                |> SignalSource.trigger a'
+                |> invokeEventive p)
+
+    let private updateWaitTime (r: Resource) delta =
+        Eventive (fun p ->
+            let a  = r.TotalWaitTime
+            let a' = a + delta
+            r.TotalWaitTime <- a'
+            r.WaitTime <- r.WaitTime |> SamplingStats.add delta
+            r.WaitTimeSource 
+                |> SignalSource.trigger ()
+                |> invokeEventive p)
+
     [<CompiledName ("Request")>]
     let rec request (r: Resource) =
         Proc (fun pid ->
@@ -115,10 +187,19 @@ module Resource =
                                     |> invokeCont c
                                     |> freezeContReentering c ()
                                     |> invokeEventive p
-                        r.WaitList.Enqueue (c) |> invokeEventive p
+                        r.WaitList.Enqueue ({ Time = p.Time; Cont = c })
+                            |> invokeEventive p
+                        updateQueueCount r 1
+                            |> invokeEventive p
                     else
-                        r.Count <- r.Count - 1
-                        resumeCont c () |> invokeEventive p)))
+                        updateWaitTime r 0.0 
+                            |> invokeEventive p
+                        updateCount r (-1) 
+                            |> invokeEventive p
+                        updateUtilisationCount r 1
+                            |> invokeEventive p
+                        resumeCont c () 
+                            |> invokeEventive p)))
 
     [<CompiledName ("RequestWithPriority")>]
     let rec requestWithPriority priority (r: Resource) =
@@ -131,13 +212,21 @@ module Resource =
                                     |> invokeCont c
                                     |> freezeContReentering c ()
                                     |> invokeEventive p
-                        r.WaitList.Enqueue (priority, c) |> invokeEventive p
+                        r.WaitList.Enqueue (priority, { Time = p.Time; Cont = c }) 
+                            |> invokeEventive p
+                        updateQueueCount r 1 
+                            |> invokeEventive p
                     else
-                        r.Count <- r.Count - 1
-                        resumeCont c () |> invokeEventive p)))
+                        updateWaitTime r 0.0 
+                            |> invokeEventive p
+                        updateCount r (-1) 
+                            |> invokeEventive p
+                        updateUtilisationCount r 1 
+                            |> invokeEventive p
+                        resumeCont c () 
+                            |> invokeEventive p)))
 
-    [<CompiledName ("ReleaseWithinEventive")>]
-    let rec releaseWithinEventive (r: Resource) =
+    let rec private release' (r: Resource) =
         Eventive (fun p ->
             let a  = r.Count
             let a' = 1 + a
@@ -147,18 +236,33 @@ module Resource =
             | _ -> ()
             let f = r.WaitList.IsEmpty () |> invokeEventive p
             if f then
-                r.Count <- a'
+                updateCount r 1 
+                    |> invokeEventive p
             else
-                let c = r.WaitList.Dequeue () |> invokeEventive p
-                let c = unfreezeCont c |> invokeEventive p
+                let x = r.WaitList.Dequeue () |> invokeEventive p
+                updateQueueCount r (-1) 
+                    |> invokeEventive p
+                let c = unfreezeCont x.Cont |> invokeEventive p
                 match c with
                 | None ->
-                    releaseWithinEventive r 
+                    release' r 
                         |> invokeEventive p
                 | Some c ->
+                    updateWaitTime r (p.Time - x.Time)
+                        |> invokeEventive p
+                    updateUtilisationCount r 1
+                        |> invokeEventive p
                     resumeCont c ()
                         |> Eventive.enqueue p.Time
                         |> invokeEventive p)    
+
+    [<CompiledName ("ReleaseWithinEventive")>]
+    let releaseWithinEventive (r: Resource) =
+        Eventive (fun p ->
+            updateUtilisationCount r (-1)
+                |> invokeEventive p
+            release' r
+                |> invokeEventive p)
 
     [<CompiledName ("Release")>]
     let release (r: Resource) =
@@ -176,7 +280,12 @@ module Resource =
             if r.Count = 0 then
                 false
             else
-                r.Count <- r.Count - 1
+                updateWaitTime r 0.0
+                    |> invokeEventive p
+                updateCount r (-1)
+                    |> invokeEventive p
+                updateUtilisationCount r 1
+                    |> invokeEventive p
                 true)
 
     [<CompiledName ("Take")>]
@@ -199,6 +308,13 @@ module Resource =
                     |> Eventive.lift
     }
 
+    let private decCount' (r: Resource) =
+        proc {
+            do! updateUtilisationCount r (-1)
+                    |> Eventive.lift
+            do! request r
+        }
+
     [<CompiledName ("IncCount")>]
     let rec incCount n r =
         if n < 0 then
@@ -207,7 +323,7 @@ module Resource =
             eventive.Zero ()
         else
             eventive {
-                do! releaseWithinEventive r
+                do! release' r
                 return! incCount (n - 1) r
             }
 
@@ -219,6 +335,6 @@ module Resource =
             proc.Zero ()
         else
             proc {
-                do! request r
+                do! decCount' r
                 return! decCount (n - 1) r
             }

@@ -44,13 +44,13 @@ module Resource =
     [<CompiledName ("Count")>]
     val count: resource:Resource -> Eventive<int>
 
-    /// Creates a new resource with the specified queue strategy and initial count, where the last value becomes the upper bound as well.
-    [<CompiledName ("Create")>]
-    val create: strat:#IQueueStrategy -> count:int -> Eventive<Resource> 
-
     /// Creates a new resource with the specified queue strategy, initial and maximum available counts.
     [<CompiledName ("CreateWithMaxCount")>]
     val createWithMaxCount: strat:#IQueueStrategy -> count:int -> maxCount:int option -> Eventive<Resource> 
+
+    /// Creates a new resource with the specified queue strategy and initial count, where the last value becomes the upper bound as well.
+    [<CompiledName ("Create")>]
+    val create: strat:#IQueueStrategy -> count:int -> Eventive<Resource> 
 
     /// Creates a new resource with the specified initial count applying strategy FCFS, where the initial count becomes the upper bound as well.
     [<CompiledName ("CreateUsingFCFS")>]
