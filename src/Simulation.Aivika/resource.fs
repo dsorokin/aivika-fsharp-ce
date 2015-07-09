@@ -124,9 +124,15 @@ module Resource =
             let countSource = 
                 SignalSource.create 
                     |> invokeSimulation p.Run
+            let utilisationCountStats =
+                TimingStats.emptyInts
+                    |> TimingStats.add p.Time 0
             let utilisationCountSource =
                 SignalSource.create
                     |> invokeSimulation p.Run
+            let queueCountStats =
+                TimingStats.emptyInts
+                    |> TimingStats.add p.Time 0
             let queueCountSource =
                 SignalSource.create
                     |> invokeSimulation p.Run
@@ -142,10 +148,10 @@ module Resource =
               CountStats = countStats;
               CountSource = countSource;
               UtilisationCount = 0;
-              UtilisationCountStats = TimingStats.emptyInts;
+              UtilisationCountStats = utilisationCountStats;
               UtilisationCountSource = utilisationCountSource;
               QueueCount = 0;
-              QueueCountStats = TimingStats.emptyInts;
+              QueueCountStats = queueCountStats;
               QueueCountSource = queueCountSource;
               TotalWaitTime = 0.0;
               WaitTime = SamplingStats.emptyFloats;
