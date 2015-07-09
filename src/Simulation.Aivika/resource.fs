@@ -57,6 +57,58 @@ module Resource =
     [<CompiledName ("Count")>]
     let count r = Eventive (fun p -> r.Count)
 
+    [<CompiledName ("CountStats")>]
+    let countStats r = Eventive (fun p -> r.CountStats)
+
+    [<CompiledName ("CountChanged")>]
+    let countChanged r = r.CountSource |> SignalSource.publish
+
+    [<CompiledName ("CountChanged_")>]
+    let countChanged_ r = countChanged r |> Signal.map (fun x -> ())
+
+    [<CompiledName ("UtilisationCount")>]
+    let utilisationCount r = Eventive (fun p -> r.UtilisationCount)
+
+    [<CompiledName ("UtilisationCountStats")>]
+    let utilisationCountStats r = Eventive (fun p -> r.UtilisationCountStats)
+
+    [<CompiledName ("UtilisationCountChanged")>]
+    let utilisationCountChanged r = r.UtilisationCountSource |> SignalSource.publish
+
+    [<CompiledName ("UtilisationCountChanged_")>]
+    let utilisationCountChanged_ r = utilisationCountChanged r |> Signal.map (fun x -> ())
+
+    [<CompiledName ("QueueCount")>]
+    let queueCount r = Eventive (fun p -> r.QueueCount)
+
+    [<CompiledName ("QueueCountStats")>]
+    let queueCountStats r = Eventive (fun p -> r.QueueCountStats)
+
+    [<CompiledName ("QueueCountChanged")>]
+    let queueCountChanged r = r.QueueCountSource |> SignalSource.publish
+
+    [<CompiledName ("QueueCountChanged_")>]
+    let queueCountChanged_ r = queueCountChanged r |> Signal.map (fun x -> ())
+
+    [<CompiledName ("TotalWaitTime")>]
+    let totalWaitTime r = Eventive (fun p -> r.TotalWaitTime)
+
+    [<CompiledName ("WaitTime")>]
+    let waitTime r = Eventive (fun p -> r.WaitTime)
+
+    [<CompiledName ("WaitTimeChanged_")>]
+    let waitTimeChanged_ r = r.WaitTimeSource |> SignalSource.publish
+
+    [<CompiledName ("WaitTimeChanged")>]
+    let waitTimeChanged r = waitTimeChanged_ r |> Signal.map (fun x -> r.WaitTime)
+
+    [<CompiledName ("Changed_")>]
+    let changed_ r =
+        [countChanged_ r;
+         utilisationCountChanged_ r;
+         queueCountChanged_ r]
+            |> Signal.concat
+
     [<CompiledName ("CreateWithMaxCount")>]
     let createWithMaxCount (strat: 's when 's :> IQueueStrategy) count maxCount =
         Eventive (fun p ->
