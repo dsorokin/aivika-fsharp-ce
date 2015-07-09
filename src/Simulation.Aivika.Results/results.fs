@@ -93,6 +93,14 @@ type ResultId =
     | ServerOutputWaitFactorId
     | ServerPreemptionFactorId
     | ArrivalProcessingTimeId
+    | ResourceCountId
+    | ResourceCountStatsId
+    | ResourceUtilisationCountId
+    | ResourceUtilisationCountStatsId
+    | ResourceQueueCountId
+    | ResourceQueueCountStatsId
+    | ResourceTotalWaitTimeId
+    | ResourceWaitTimeId
     | CustomResultId of ResultDescription option
 
 type ResultTypeId = 
@@ -112,6 +120,7 @@ type ResultTypeId =
     | InfiniteQueueId
     | ServerId
     | ArrivalTimerId
+    | ResourceId
 
 type [<AbstractClass>] ResultFormatInfo (provider: IFormatProvider) as info = 
 
@@ -188,6 +197,14 @@ type [<AbstractClass>] ResultFormatInfo (provider: IFormatProvider) as info =
                 | ServerOutputWaitFactorId -> Some "the relative time spent on delivering the output (from 0 to 1)"
                 | ServerPreemptionFactorId -> Some "the relative time spent while being preempted (from 0 to 1)"
                 | ArrivalProcessingTimeId  -> Some "the processing time of arrivals"
+                | ResourceCountId                 -> Some "the current available count"
+                | ResourceCountStatsId            -> Some "the available count statistics"
+                | ResourceUtilisationCountId      -> Some "the current utilisation count"
+                | ResourceUtilisationCountStatsId -> Some "the utilisation count statistics"
+                | ResourceQueueCountId            -> Some "the current queue length"
+                | ResourceQueueCountStatsId       -> Some "the queue length statistics"
+                | ResourceTotalWaitTimeId         -> Some "the total waiting time"
+                | ResourceWaitTimeId              -> Some "the waiting time"
                 | CustomResultId z         -> z
 
             override x.GetDescription (typeId: ResultTypeId) =
@@ -208,6 +225,7 @@ type [<AbstractClass>] ResultFormatInfo (provider: IFormatProvider) as info =
                 | InfiniteQueueId       -> Some "infinite queue"
                 | ServerId              -> Some "server"
                 | ArrivalTimerId        -> Some "how long the arrivals are processed?"
+                | ResourceId            -> Some "resource"
         }
 
     static member CurrentInfo = ResultFormatInfo.CreateInfo (CultureInfo.CurrentCulture)
@@ -1615,6 +1633,74 @@ and ArrivalTimerResultSummary (c: ResultContainer<ArrivalTimer>) =
     override x.Properties =
         [ BasicResultProperty.FromDoubleStats ("processingTime", c, ArrivalTimer.processingTime, ArrivalTimer.processingTimeChanged_, ArrivalProcessingTimeId) ]
 
+type ResourceResultObject (c: ResultContainer<Resource>) =
+
+    inherit ResultObject ()
+
+    override x.Name       = c.Name
+    override x.Id         = c.Id
+    override x.TypeId     = ResourceId
+    override x.Signal     = lazy c.Signal
+    override x.Summary () = ResourceResultSummary (c) :> ResultObject |> ResultObjectSource 
+    override x.Properties =
+        [ BasicResultProperty.FromInt ("count", c, Resource.count, Resource.countChanged_, ResourceCountId);
+          BasicResultProperty.FromIntTimingStats ("countStats", c, Resource.countStats, Resource.countChanged_, ResourceCountStatsId);
+          BasicResultProperty.FromInt ("utilisationCount", c, Resource.utilisationCount, Resource.utilisationCountChanged_, ResourceUtilisationCountId);
+          BasicResultProperty.FromIntTimingStats ("utilisationCountStats", c, Resource.utilisationCountStats, Resource.utilisationCountChanged_, ResourceUtilisationCountStatsId);
+          BasicResultProperty.FromInt ("queueCount", c, Resource.queueCount, Resource.queueCountChanged_, ResourceQueueCountId);
+          BasicResultProperty.FromIntTimingStats ("queueCountStats", c, Resource.queueCountStats, Resource.queueCountChanged_, ResourceQueueCountStatsId);
+          BasicResultProperty.FromDouble ("totalWaitTime", c, Resource.totalWaitTime, Resource.waitTimeChanged_, ResourceTotalWaitTimeId);
+          BasicResultProperty.FromDoubleStats ("waitTime", c, Resource.waitTime, Resource.waitTimeChanged_, ResourceWaitTimeId) ]
+
+and ResourceResultSummary (c: ResultContainer<Resource>) =
+
+    inherit ResultObject ()
+
+    override x.Name       = c.Name
+    override x.Id         = c.Id
+    override x.TypeId     = ResourceId
+    override x.Signal     = lazy c.Signal
+    override x.Summary () = ResourceResultSummary (c) :> ResultObject |> ResultObjectSource 
+    override x.Properties =
+        [ BasicResultProperty.FromIntTimingStats ("countStats", c, Resource.countStats, Resource.countChanged_, ResourceCountStatsId);
+          BasicResultProperty.FromIntTimingStats ("utilisationCountStats", c, Resource.utilisationCountStats, Resource.utilisationCountChanged_, ResourceUtilisationCountStatsId);
+          BasicResultProperty.FromIntTimingStats ("queueCountStats", c, Resource.queueCountStats, Resource.queueCountChanged_, ResourceQueueCountStatsId);
+          BasicResultProperty.FromDoubleStats ("waitTime", c, Resource.waitTime, Resource.waitTimeChanged_, ResourceWaitTimeId) ]
+
+type PreemptibleResourceResultObject (c: ResultContainer<PreemptibleResource>) =
+
+    inherit ResultObject ()
+
+    override x.Name       = c.Name
+    override x.Id         = c.Id
+    override x.TypeId     = ResourceId
+    override x.Signal     = lazy c.Signal
+    override x.Summary () = PreemptibleResourceResultSummary (c) :> ResultObject |> ResultObjectSource 
+    override x.Properties =
+        [ BasicResultProperty.FromInt ("count", c, PreemptibleResource.count, PreemptibleResource.countChanged_, ResourceCountId);
+          BasicResultProperty.FromIntTimingStats ("countStats", c, PreemptibleResource.countStats, PreemptibleResource.countChanged_, ResourceCountStatsId);
+          BasicResultProperty.FromInt ("utilisationCount", c, PreemptibleResource.utilisationCount, PreemptibleResource.utilisationCountChanged_, ResourceUtilisationCountId);
+          BasicResultProperty.FromIntTimingStats ("utilisationCountStats", c, PreemptibleResource.utilisationCountStats, PreemptibleResource.utilisationCountChanged_, ResourceUtilisationCountStatsId);
+          BasicResultProperty.FromInt ("queueCount", c, PreemptibleResource.queueCount, PreemptibleResource.queueCountChanged_, ResourceQueueCountId);
+          BasicResultProperty.FromIntTimingStats ("queueCountStats", c, PreemptibleResource.queueCountStats, PreemptibleResource.queueCountChanged_, ResourceQueueCountStatsId);
+          BasicResultProperty.FromDouble ("totalWaitTime", c, PreemptibleResource.totalWaitTime, PreemptibleResource.waitTimeChanged_, ResourceTotalWaitTimeId);
+          BasicResultProperty.FromDoubleStats ("waitTime", c, PreemptibleResource.waitTime, PreemptibleResource.waitTimeChanged_, ResourceWaitTimeId) ]
+
+and PreemptibleResourceResultSummary (c: ResultContainer<PreemptibleResource>) =
+
+    inherit ResultObject ()
+
+    override x.Name       = c.Name
+    override x.Id         = c.Id
+    override x.TypeId     = ResourceId
+    override x.Signal     = lazy c.Signal
+    override x.Summary () = PreemptibleResourceResultSummary (c) :> ResultObject |> ResultObjectSource 
+    override x.Properties =
+        [ BasicResultProperty.FromIntTimingStats ("countStats", c, PreemptibleResource.countStats, PreemptibleResource.countChanged_, ResourceCountStatsId);
+          BasicResultProperty.FromIntTimingStats ("utilisationCountStats", c, PreemptibleResource.utilisationCountStats, PreemptibleResource.utilisationCountChanged_, ResourceUtilisationCountStatsId);
+          BasicResultProperty.FromIntTimingStats ("queueCountStats", c, PreemptibleResource.queueCountStats, PreemptibleResource.queueCountChanged_, ResourceQueueCountStatsId);
+          BasicResultProperty.FromDoubleStats ("waitTime", c, PreemptibleResource.waitTime, PreemptibleResource.waitTimeChanged_, ResourceWaitTimeId) ]
+
 [<AutoOpen>]
 module ResultPropertyExtensions =
 
@@ -1999,6 +2085,28 @@ module ResultSourceExtensions =
         static member From (name: ResultName, x: ArrivalTimer, ?descr: ResultDescription) =
             ResultSource.From (name, x, CustomResultId descr)
 
+        static member From (name: ResultName, x: Resource, id: ResultId) =
+            let c = { new ResultContainer<_> () with
+                        override c.Name   = name
+                        override c.Id     = id
+                        override c.Data   = x
+                        override c.Signal = Resource.changed_ x |> ResultSignal }
+            ResourceResultObject (c) :> ResultObject |> ResultObjectSource
+
+        static member From (name: ResultName, x: Resource, ?descr: ResultDescription) =
+            ResultSource.From (name, x, CustomResultId descr)
+
+        static member From (name: ResultName, x: PreemptibleResource, id: ResultId) =
+            let c = { new ResultContainer<_> () with
+                        override c.Name   = name
+                        override c.Id     = id
+                        override c.Data   = x
+                        override c.Signal = PreemptibleResource.changed_ x |> ResultSignal }
+            PreemptibleResourceResultObject (c) :> ResultObject |> ResultObjectSource
+
+        static member From (name: ResultName, x: PreemptibleResource, ?descr: ResultDescription) =
+            ResultSource.From (name, x, CustomResultId descr)
+
         static member From (name: ResultName, xs: Parameter<_> list, id: ResultId) =
             let subname (i: int) = ".[" + i.ToString () + "]"
             let items = xs |> List.mapi (fun i x -> ResultSource.From (name + subname i, x, id)) |> List.toArray
@@ -2105,6 +2213,24 @@ module ResultSourceExtensions =
         static member From (name: ResultName, xs: ArrivalTimer list, ?descr: ResultDescription) =
             ResultSource.From (name, xs, CustomResultId descr)
 
+        static member From (name: ResultName, xs: Resource list, id: ResultId) =
+            let subname (i: int) = ".[" + i.ToString () + "]"
+            let items = xs |> List.mapi (fun i x -> ResultSource.From (name + subname i, x, id)) |> List.toArray
+            let subscript = items |> Array.mapi (fun i x -> subname i)
+            BasicResultArray (name, items, subscript, id) :> ResultArray |> ResultArraySource
+
+        static member From (name: ResultName, xs: Resource list, ?descr: ResultDescription) =
+            ResultSource.From (name, xs, CustomResultId descr)
+
+        static member From (name: ResultName, xs: PreemptibleResource list, id: ResultId) =
+            let subname (i: int) = ".[" + i.ToString () + "]"
+            let items = xs |> List.mapi (fun i x -> ResultSource.From (name + subname i, x, id)) |> List.toArray
+            let subscript = items |> Array.mapi (fun i x -> subname i)
+            BasicResultArray (name, items, subscript, id) :> ResultArray |> ResultArraySource
+
+        static member From (name: ResultName, xs: PreemptibleResource list, ?descr: ResultDescription) =
+            ResultSource.From (name, xs, CustomResultId descr)
+
         static member From (name: ResultName, xs: Parameter<_> array, id: ResultId) =
             let subname (i: int) = ".[" + i.ToString () + "]"
             let items = xs |> Array.mapi (fun i x -> ResultSource.From (name + subname i, x, id))
@@ -2209,6 +2335,24 @@ module ResultSourceExtensions =
             BasicResultArray (name, items, subscript, id) :> ResultArray |> ResultArraySource
 
         static member From (name: ResultName, xs: ArrivalTimer array, ?descr: ResultDescription) =
+            ResultSource.From (name, xs, CustomResultId descr)
+
+        static member From (name: ResultName, xs: Resource array, id: ResultId) =
+            let subname (i: int) = ".[" + i.ToString () + "]"
+            let items = xs |> Array.mapi (fun i x -> ResultSource.From (name + subname i, x, id))
+            let subscript = items |> Array.mapi (fun i x -> subname i)
+            BasicResultArray (name, items, subscript, id) :> ResultArray |> ResultArraySource
+
+        static member From (name: ResultName, xs: Resource array, ?descr: ResultDescription) =
+            ResultSource.From (name, xs, CustomResultId descr)
+
+        static member From (name: ResultName, xs: PreemptibleResource array, id: ResultId) =
+            let subname (i: int) = ".[" + i.ToString () + "]"
+            let items = xs |> Array.mapi (fun i x -> ResultSource.From (name + subname i, x, id))
+            let subscript = items |> Array.mapi (fun i x -> subname i)
+            BasicResultArray (name, items, subscript, id) :> ResultArray |> ResultArraySource
+
+        static member From (name: ResultName, xs: PreemptibleResource array, ?descr: ResultDescription) =
             ResultSource.From (name, xs, CustomResultId descr)
                                                 
         member x.WriteUsingLabel (w: TextWriter, indent: int, provider: IFormatProvider, label: ResultName) =

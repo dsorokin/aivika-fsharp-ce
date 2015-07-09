@@ -154,6 +154,22 @@ type ResultId =
     | ServerPreemptionFactorId
     /// The processing time of arrivals.
     | ArrivalProcessingTimeId
+    /// The current available resource count.
+    | ResourceCountId
+    /// The available resource count statistics.
+    | ResourceCountStatsId
+    /// The current resource utilisation count.
+    | ResourceUtilisationCountId
+    /// The resource utilisation count statistics.
+    | ResourceUtilisationCountStatsId
+    /// The current queue length for the resource.
+    | ResourceQueueCountId
+    /// The queue length statistics for the resource.
+    | ResourceQueueCountStatsId
+    /// The total wait time for the resource.
+    | ResourceTotalWaitTimeId
+    /// The wait time for the resource.
+    | ResourceWaitTimeId
     /// An user-defined result computation.
     | CustomResultId of ResultDescription option
 
@@ -191,6 +207,8 @@ type ResultTypeId =
     | ServerId
     /// The arrival timer.
     | ArrivalTimerId
+    /// The resource.
+    | ResourceId
 
 /// The format info for the result source.
 type [<AbstractClass>] ResultFormatInfo = 
@@ -763,6 +781,18 @@ module ResultSourceExtensions =
         /// Converts the server to a result source.
         static member From: name:ResultName * comp:ArrivalTimer * ?descr:ResultDescription -> ResultSource
 
+        /// Converts the server to a result source.
+        static member From: name:ResultName * comp:Resource * id:ResultId -> ResultSource
+
+        /// Converts the server to a result source.
+        static member From: name:ResultName * comp:Resource * ?descr:ResultDescription -> ResultSource
+
+        /// Converts the server to a result source.
+        static member From: name:ResultName * comp:PreemptibleResource * id:ResultId -> ResultSource
+
+        /// Converts the server to a result source.
+        static member From: name:ResultName * comp:PreemptibleResource * ?descr:ResultDescription -> ResultSource
+
         /// Converts the computation to a result source.
         static member From: name:ResultName * comp:Parameter<'a> list * id:ResultId -> ResultSource
 
@@ -836,6 +866,18 @@ module ResultSourceExtensions =
         static member From: name:ResultName * comp:ArrivalTimer list * ?descr:ResultDescription -> ResultSource
 
         /// Converts the computation to a result source.
+        static member From: name:ResultName * comp:Resource list * id:ResultId -> ResultSource
+
+        /// Converts the computation to a result source.
+        static member From: name:ResultName * comp:Resource list * ?descr:ResultDescription -> ResultSource
+
+        /// Converts the computation to a result source.
+        static member From: name:ResultName * comp:PreemptibleResource list * id:ResultId -> ResultSource
+
+        /// Converts the computation to a result source.
+        static member From: name:ResultName * comp:PreemptibleResource list * ?descr:ResultDescription -> ResultSource
+
+        /// Converts the computation to a result source.
         static member From: name:ResultName * comp:Parameter<'a> array * id:ResultId -> ResultSource
 
         /// Converts the computation to a result source.
@@ -906,6 +948,18 @@ module ResultSourceExtensions =
 
         /// Converts the computation to a result source.
         static member From: name:ResultName * comp:ArrivalTimer array * ?descr:ResultDescription -> ResultSource
+
+        /// Converts the computation to a result source.
+        static member From: name:ResultName * comp:Resource array * id:ResultId -> ResultSource
+
+        /// Converts the computation to a result source.
+        static member From: name:ResultName * comp:Resource array * ?descr:ResultDescription -> ResultSource
+
+        /// Converts the computation to a result source.
+        static member From: name:ResultName * comp:PreemptibleResource array * id:ResultId -> ResultSource
+
+        /// Converts the computation to a result source.
+        static member From: name:ResultName * comp:PreemptibleResource array * ?descr:ResultDescription -> ResultSource
 
         /// Returns a computation that writes the results using the specified indent and format provider.
         member Write: writer:TextWriter * indent:int * provider:IFormatProvider -> Eventive<unit>
