@@ -40,6 +40,70 @@ module PreemptibleResource =
     [<CompiledName ("Count")>]
     val count: resource:PreemptibleResource -> Eventive<int>
 
+    /// Returns a computation of the statistics for the available count of the resource.
+    [<CompiledName ("CountStats")>]
+    val countStats: resource:PreemptibleResource -> Eventive<TimingStats<int>>
+
+    /// Returns a signal triggered when the current available count of the resource changes.
+    [<CompiledName ("CountChanged")>]
+    val countChanged: resource:PreemptibleResource -> Signal<int>
+
+    /// Returns a signal triggered when the current available count of the resource changes.
+    [<CompiledName ("CountChanged_")>]
+    val countChanged_: resource:PreemptibleResource -> Signal<unit>
+
+    /// Returns a computation of the current utilisation count of the resource.
+    [<CompiledName ("UtilisationCount")>]
+    val utilisationCount: resource:PreemptibleResource -> Eventive<int>
+
+    /// Returns a computation of the statistics for the utilisation count of the resource.
+    [<CompiledName ("UtilisationCountStats")>]
+    val utilisationCountStats: resource:PreemptibleResource -> Eventive<TimingStats<int>>
+
+    /// Returns a signal triggered when the current utilisation count of the resource changes.
+    [<CompiledName ("UtilisationCountChanged")>]
+    val utilisationCountChanged: resource:PreemptibleResource -> Signal<int>
+
+    /// Returns a signal triggered when the current utilisation count of the resource changes.
+    [<CompiledName ("UtilisationCountChanged_")>]
+    val utilisationCountChanged_: resource:PreemptibleResource -> Signal<unit>
+
+    /// Returns a computation of the current queue length of the resource.
+    [<CompiledName ("QueueCount")>]
+    val queueCount: resource:PreemptibleResource -> Eventive<int>
+
+    /// Returns a computation of the statistics for the queue length of the resource.
+    [<CompiledName ("QueueCountStats")>]
+    val queueCountStats: resource:PreemptibleResource -> Eventive<TimingStats<int>>
+
+    /// Returns a signal triggered when the current queue length of the resource changes.
+    [<CompiledName ("QueueCountChanged")>]
+    val queueCountChanged: resource:PreemptibleResource -> Signal<int>
+
+    /// Returns a signal triggered when the current queue length of the resource changes.
+    [<CompiledName ("QueueCountChanged_")>]
+    val queueCountChanged_: resource:PreemptibleResource -> Signal<unit>
+
+    /// Returns a computation of the total wait time of the resource.
+    [<CompiledName ("TotalWaitTime")>]
+    val totalWaitTime: resource:PreemptibleResource -> Eventive<float>
+
+    /// Returns a computation of the statistics for the wait time of the resource.
+    [<CompiledName ("WaitTime")>]
+    val waitTime: resource:PreemptibleResource -> Eventive<SamplingStats<float>>
+
+    /// Returns a signal triggered when the wait time of the resource changes.
+    [<CompiledName ("WaitTimeChanged_")>]
+    val waitTimeChanged_: resource:PreemptibleResource -> Signal<unit>
+
+    /// Returns a signal triggered when the wait time of the resource changes.
+    [<CompiledName ("WaitTimeChanged")>]
+    val waitTimeChanged: resource:PreemptibleResource -> Signal<SamplingStats<float>>
+
+    /// Returns a signal triggered when one of the resource counters changes.
+    [<CompiledName ("Changed_")>]
+    val changed_: resource:PreemptibleResource -> Signal<unit>
+
     /// Creates a new resource with the specified initial and maximum available counts.
     [<CompiledName ("CreateWithMaxCount")>]
     val createWithMaxCount: count:int -> maxCount:int option -> Eventive<PreemptibleResource> 
