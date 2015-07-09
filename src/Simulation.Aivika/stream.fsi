@@ -366,3 +366,27 @@ module Stream =
     /// Returns a stream of values triggered by the specified signal.
     [<CompiledName ("OfSignal")>]
     val ofSignal: signal:Signal<'a> -> Proc<Stream<'a>>
+
+    /// Returns the prefix of the stream of the specified length.
+    [<CompiledName ("Take")>]
+    val take: n:int -> stream:Stream<'a> -> Stream<'a>
+
+    /// Returns the longest prefix of the stream of elements that satisfy the predicate.
+    [<CompiledName ("TakeWhile")>]
+    val takeWhile: pred:('a -> bool) -> Stream<'a> -> Stream<'a>
+
+    /// Returns the longest prefix of the stream of elements that satisfy the computation.
+    [<CompiledName ("TakeWhileC")>]
+    val takeWhileC: pred:('a -> Proc<bool>) -> Stream<'a> -> Stream<'a>
+
+    /// Returns the suffix of the stream after the specified first elements.
+    [<CompiledName ("Drop")>]
+    val drop: n:int -> stream:Stream<'a> -> Stream<'a>
+
+    /// Returns the suffix of the stream remaining after the first elements that satisfy the specified predicate.
+    [<CompiledName ("DropWhile")>]
+    val dropWhile: pred:('a -> bool) -> Stream<'a> -> Stream<'a>
+
+    /// Returns the suffix of the stream remaining after the first elements that satisfy the specified computation.
+    [<CompiledName ("DropWhileC")>]
+    val dropWhileC: pred:('a -> Proc<bool>) -> Stream<'a> -> Stream<'a>

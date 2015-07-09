@@ -930,3 +930,87 @@ module Stream =
             do! eventive { x.Dispose () } |> Proc.whenCancelling
             return InfiniteQueue.dequeue q |> repeat
         }
+
+    [<CompiledName ("Take")>]
+    let rec take n m =
+        if n <= 0
+        then empty
+        else 
+            Stream (proc {
+                let! x = invokeStream m
+                match x with
+                | StreamNil -> 
+                    return StreamNil
+                | StreamCons (a, xs) ->
+                    return StreamCons (a, take (n - 1) xs)
+            })
+
+    [<CompiledName ("TakeWhile")>]
+    let rec takeWhile pred m =
+        Stream (proc {
+            let! x = invokeStream m
+            match x with
+            | StreamNil -> 
+                return StreamNil
+            | StreamCons (a, xs) ->
+                let f = pred a
+                if f
+                then return StreamCons (a, takeWhile pred xs)
+                else return StreamNil
+        })
+
+    [<CompiledName ("TakeWhileC")>]
+    let rec takeWhileC pred m =
+        Stream (proc {
+            let! x = invokeStream m
+            match x with
+            | StreamNil -> 
+                return StreamNil
+            | StreamCons (a, xs) ->
+                let! f = pred a
+                if f
+                then return StreamCons (a, takeWhileC pred xs)
+                else return StreamNil
+        })
+
+    [<CompiledName ("Drop")>]
+    let rec drop n m =
+        if n <= 0
+        then m
+        else 
+            Stream (proc {
+                let! x = invokeStream m
+                match x with
+                | StreamNil -> 
+                    return StreamNil
+                | StreamCons (a, xs) ->
+                    return! invokeStream (drop (n - 1) xs)
+            })
+
+    [<CompiledName ("DropWhile")>]
+    let rec dropWhile pred m =
+        Stream (proc {
+            let! x = invokeStream m
+            match x with
+            | StreamNil -> 
+                return StreamNil
+            | StreamCons (a, xs) ->
+                let f = pred a
+                if f
+                then return! invokeStream (dropWhile pred xs)
+                else return StreamCons (a, xs)
+        })
+
+    [<CompiledName ("DropWhileC")>]
+    let rec dropWhileC pred m =
+        Stream (proc {
+            let! x = invokeStream m
+            match x with
+            | StreamNil -> 
+                return StreamNil
+            | StreamCons (a, xs) ->
+                let! f = pred a
+                if f
+                then return! invokeStream (dropWhileC pred xs)
+                else return StreamCons (a, xs)
+        })
