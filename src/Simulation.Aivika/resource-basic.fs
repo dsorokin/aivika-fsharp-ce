@@ -212,3 +212,15 @@ module Resource =
                 do! releaseWithinEventive r
                 return! incCount (n - 1) r
             }
+
+    [<CompiledName ("DecCount")>]
+    let rec decCount n r =
+        if n < 0 then
+            failwithf "The resource count decrement cannot be negative."
+        elif n = 0 then
+            proc.Zero ()
+        else
+            proc {
+                do! request r
+                return! decCount (n - 1) r
+            }

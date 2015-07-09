@@ -117,3 +117,7 @@ module Resource =
     /// Increases the count of available resource by the specified number, invoking the awaiting processes as needed.
     [<CompiledName ("IncCount")>]
     val incCount: n:int -> resource:Resource -> Eventive<unit> 
+
+    /// Decrease the count of available resource by the specified number, waiting for the processes that captured the resource if needed.
+    [<CompiledName ("DecCount")>]
+    val decCount: n:int -> resource:Resource -> Proc<unit> 
