@@ -61,12 +61,13 @@ module ExperimentProvider =
 
     [<CompiledName ("Queue")>]
     let queue (series: ResultTransform) =
+        let series0 = series >> ResultSet.findById QueueCountId
         let series1 = series >> ResultSet.findById QueueCountStatsId
         let series2 = series >> ResultSet.findById QueueWaitTimeId
         let series3 = series >> ResultSet.findById QueueLostCountId
-        let series' = ResultTransform.concat [series; series1; series2; series3]
+        let series' = ResultTransform.concat [series; series0; series1; series2; series3]
         [ExperimentProvider.description series';
-         deviationChart series1;
+         deviationChart <| ResultTransform.append series0 series1;
          ExperimentProvider.lastValueStats series1;
          deviationChart series2;
          ExperimentProvider.lastValueStats series2;
@@ -77,12 +78,13 @@ module ExperimentProvider =
 
     [<CompiledName ("InfiniteQueue")>]
     let infiniteQueue (series: ResultTransform) =
+        let series0 = series >> ResultSet.findById QueueCountId
         let series1 = series >> ResultSet.findById QueueCountStatsId
         let series2 = series >> ResultSet.findById QueueWaitTimeId
         let series3 = series >> ResultSet.findById QueueRateId
-        let series' = ResultTransform.concat [series; series1; series2; series3]
+        let series' = ResultTransform.concat [series; series0; series1; series2; series3]
         [ExperimentProvider.description series';
-         deviationChart series1;
+         deviationChart <| ResultTransform.append series0 series1;
          ExperimentProvider.lastValueStats series1;
          deviationChart series2;
          ExperimentProvider.lastValueStats series2;
