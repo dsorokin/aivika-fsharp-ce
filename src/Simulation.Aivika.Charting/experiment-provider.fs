@@ -114,3 +114,28 @@ module ExperimentProvider =
          deviationChart series1;
          ExperimentProvider.lastValueStats series1]
             |> ExperimentProvider.concat
+
+    [<CompiledName ("Resource")>]
+    let resource (series: ResultTransform) =
+        let series0 = series >> ResultSet.findById ResourceQueueCountId
+        let series1 = series >> ResultSet.findById ResourceQueueCountStatsId
+        let series2 = series >> ResultSet.findById ResourceWaitTimeId
+        let series3 = series >> ResultSet.findById ResourceCountId
+        let series4 = series >> ResultSet.findById ResourceCountStatsId
+        let series5 = series >> ResultSet.findById ResourceUtilisationCountId
+        let series6 = series >> ResultSet.findById ResourceUtilisationCountStatsId
+        let series' = ResultTransform.concat [series; series0; series1; series2; series3; series4; series5; series6]
+        [ExperimentProvider.description series';
+         deviationChart <| ResultTransform.append series0 series1;
+         ExperimentProvider.lastValueStats series1;
+         deviationChart series2;
+         ExperimentProvider.lastValueStats series2;
+         deviationChart <| ResultTransform.append series3 series4;
+         ExperimentProvider.lastValueStats series4;
+         deviationChart <| ResultTransform.append series5 series6;
+         ExperimentProvider.lastValueStats series6]
+            |> ExperimentProvider.concat
+
+    [<CompiledName ("PreemptibleResource")>]
+    let preemptibleResource (series: ResultTransform) =
+        resource series

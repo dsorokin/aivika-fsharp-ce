@@ -65,3 +65,11 @@ module ExperimentProvider =
     /// Renders the basic arrival timer properties for the specified series.
     [<CompiledName ("ArrivalTimer")>]
     val arrivalTimer: series:ResultTransform -> IExperimentProvider<HtmlTextWriter>
+
+    /// Renders the basic resource properties for the specified series.
+    [<CompiledName ("Resource")>]
+    val resource: series:ResultTransform -> IExperimentProvider<HtmlTextWriter>
+
+    /// Renders the basic resource properties for the specified series.
+    [<CompiledName ("PreemptibleResource")>]
+    val preemptibleResource: series:ResultTransform -> IExperimentProvider<HtmlTextWriter>
