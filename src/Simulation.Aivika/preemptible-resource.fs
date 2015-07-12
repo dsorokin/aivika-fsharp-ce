@@ -316,7 +316,7 @@ module PreemptibleResource =
         Proc (fun pid ->
             Cont (fun c ->
                 Eventive (fun p ->
-                    let f = r.ActingQueue.RemoveBy (fun item -> pid = item.Id)
+                    let f = Option.isSome <| r.ActingQueue.RemoveBy (fun item -> pid = item.Id)
                     if f then
                         updateUtilisationCount r (-1)
                             |> invokeEventive p
@@ -337,7 +337,7 @@ module PreemptibleResource =
 
                 return!
                     eventive {
-                        let f = r.ActingQueue.RemoveBy (fun item -> pid = item.Id)
+                        let f = Option.isSome <| r.ActingQueue.RemoveBy (fun item -> pid = item.Id)
                         if f then
                             do! updateUtilisationCount r (-1)
                             do! release' r

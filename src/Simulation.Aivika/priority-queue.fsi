@@ -49,4 +49,4 @@ type PriorityQueue<'a> =
     member Front: float * 'a
 
     /// Tries to remove an element satisfying the specified predicate.
-    member internal RemoveBy: pred:('a -> bool) -> bool
+    member internal RemoveBy: pred:('a -> bool) -> 'a option

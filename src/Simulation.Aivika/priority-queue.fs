@@ -127,8 +127,10 @@ type PriorityQueue<'a> () =
         let i = indexBy p 0
 
         if i < 0 then 
-            false
+            None
         else
+
+            let v0 = vs.[i]
 
             assert (size > 0)
             size <- size - 1
@@ -142,4 +144,4 @@ type PriorityQueue<'a> () =
             if size > 0 then
                 siftDown i k v
 
-            true
+            Some v0

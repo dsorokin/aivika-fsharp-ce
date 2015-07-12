@@ -39,7 +39,7 @@ type IQueueStorage<'a> =
 
     abstract Enqueue: priority:float * item:'a -> Eventive<unit>
 
-    abstract DeleteBy: pred:('a -> bool) -> Eventive<bool>
+    abstract DeleteBy: pred:('a -> bool) -> Eventive<'a option>
 
 [<Interface>]
 type IQueueStrategy =
@@ -78,10 +78,11 @@ type FCFS () =
                         Eventive (fun p ->
                             let rec loop (n: LinkedListNode<_>) =
                                 if n = null then
-                                    false
+                                    None
                                 elif pred n.Value then
+                                    let a = n.Value
                                     queue.Remove (n)
-                                    true
+                                    Some a
                                 else
                                     loop n.Next
                             loop queue.First)
@@ -119,10 +120,11 @@ type LCFS () =
                         Eventive (fun p ->
                             let rec loop (n: LinkedListNode<_>) =
                                 if n = null then
-                                    false
+                                    None
                                 elif pred n.Value then
+                                    let a = n.Value
                                     queue.Remove (n)
-                                    true
+                                    Some a
                                 else
                                     loop n.Next
                             loop queue.First)
@@ -162,10 +164,11 @@ type SIRO () =
                         Eventive (fun p ->
                             let rec loop i =
                                 if i >= queue.Count then
-                                    false
+                                    None
                                 elif pred queue.[i] then
+                                    let a = queue.[i]
                                     queue.RemoveAt (i)
-                                    true
+                                    Some a
                                 else
                                     loop (i + 1)
                             loop 0)

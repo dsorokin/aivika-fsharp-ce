@@ -41,7 +41,7 @@ type IQueueStorage<'a> =
     abstract Enqueue: priority:Priority * item:'a -> Eventive<unit>
 
     /// Removes an element satisfying the specified predicate, or raises an exception if the operation is not supported.
-    abstract DeleteBy: pred:('a -> bool) -> Eventive<bool>
+    abstract DeleteBy: pred:('a -> bool) -> Eventive<'a option>
 
 /// Defines a queue strategy.
 [<Interface>]
