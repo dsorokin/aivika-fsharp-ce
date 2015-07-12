@@ -321,6 +321,10 @@ module Dynamics =
     /// Memoized computation that generates integer random numbers distributed uniformly with the specified minimum and maximum.
     [<CompiledName ("MemoRandomUniformInt")>]
     val memoRandomUniformInt: minimum:Dynamics<int> -> maximum:Dynamics<int> -> Dynamics<int>
+
+    /// Memoized computation that generates triangular random numbers with the specified minimum, median and maximum.
+    [<CompiledName ("MemoRandomTriangular")>]
+    val memoRandomTriangular: minimum:Dynamics<float> -> median:Dynamics<float> -> maximum:Dynamics<float> -> Dynamics<float>
     
     /// Memoized computation that generates normal random numbers with the specified mean and deviation.
     [<CompiledName ("MemoRandomNormal")>]

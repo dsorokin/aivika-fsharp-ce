@@ -174,6 +174,10 @@ module Processor =
     [<CompiledName ("RandomUniformInt")>]
     let randomUniformInt minimum maximum =
         Proc.randomUniformInt_ minimum maximum |> within
+
+    [<CompiledName ("RandomTriangular")>]
+    let randomTriangular minimum median maximum =
+        Proc.randomTriangular_ minimum median maximum |> within
     
     [<CompiledName ("RandomNormal")>]
     let randomNormal mu nu =

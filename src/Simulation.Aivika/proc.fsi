@@ -351,6 +351,14 @@ module Proc =
     /// Computation that holds the process for an integer random time interval distributed uniformly with the specified minimum and maximum.
     [<CompiledName ("RandomUniformInt_")>]
     val randomUniformInt_: minimum:int -> maximum:int -> Proc<unit>
+
+    /// Computation that holds the process for a triangular random time interval with the specified minimum, median and maximum and that returns the interval.
+    [<CompiledName ("RandomTriangular")>]
+    val randomTriangular: minimum:float -> median:float -> maximum:float -> Proc<float>
+    
+    /// Computation that holds the process for a triangular random time interval with the specified minimum, median and maximum.
+    [<CompiledName ("RandomTriangular_")>]
+    val randomTriangular_: minimum:float -> median:float -> maximum:float -> Proc<unit>
     
     /// Computation that holds the process for a random time interval distributed normally with the specified mean and deviation and that returns the interval.
     [<CompiledName ("RandomNormal")>]

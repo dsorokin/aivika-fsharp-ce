@@ -303,6 +303,10 @@ module Parameter =
     /// Computation that generates a new integer random number distributed uniformly with the specified minimum and maximum.
     [<CompiledName ("RandomUniformInt")>]
     val randomUniformInt: minimum:int -> maximum:int -> Parameter<int>
+
+    /// Computation that generates a new triangular random number with the specified minimum, median and maximum.
+    [<CompiledName ("RandomTriangular")>]
+    val randomTriangular: minimum:float -> median:float -> maximum:float -> Parameter<float>
     
     /// Computation that generates a new normal random number with the specified mean and deviation.
     [<CompiledName ("RandomNormal")>]

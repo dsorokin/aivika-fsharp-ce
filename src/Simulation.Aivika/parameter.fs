@@ -296,6 +296,10 @@ module Parameter =
     [<CompiledName ("RandomUniformInt")>]
     let randomUniformInt minimum maximum =
         Parameter (fun r -> r.Generator.NextUniformInt (minimum, maximum))
+
+    [<CompiledName ("RandomTriangular")>]
+    let randomTriangular minimum median maximum =
+        Parameter (fun r -> r.Generator.NextTriangular (minimum, median, maximum))
     
     [<CompiledName ("RandomNormal")>]
     let randomNormal mean deviation =

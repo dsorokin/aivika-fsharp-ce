@@ -251,6 +251,14 @@ module Server =
     /// Creates a new non-preemptible server that holds the process for an integer random time interval distributed uniformly with the specified minimum and maximum, when processing every input element.
     [<CompiledName ("CreateRandomUniformInt")>]
     val createRandomUniformInt: minimum:int -> maximum:int -> Simulation<Server<unit, 'a, 'a>>
+
+    /// Creates a new server that holds the process for a triangular random time interval with the specified minimum, median and maximum, when processing every input element.
+    [<CompiledName ("CreateRandomTriangularPreemptible")>]
+    val createRandomTriangularPreemptible: preemptible:bool -> minimum:float -> median:float -> maximum:float -> Simulation<Server<unit, 'a, 'a>>
+    
+    /// Creates a new non-preemptible server that holds the process for a triangular random time interval with the specified minimum, median and maximum, when processing every input element.
+    [<CompiledName ("CreateRandomTriangular")>]
+    val createRandomTriangular: minimum:float -> median:float -> maximum:float -> Simulation<Server<unit, 'a, 'a>>
     
     /// Creates a new server that holds the process for a random time interval distributed normally with the specified mean and deviation, when processing every input element.
     [<CompiledName ("CreateRandomNormalPreemptible")>]

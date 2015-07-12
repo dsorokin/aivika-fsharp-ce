@@ -362,6 +362,16 @@ module Dynamics =
             let maximum' = invokeDynamics p maximum
             g.NextUniformInt (minimum', maximum'))
         |> memo0
+
+    [<CompiledName ("MemoRandomTriangular")>]
+    let memoRandomTriangular minimum median maximum =
+        Dynamics (fun p ->
+            let g = p.Run.Generator
+            let minimum' = invokeDynamics p minimum
+            let median'  = invokeDynamics p median
+            let maximum' = invokeDynamics p maximum
+            g.NextTriangular (minimum', median', maximum'))
+        |> memo0
     
     [<CompiledName ("MemoRandomNormal")>]
     let memoRandomNormal mean deviation =    

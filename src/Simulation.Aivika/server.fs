@@ -452,6 +452,17 @@ module Server =
     let createRandomUniformInt minimum maximum =
         createRandomUniformIntPreemptible false minimum maximum
     
+    [<CompiledName ("CreateRandomTriangularPreemptible")>]
+    let createRandomTriangularPreemptible preemptible minimum median maximum =
+        createPreemptible preemptible (fun a -> proc {
+            do! Proc.randomTriangular_ minimum median maximum
+            return a
+        })
+    
+    [<CompiledName ("CreateRandomTriangular")>]
+    let createRandomTriangular minimum median maximum =
+        createRandomTriangularPreemptible false minimum median maximum
+    
     [<CompiledName ("CreateRandomNormalPreemptible")>]
     let createRandomNormalPreemptible preemptible mu nu =
         createPreemptible preemptible (fun a -> proc {

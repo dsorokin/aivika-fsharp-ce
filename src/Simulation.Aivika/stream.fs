@@ -851,6 +851,12 @@ module Stream =
             parameter.Bind (Parameter.randomUniformInt minimum maximum,
                 fun x -> parameter.Return (float x, x))
         
+    [<CompiledName ("RandomTriangular")>]    
+    let randomTriangular minimum median maximum = 
+        randomArrival <|
+            parameter.Bind (Parameter.randomTriangular minimum median maximum,
+                fun x -> parameter.Return (x, x))
+
     [<CompiledName ("RandomNormal")>]    
     let randomNormal mu nu = 
         randomArrival <|

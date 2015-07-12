@@ -711,6 +711,21 @@ module Proc =
         let! t = Parameter.randomUniformInt minimum maximum |> Parameter.lift
         do! hold (float t)
     }
+
+    [<CompiledName ("RandomTriangular")>]
+    let randomTriangular minimum median maximum = proc {
+
+        let! t = Parameter.randomTriangular minimum median maximum |> Parameter.lift
+        do! hold t
+        return t
+    }
+
+    [<CompiledName ("RandomTriangular_")>]
+    let randomTriangular_ minimum median maximum = proc {
+
+        let! t = Parameter.randomTriangular minimum median maximum |> Parameter.lift
+        do! hold t
+    }
     
     [<CompiledName ("RandomNormal")>]
     let randomNormal mu nu = proc {

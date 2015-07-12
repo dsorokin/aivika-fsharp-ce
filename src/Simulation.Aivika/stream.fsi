@@ -342,6 +342,10 @@ module Stream =
     /// Returns a stream with integer delays distributed uniformly with the specified minimum and maximum.
     [<CompiledName ("RandomUniformInt")>]
     val randomUniformInt: minimum:int -> maximum:int -> Stream<Arrival<int>>
+
+    /// Returns a stream with delays distributed triangularly with the specified minimum, median and maximum.
+    [<CompiledName ("RandomTriangular")>]
+    val randomTriangular: minimum:float -> median:float -> maximum:float -> Stream<Arrival<float>>
     
     /// Returns a stream with delays distributed normally with the specified mean and deviation.
     [<CompiledName ("RandomNormal")>]

@@ -52,6 +52,9 @@ and [<AbstractClass>] Generator =
     /// Generates an integer uniform random number with the specified minimum and maximum.
     abstract NextUniformInt: minimum:int * maximum:int -> int
 
+    /// Generates a triangular random number with the specified minimum, median and maximum.
+    abstract NextTriangular: minimum:float * median:float * maximum:float -> float
+
     /// Generates a normal random number with mean 0 and deviation 1.
     abstract NextNormal: unit -> float
     

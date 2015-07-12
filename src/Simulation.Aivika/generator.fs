@@ -87,6 +87,13 @@ module private BuiltInGeneratorCore =
                 
                 xi1 * psi
 
+    let triangular min median max g =
+        let x = g ()
+        if x <= (median - min) / (max - min) then 
+            min + sqrt ((median - min) * (max - min) * x)
+        else 
+            max - sqrt ((max - median) * (max - min) * (1.0 - x))
+        
     let poisson mu g =
     
         let mutable v = 0
@@ -141,6 +148,8 @@ and [<AbstractClass>] Generator () =
 
     abstract NextUniformInt: minimum:int * maximum:int -> int
 
+    abstract NextTriangular: minimum:float * median:float * maximum:float -> float
+
     abstract NextNormal: unit -> float
     
     abstract NextNormal: mean:float * deviation:float -> float
@@ -170,6 +179,9 @@ and BasicGenerator (uniformGenerator: unit -> float) =
         let minimum' = float minimum
         let maximum' = float maximum
         int (round (minimum' + (maximum' - minimum') * uniformGenerator ()))
+
+    override x.NextTriangular (minimum, median, maximum) =
+        BuiltInGeneratorCore.triangular minimum median maximum uniformGenerator
 
     override x.NextNormal () =
         normalGenerator ()
