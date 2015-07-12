@@ -1024,3 +1024,9 @@ module Stream =
                 then return! invokeStream (dropWhileC pred xs)
                 else return StreamCons (a, xs)
         })
+
+    [<CompiledName ("AccumAssembly")>]
+    let accumAssembly f acc m =
+        accum f acc m
+            |> filter Option.isSome
+            |> map Option.get

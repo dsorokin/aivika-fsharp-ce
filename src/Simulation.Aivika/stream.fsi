@@ -150,6 +150,10 @@ module Stream =
     /// Accumulator that outputs a value determined by the supplied function.
     [<CompiledName ("Accum")>]
     val accum: f:('state -> 'a -> Proc<'state * 'b>) -> state:'state -> Stream<'a> -> Stream<'b> 
+
+    /// Assemble an accumulated output determined by the supplied function.
+    [<CompiledName ("AccumAssembly")>]
+    val accumAssembly: f:('state -> 'a -> Proc<'state * 'b option>) -> state:'state -> Stream<'a> -> Stream<'b> 
  
     /// Transforms a computation.
     [<CompiledName ("Ap")>]
