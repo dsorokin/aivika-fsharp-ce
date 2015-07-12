@@ -1030,3 +1030,26 @@ module Stream =
         accum f acc m
             |> filter Option.isSome
             |> map Option.get
+
+    [<CompiledName ("FirstArrivals")>]
+    let firstArrivals n m =
+        let f (i, a0) a =
+            proc {
+                let a0' = if Option.isSome a0 then a0 else Some a
+                if i % n = 0 then
+                    return ((1, None), a0')
+                else
+                    return ((i + 1, a0'), None)
+            }
+        accumAssembly f (1, None) m
+
+    [<CompiledName ("LastArrivals")>]
+    let lastArrivals n m =
+        let f i a =
+            proc {
+                if i % n = 0 then
+                    return (1, Some a)
+                else
+                    return (i + 1, None)
+            }
+        accumAssembly f 1 m

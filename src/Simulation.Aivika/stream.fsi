@@ -398,3 +398,11 @@ module Stream =
     /// Returns the suffix of the stream remaining after the first elements that satisfy the specified computation.
     [<CompiledName ("DropWhileC")>]
     val dropWhileC: pred:('a -> Proc<bool>) -> Stream<'a> -> Stream<'a>
+
+    /// Return a stream of first arrivals after assembling the specified number of elements.
+    [<CompiledName ("FirstArrivals")>]
+    val firstArrivals: n:int -> Stream<'a> -> Stream<'a>
+
+    /// Return a stream of last arrivals after assembling the specified number of elements.
+    [<CompiledName ("LastArrivals")>]
+    val lastArrivals: n:int -> Stream<'a> -> Stream<'a>
