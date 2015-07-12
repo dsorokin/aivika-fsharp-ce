@@ -250,12 +250,10 @@ module Queue =
                 q.WaitTime
                     |> SamplingStats.add (t - t1))
 
-    /// Extracts an item for the dequeueing request.
-    let private dequeueExtract t' (q: Queue<'a>) =
+    /// Post extracts an item for the dequeueing request.
+    let private dequeuePostExtract t' (q: Queue<'a>) (i: QueueItem<'a>) =
         Eventive (fun p ->
             let t = p.Time
-            let i = q.Store.Dequeue ()
-                        |> invokeEventive p
             q.Count <- q.Count - 1
             q.CountStats <- q.CountStats |> TimingStats.add t q.Count
             q.OutputCount <- q.OutputCount + 1
@@ -266,6 +264,14 @@ module Queue =
             SignalSource.trigger i.Value q.DequeueExtractedSource
                 |> invokeEventive p
             i.Value)
+
+    /// Extracts an item for the dequeueing request.
+    let private dequeueExtract t' (q: Queue<'a>) =
+        Eventive (fun p ->
+            let i = q.Store.Dequeue ()
+                        |> invokeEventive p
+            dequeuePostExtract t' q i
+                |> invokeEventive p)
 
     [<CompiledName ("Dequeue")>]
     let dequeue q =
@@ -292,6 +298,44 @@ module Queue =
                 return! dequeueExtract t q |> Eventive.map Some
             else
                 return None
+        }
+
+    [<CompiledName ("DeleteBy")>]
+    let deleteBy pred q =
+        eventive {
+            let! x = Resource.tryRequestWithinEventive q.OutputRes
+            if x then
+                let! i = q.Store.DeleteBy (fun y -> pred y.Value)
+                match i with
+                | None ->
+                    do! Resource.releaseWithinEventive q.OutputRes
+                    return None
+                | Some i ->
+                    let! t = dequeueRequest q
+                    return! dequeuePostExtract t q i |> Eventive.map Some
+            else
+                return None
+        }
+            
+    [<CompiledName ("DeleteBy_")>]
+    let deleteBy_ pred q =
+        deleteBy pred q |> Eventive.map ignore
+
+    [<CompiledName ("Delete")>]
+    let delete a q =
+        deleteBy (fun x -> a = x) q |> Eventive.map Option.isSome
+
+    [<CompiledName ("Delete_")>]
+    let delete_ a q =
+        deleteBy (fun x -> a = x) q |> Eventive.map ignore
+
+    [<CompiledName ("Clear")>]
+    let rec clear q =
+        eventive {
+            let! x = tryDequeue q
+            match x with
+            | None   -> return ()
+            | Some a -> return! clear q
         }
 
     [<CompiledName ("Enqueue")>]

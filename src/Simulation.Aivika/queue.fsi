@@ -108,6 +108,26 @@ module Queue =
     [<CompiledName ("TryDequeue")>]
     val tryDequeue: queue:Queue<'a> -> Eventive<'a option>
 
+    /// Tries to remove an element satisfying the specified predicate.
+    [<CompiledName ("DeleteBy")>]
+    val deleteBy: pred:('a -> bool) -> queue:Queue<'a> -> Eventive<'a option>
+
+    /// Tries to remove an element satisfying the specified predicate.
+    [<CompiledName ("DeleteBy_")>]
+    val deleteBy_: pred:('a -> bool) -> queue:Queue<'a> -> Eventive<unit>
+
+    /// Tries to remove the specified item from the queue.
+    [<CompiledName ("Delete")>]
+    val delete: item:'a -> queue:Queue<'a> -> Eventive<bool> when 'a : equality
+
+    /// Tries to remove the specified item from the queue.
+    [<CompiledName ("Delete_")>]
+    val delete_: item:'a -> queue:Queue<'a> -> Eventive<unit> when 'a : equality
+
+    /// Removes all elements from the queue.
+    [<CompiledName ("Clear")>]
+    val clear: queue:Queue<'a> -> Eventive<unit>
+
     /// Enqueues an item suspending the process if the queue is full.
     [<CompiledName ("Enqueue")>]
     val enqueue: item:'a -> queue:Queue<'a> -> Proc<unit>
