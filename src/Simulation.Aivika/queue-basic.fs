@@ -125,7 +125,6 @@ module Queue =
     /// Post extracts an item for the dequeueing request.
     let private dequeuePostExtract (q: Queue<'a>) (item: 'a) =
         Eventive (fun p ->
-            let t = p.Time
             q.Count <- q.Count - 1
             Resource.releaseWithinEventive q.InputRes
                 |> invokeEventive p
