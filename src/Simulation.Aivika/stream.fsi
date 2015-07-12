@@ -381,11 +381,11 @@ module Stream =
 
     /// Returns the longest prefix of the stream of elements that satisfy the predicate.
     [<CompiledName ("TakeWhile")>]
-    val takeWhile: pred:('a -> bool) -> Stream<'a> -> Stream<'a>
+    val takeWhile: pred:('a -> bool) -> stream:Stream<'a> -> Stream<'a>
 
     /// Returns the longest prefix of the stream of elements that satisfy the computation.
     [<CompiledName ("TakeWhileC")>]
-    val takeWhileC: pred:('a -> Proc<bool>) -> Stream<'a> -> Stream<'a>
+    val takeWhileC: pred:('a -> Proc<bool>) -> stream:Stream<'a> -> Stream<'a>
 
     /// Returns the suffix of the stream after the specified first elements.
     [<CompiledName ("Drop")>]
@@ -393,16 +393,16 @@ module Stream =
 
     /// Returns the suffix of the stream remaining after the first elements that satisfy the specified predicate.
     [<CompiledName ("DropWhile")>]
-    val dropWhile: pred:('a -> bool) -> Stream<'a> -> Stream<'a>
+    val dropWhile: pred:('a -> bool) -> stream:Stream<'a> -> Stream<'a>
 
     /// Returns the suffix of the stream remaining after the first elements that satisfy the specified computation.
     [<CompiledName ("DropWhileC")>]
-    val dropWhileC: pred:('a -> Proc<bool>) -> Stream<'a> -> Stream<'a>
+    val dropWhileC: pred:('a -> Proc<bool>) -> stream:Stream<'a> -> Stream<'a>
 
     /// Return a stream of first arrivals after assembling the specified number of elements.
     [<CompiledName ("FirstArrivals")>]
-    val firstArrivals: n:int -> Stream<'a> -> Stream<'a>
+    val firstArrivals: n:int -> stream:Stream<'a> -> Stream<'a>
 
     /// Return a stream of last arrivals after assembling the specified number of elements.
     [<CompiledName ("LastArrivals")>]
-    val lastArrivals: n:int -> Stream<'a> -> Stream<'a>
+    val lastArrivals: n:int -> stream:Stream<'a> -> Stream<'a>
