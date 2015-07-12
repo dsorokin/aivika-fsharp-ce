@@ -1053,3 +1053,57 @@ module Stream =
                     return (i + 1, None)
             }
         accumAssembly f 1 m
+
+    [<CompiledName ("Clone")>]
+    let clone n m =
+        let qs = [| for i = 0 to n - 1 do 
+                        yield InfiniteQueue.createUsingFCFS 
+                                |> Simulation.memo |]
+        let rs = Resource.createUsingFCFS 1
+                    |> Simulation.memo
+        let r  = ref (Some m)
+        let rec streamer ith a =
+                proc {
+                    match a with
+                    | Some a ->
+                        return StreamCons (a, Stream (loop ith))
+                    | None ->
+                        return StreamNil
+                }
+        and loop ith =
+                proc {
+                    let! q = qs.[ith] |> Simulation.lift
+                    let! a = InfiniteQueue.tryDequeue q |> Eventive.lift
+                    match a with
+                    | Some a -> return! streamer ith a
+                    | None   ->
+                        let! rs = rs |> Simulation.lift
+                        use! h = Resource.take rs
+                        let! a = InfiniteQueue.tryDequeue q |> Eventive.lift
+                        match a with
+                        | Some a -> return! streamer ith a
+                        | None   ->
+                            let! a =
+                                proc {
+                                    match !r with
+                                    | None   -> return None
+                                    | Some s ->
+                                        let! x = invokeStream s
+                                        match x with
+                                        | StreamNil ->
+                                            r := None 
+                                            return None
+                                        | StreamCons (a, xs) ->
+                                            r := Some xs
+                                            return (Some a)
+                                }
+                            do! eventive {
+                                    for i = 0 to n - 1 do
+                                        if i <> ith then
+                                            let! q = qs.[i] |> Simulation.lift
+                                            do! q |> InfiniteQueue.enqueue a
+                                } |> Eventive.lift
+                            return! streamer ith a
+                }
+        [ for i = 0 to n - 1 do
+            yield Stream (loop i) ]

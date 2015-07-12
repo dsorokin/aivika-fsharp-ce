@@ -399,10 +399,14 @@ module Stream =
     [<CompiledName ("DropWhileC")>]
     val dropWhileC: pred:('a -> Proc<bool>) -> stream:Stream<'a> -> Stream<'a>
 
-    /// Return a stream of first arrivals after assembling the specified number of elements.
+    /// Returns a stream of first arrivals after assembling the specified number of elements.
     [<CompiledName ("FirstArrivals")>]
     val firstArrivals: n:int -> stream:Stream<'a> -> Stream<'a>
 
-    /// Return a stream of last arrivals after assembling the specified number of elements.
+    /// Returns a stream of last arrivals after assembling the specified number of elements.
     [<CompiledName ("LastArrivals")>]
     val lastArrivals: n:int -> stream:Stream<'a> -> Stream<'a>
+
+    /// Creates the specified number of equivalent clones of the input stream.
+    [<CompiledName ("Clone")>]
+    val clone: n:int -> stream:Stream<'a> -> Stream<'a> list
