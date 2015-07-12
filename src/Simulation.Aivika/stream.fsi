@@ -146,7 +146,11 @@ module Stream =
     /// Composes a computation.
     [<CompiledName ("MapC")>]
     val mapc: f:('a -> Proc<'b>) -> comp:Stream<'a> -> Stream<'b>
-    
+
+    /// Accumulator that outputs a value determined by the supplied function.
+    [<CompiledName ("Accum")>]
+    val accum: f:('state -> 'a -> Proc<'state * 'b>) -> state:'state -> Stream<'a> -> Stream<'b> 
+ 
     /// Transforms a computation.
     [<CompiledName ("Ap")>]
     val ap: f:Proc<'a -> 'b> -> comp:Stream<'a> -> Stream<'b>

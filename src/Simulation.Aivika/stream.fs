@@ -227,6 +227,16 @@ module Stream =
                 return StreamCons (y, mapc f m')
         })
 
+    [<CompiledName ("Accum")>]
+    let accum f acc (m: Stream<_>) =
+        stream {
+            let r = ref acc
+            for a in m do
+                let! (acc', b) = f !r a
+                r := acc'
+                yield b
+        }
+
     [<CompiledName ("Ap")>]
     let rec ap mf m =
         Stream (proc {

@@ -47,15 +47,7 @@ module Processor =
     let arrc f = Stream.mapc f
 
     [<CompiledName ("Accum")>]
-    let accum f acc =
-        fun (xs: Stream<_>) ->
-            let r = ref acc
-            stream {
-                for a in xs do
-                    let! (acc', b) = f !r a
-                    r := acc'
-                    yield b
-            }
+    let accum f acc = Stream.accum f acc
 
     [<CompiledName ("Within")>]
     let within m =
