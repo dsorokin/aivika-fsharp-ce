@@ -39,6 +39,8 @@ type IQueueStorage<'a> =
 
     abstract Enqueue: priority:float * item:'a -> Eventive<unit>
 
+    abstract DeleteBy: pred:('a -> bool) -> Eventive<bool>
+
 [<Interface>]
 type IQueueStrategy =
 
@@ -70,7 +72,19 @@ type FCFS () =
                             queue.AddLast (item) |> ignore)
 
                     member x.Enqueue (priority: float, item: 'a) =
-                        raise <| NotSupportedException ("The FCFS storage does not support priorities.") 
+                        raise <| NotSupportedException ("The FCFS storage does not support priorities.")
+
+                    member x.DeleteBy (pred) =
+                        Eventive (fun p ->
+                            let rec loop (n: LinkedListNode<_>) =
+                                if n = null then
+                                    false
+                                elif pred n.Value then
+                                    queue.Remove (n)
+                                    true
+                                else
+                                    loop n.Next
+                            loop queue.First)
                 })
 
 [<Sealed>]
@@ -100,6 +114,18 @@ type LCFS () =
 
                     member x.Enqueue (priority: float, item: 'a) =
                         raise <| NotSupportedException ("The LCFS storage does not support priorities.") 
+
+                    member x.DeleteBy (pred) =
+                        Eventive (fun p ->
+                            let rec loop (n: LinkedListNode<_>) =
+                                if n = null then
+                                    false
+                                elif pred n.Value then
+                                    queue.Remove (n)
+                                    true
+                                else
+                                    loop n.Next
+                            loop queue.First)
                 })
 
 [<Sealed>]
@@ -131,6 +157,18 @@ type SIRO () =
 
                     member x.Enqueue (priority: float, item: 'a) =
                         raise <| NotSupportedException ("The SIRO storage does not support priorities.") 
+
+                    member x.DeleteBy (pred) =
+                        Eventive (fun p ->
+                            let rec loop i =
+                                if i >= queue.Count then
+                                    false
+                                elif pred queue.[i] then
+                                    queue.RemoveAt (i)
+                                    true
+                                else
+                                    loop (i + 1)
+                            loop 0)
                 })
 
 [<Sealed>]
@@ -160,6 +198,9 @@ type StaticPriorities () =
 
                     member x.Enqueue (priority: float, item: 'a) =
                         Eventive (fun p -> queue.Enqueue (priority, item))
+
+                    member x.DeleteBy (pred) =
+                        Eventive (fun p -> queue.RemoveBy (pred))
                 })
 
 [<RequireQualifiedAccess>]
