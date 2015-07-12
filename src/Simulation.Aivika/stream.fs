@@ -924,7 +924,7 @@ module Stream =
     [<CompiledName ("OfSignal")>]
     let ofSignal s =
         proc {
-            let! q  = InfiniteQueue.createUsingFCFS |> Eventive.lift
+            let! q  = InfiniteQueue.createUsingFCFS |> Simulation.lift
             let h a = InfiniteQueue.enqueue a q
             let! x  = Signal.subscribe h s |> Eventive.lift
             do! eventive { x.Dispose () } |> Proc.whenCancelling

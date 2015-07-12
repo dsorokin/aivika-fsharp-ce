@@ -116,6 +116,8 @@
     <Compile Include="queue-basic.fs" />
     <Compile Include="infinite-queue.fsi" />
     <Compile Include="infinite-queue.fs" />
+    <Compile Include="infinite-queue-basic.fsi" />
+    <Compile Include="infinite-queue-basic.fs" />
     <Compile Include="stream.fsi" />
     <Compile Include="stream.fs" />
     <Compile Include="processor.fsi" />
