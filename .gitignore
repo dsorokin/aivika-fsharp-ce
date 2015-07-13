@@ -21,3 +21,7 @@ doc/pdf/**/*.synctex.gz
 nuget/**/content/
 nuget/**/lib/
 nuget/**/tools/
+nuget/**/LICENSE
+nuget/**/LICENSE.GPLv3
+nuget-tests/**/bin/
+nuget-tests/**/obj/
