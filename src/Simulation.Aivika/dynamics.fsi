@@ -366,3 +366,6 @@ module Dynamics =
     [<CompiledName ("Min")>]
     val min: comp1:Dynamics<'a> -> comp2:Dynamics<'a> -> Dynamics<'a> when 'a: comparison
     
+    /// Shows the debug message with the current simulation time.
+    [<CompiledName ("Trace")>]
+    val trace: message:string -> comp:Dynamics<'a> -> Dynamics<'a>

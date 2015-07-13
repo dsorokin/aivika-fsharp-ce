@@ -414,3 +414,7 @@ module Stream =
     /// Creates the specified number of equivalent clones of the input stream.
     [<CompiledName ("Clone")>]
     val clone: n:int -> stream:Stream<'a> -> Stream<'a> list
+
+    /// Shows the debug message with the current simulation time.
+    [<CompiledName ("Trace")>]
+    val trace: request:string option -> response:string option -> nil:string option -> comp:Stream<'a> -> Stream<'a>

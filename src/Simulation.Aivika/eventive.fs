@@ -370,3 +370,9 @@ module Eventive =
                         let a = invokeEventive p m
                         dict := Some (p.Run.UniqueId, a)
                         a))
+
+    [<CompiledName ("Trace")>]
+    let trace message (m: Eventive<'a>) =
+        Eventive (fun p ->
+            printfn "t = %f: %s" p.Time message
+            invokeEventive p m)

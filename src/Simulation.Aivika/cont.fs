@@ -784,3 +784,13 @@ module internal Cont =
                 let h = Signal.subscribe handle s
                             |> invokeEventive p
                 r := Some h))
+
+    [<CompiledName ("Trace")>]
+    let trace message (m: Cont<'a>) =
+        Cont (fun c ->
+            Eventive (fun p ->
+                if contCanceled c then
+                    cancelCont p c
+                else
+                    printfn "t = %f: %s" p.Time message
+                    invokeEventive p (invokeCont c m)))

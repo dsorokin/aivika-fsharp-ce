@@ -801,3 +801,9 @@ module Proc =
         let! t = Parameter.randomBinomial prob trials |> Parameter.lift
         do! hold (float t)
     }
+
+    [<CompiledName ("Trace")>]
+    let trace message (m: Proc<'a>) =
+        Proc (fun pid ->
+            invokeProc pid m
+                |> Cont.trace message)

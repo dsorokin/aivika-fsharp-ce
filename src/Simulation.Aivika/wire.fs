@@ -515,3 +515,29 @@ module Wire =
                     WireNil
                 | WireCons (a, xs') ->
                     WireCons (a, loop xs' t a)))
+
+    [<CompiledName ("Trace")>]
+    let rec trace request response nil m =
+        Wire (eventive {
+            let! x =
+                match request with
+                | None -> 
+                    invokeWire m
+                | Some message ->
+                    invokeWire m |> Eventive.trace message
+            match x with
+            | WireNil -> 
+                let p = eventive.Return (WireNil)
+                match nil with
+                | None ->
+                    return! p
+                | Some message ->
+                    return! p |> Eventive.trace message
+            | WireCons (a, m') ->
+                let p = eventive.Return (WireCons (a, trace request response nil m'))
+                match response with
+                | None ->
+                    return! p
+                | Some message ->
+                    return! p |> Eventive.trace message 
+        })

@@ -399,3 +399,7 @@ module Proc =
     /// Computation that holds the process for a random time interval distributed binomially with the specified probability and number of trials.
     [<CompiledName ("RandomBinomial_")>]
     val randomBinomial_: prob:float -> trials:int -> Proc<unit>
+
+    /// Shows the debug message with the current simulation time.
+    [<CompiledName ("Trace")>]
+    val trace: message:string -> comp:Proc<'a> -> Proc<'a>

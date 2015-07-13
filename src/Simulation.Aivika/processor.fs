@@ -198,3 +198,7 @@ module Processor =
     [<CompiledName ("RandomBinomial")>]
     let randomBinomial prob trials =
         Proc.randomBinomial_ prob trials |> within
+
+    [<CompiledName ("Trace")>]
+    let trace request response nil p =
+        fun (xs: Stream<_>) -> Stream.trace request response nil (p xs)  

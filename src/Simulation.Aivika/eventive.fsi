@@ -227,3 +227,7 @@ module Eventive =
     /// Memoizes the computation so that a new computation would always return the same result within the simulation run.
     [<CompiledName ("Memo")>]
     val memo: comp:Eventive<'a> -> Eventive<'a>
+
+    /// Shows the debug message with the current simulation time.
+    [<CompiledName ("Trace")>]
+    val trace: message:string -> comp:Eventive<'a> -> Eventive<'a>

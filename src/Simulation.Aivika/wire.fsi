@@ -249,3 +249,7 @@ module Wire =
     /// Returns the same output values in the same time points not requesting input in such cases so that the time was always different.
     [<CompiledName ("DelayInTime")>]
     val delayInTime: comp:Wire<'a> -> Wire<'a>
+
+    /// Shows the debug message with the current simulation time.
+    [<CompiledName ("Trace")>]
+    val trace: request:string option -> response:string option -> nil:string option -> comp:Wire<'a> -> Wire<'a>

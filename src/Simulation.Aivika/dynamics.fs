@@ -438,6 +438,12 @@ module Dynamics =
             let x1' = invokeDynamics p x1
             let x2' = invokeDynamics p x2
             in min x1' x2')
+
+    [<CompiledName ("Trace")>]
+    let trace message (m: Dynamics<'a>) =
+        Dynamics (fun p ->
+            printfn "t = %f: %s" p.Time message
+            invokeDynamics p m)
          
 type Dynamics<'a> with
 

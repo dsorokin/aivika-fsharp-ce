@@ -1113,3 +1113,29 @@ module Stream =
                 }
         [ for i = 0 to n - 1 do
             yield Stream (loop i) ]
+
+    [<CompiledName ("Trace")>]
+    let rec trace request response nil m =
+        Stream (proc {
+            let! x =
+                match request with
+                | None -> 
+                    invokeStream m
+                | Some message ->
+                    invokeStream m |> Proc.trace message
+            match x with
+            | StreamNil -> 
+                let p = proc.Return (StreamNil)
+                match nil with
+                | None ->
+                    return! p
+                | Some message ->
+                    return! p |> Proc.trace message
+            | StreamCons (a, m') ->
+                let p = proc.Return (StreamCons (a, trace request response nil m'))
+                match response with
+                | None ->
+                    return! p
+                | Some message ->
+                    return! p |> Proc.trace message 
+        })

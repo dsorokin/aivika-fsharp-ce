@@ -187,3 +187,7 @@ module Processor =
     /// Returns a computation that holds the process for a random time interval distributed binomially with the specified probability and number of trials, when processing every input element.
     [<CompiledName ("RandomBinomial")>]
     val randomBinomial: prob:float -> trials:int -> Processor<'a, 'a>
+
+    /// Shows the debug message with the current simulation time.
+    [<CompiledName ("Trace")>]
+    val trace: request:string option -> response:string option -> nil:string option -> comp:Processor<'a, 'b> -> Processor<'a, 'b>

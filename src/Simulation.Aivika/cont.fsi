@@ -302,3 +302,7 @@ module internal Cont =
     /// Awaits the specified signal and then resumes the computation.
     [<CompiledName ("Await")>]
     val await: signal:Signal<'a> -> Cont<'a>
+
+    /// Shows the debug message with the current simulation time.
+    [<CompiledName ("Trace")>]
+    val trace: message:string -> comp:Cont<'a> -> Cont<'a>
