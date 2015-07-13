@@ -1068,7 +1068,7 @@ module Stream =
         let rs = Resource.createUsingFCFS 1
                     |> Simulation.memo
         let r  = ref (Some m)
-        let rec streamer ith a =
+        let rec cont ith a =
                 proc {
                     match a with
                     | Some a ->
@@ -1081,13 +1081,13 @@ module Stream =
                     let! q = qs.[ith] |> Simulation.lift
                     let! a = InfiniteQueue.tryDequeue q |> Eventive.lift
                     match a with
-                    | Some a -> return! streamer ith a
+                    | Some a -> return! cont ith a
                     | None   ->
                         let! rs = rs |> Simulation.lift
                         use! h = Resource.take rs
                         let! a = InfiniteQueue.tryDequeue q |> Eventive.lift
                         match a with
-                        | Some a -> return! streamer ith a
+                        | Some a -> return! cont ith a
                         | None   ->
                             let! a =
                                 proc {
@@ -1109,7 +1109,7 @@ module Stream =
                                             let! q = qs.[i] |> Simulation.lift
                                             do! q |> InfiniteQueue.enqueue a
                                 } |> Eventive.lift
-                            return! streamer ith a
+                            return! cont ith a
                 }
         [ for i = 0 to n - 1 do
             yield Stream (loop i) ]
