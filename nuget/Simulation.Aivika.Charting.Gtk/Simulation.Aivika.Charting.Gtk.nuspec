@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <package >
   <metadata>
-    <id>Simulation.Aivika</id>
+    <id>Simulation.Aivika.Charting.Gtk</id>
     <version>3.1.16.0</version>
     <authors>David Sorokin</authors>
     <owners>David Sorokin</owners>
@@ -9,14 +9,16 @@
     <licenseUrl>https://github.com/dsorokin/aivika-fsharp-ce/blob/master/LICENSE</licenseUrl>
     <projectUrl>https://github.com/dsorokin/aivika-fsharp-ce</projectUrl>
     <requireLicenseAcceptance>true</requireLicenseAcceptance>
-    <summary>The F# library for discrete event simulation, system dynamics and agent-based modeling.</summary>
-    <description>Aivika for .NET is a multi-paradigm simulation library, a port of the Haskell library of the same name and created by the same author.
-
-The main idea is that many simulation activities can actually be represented as abstract computations. Functional programming has a developed apparatus for creating such computations, combining them, reasoning about them and so on. This is monads, streams, arrows etc. It is important that F# provides an easy-to-use syntactic sugar for working with such computations, which is a clue to practical usability of the method.</description>
+    <summary>Charting components of the Aivika simulation library for Linux and OS X.</summary>
+    <description>The charting components allow visualizing the results of simulation on Linux and OS X. You can plot the deviation chart, histogram, time series and XY chart.</description>
     <releaseNotes>A new version of the package.</releaseNotes>
     <copyright>Copyright 2009-2015</copyright>
     <tags>discrete-event simulation system-dynamics agent-based modeling</tags>
-    <dependencies />
+    <dependencies>
+      <dependency id="Simulation.Aivika" version="3.1.16.0" />
+      <dependency id="OxyPlot.Core" version="2014.1.546" />
+      <dependency id="OxyPlot.GtkSharp" version="2014.1.546" />
+    </dependencies>
     <!--
     <files>
       <file src="..\..\LICENSE" target="." />
