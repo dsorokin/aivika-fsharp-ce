@@ -100,11 +100,13 @@ accepting the license.
 On Windows the library consists of the following two packages:
 
 `PM> Install-Package Simulation.Aivika`
+
 `PM> Install-Package Simulation.Aivika.Charting`
 
 On Linux and OS X the charting component uses Gtk# already:
 
 `PM> Install-Package Simulation.Aivika`
+
 `PM> Install-Package Simulation.Aivika.Charting.Gtk`
 
 Also the library can be manually installed. For that, please download 
