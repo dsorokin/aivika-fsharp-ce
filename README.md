@@ -74,7 +74,7 @@ Moreover, there are additional modules that allow:
 
 * parallel execution of the Monte-Carlo simulation.
 
-The library was tested on Windows, OS X and Linux.
+The library is tested on Windows, OS X and Linux.
 
 ### License
 
@@ -94,15 +94,23 @@ David Sorokin <mailto:david.sorokin@gmail.com>, Yoshkar-Ola, Russia.
 
 ### Installation
 
-To install the library, please download the sources and compile them. 
-There are two solutions. The first one is destined for Windows,
-while another solution with word `Gtk` in the name is destined
-for OS X and Linux.
+The library can be automatically installed with help of NuGet after 
+accepting the license.
 
-Also the simulation engine without additional modules can be installed
-via NuGet after accepting the license:
+On Windows the library consists of the following two packages:
 
 `PM> Install-Package Simulation.Aivika`
+`PM> Install-Package Simulation.Aivika.Charting`
+
+On Linux and OS X the charting component uses Gtk# already:
+
+`PM> Install-Package Simulation.Aivika`
+`PM> Install-Package Simulation.Aivika.Charting.Gtk`
+
+Also the library can be manually installed. For that, please download 
+the sources and compile them. There are two solutions. The first one 
+is destined for Windows, while another solution with word `Gtk` in 
+the name is destined for OS X and Linux.
 
 ### Documentation
 
