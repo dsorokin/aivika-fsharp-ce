@@ -26,12 +26,12 @@ open System.Reflection
 [<assembly: AssemblyTitleAttribute("Aivika Simulation Charting")>]
 [<assembly: AssemblyProductAttribute("Aivika Simulation Charting")>]
 [<assembly: AssemblyDescriptionAttribute("A module for charting when running Aivika simulation experiments")>]
-[<assembly: AssemblyInformationalVersionAttribute ("3.0")>]
-[<assembly: AssemblyVersionAttribute ("3.0.15.2")>]
-[<assembly: AssemblyFileVersionAttribute("3.0.15.2")>]
+[<assembly: AssemblyInformationalVersionAttribute ("3.1")>]
+[<assembly: AssemblyVersionAttribute ("3.1.16.0")>]
+[<assembly: AssemblyFileVersionAttribute("3.1.16.0")>]
 [<assembly: AssemblyCopyrightAttribute("Copyright (C) 2009-2015 David Sorokin. All rights reserved.")>]
 
 do ()
 
 module internal AssemblyVersionInformation =
-    let [<Literal>] Version = "3.0.15.2"
+    let [<Literal>] Version = "3.1.16.0"
