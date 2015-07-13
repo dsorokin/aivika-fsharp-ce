@@ -27,9 +27,10 @@ let timer4 = ResultSet.findByName "timer4"
 let timer5 = ResultSet.findByName "timer5"
 let projCompletion = ResultSet.findByName "projCompletion"
 
-let completionTime series =
-    series |> ResultSet.findById ArrivalProcessingTimeId
-           |> ResultSet.findById SamplingStatsMeanId 
+let completionTime =
+    ResultSet.findById ArrivalProcessingTimeId
+        >> ResultSet.expand
+        >> ResultSet.findById SamplingStatsMeanId 
 
 let timers =
     [timer2; timer3; timer4; timer5;
@@ -42,16 +43,21 @@ let lastValueStatsProvider =
     p.Series <- timers
     p :> IExperimentProvider<HtmlTextWriter>
 
-// let histogramProvider title series =
-//    let p = new HistogramProvider ()
-//    p.Title  <- title
-//    p.Series <- completionTime series
-//    p :> IExperimentProvider<HtmlTextWriter>
+let lastValueHistogramProvider title series =
+   let p = new LastValueHistogramProvider ()
+   p.Title  <- title
+   p.Series <- series >> completionTime
+   p :> IExperimentProvider<HtmlTextWriter>
 
 let providers =
     [ExperimentProvider.experimentSpecs;
      ExperimentProvider.description timers;
-     lastValueStatsProvider]
+     lastValueStatsProvider;
+     lastValueHistogramProvider "Node 2" timer2;
+     lastValueHistogramProvider "Node 3" timer3;
+     lastValueHistogramProvider "Node 4" timer4;
+     lastValueHistogramProvider "Node 5" timer5;
+     lastValueHistogramProvider "Project Completion" projCompletion]
 
 experiment.RenderHtml (Model.model, providers)
     |> Async.RunSynchronously
