@@ -29,6 +29,9 @@ module Experiment =
         provider1.Series <- m
         provider2.Series <- c
 
+        provider1.Height <- 1000
+        provider2.Height <- 1000
+
         let providers =
             [ExperimentProvider.experimentSpecs;
              provider1 :> IExperimentProvider<HtmlTextWriter>;
