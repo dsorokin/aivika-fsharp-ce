@@ -26,6 +26,7 @@ namespace Simulation.Aivika.RoundRobbin
 open System
 
 open Simulation.Aivika
+open Simulation.Aivika.Basic
 
 [<RequireQualifiedAccess>]
 [<CompilationRepresentation (CompilationRepresentationFlags.ModuleSuffix)>]
@@ -36,7 +37,7 @@ module Processor =
         fun xs -> stream {
         
             let! q = InfiniteQueue.createUsingFCFS 
-                        |> Eventive.lift
+                        |> Simulation.lift
             
             let rec loop = proc {
             
