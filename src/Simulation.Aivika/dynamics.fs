@@ -439,6 +439,14 @@ module Dynamics =
             let x2' = invokeDynamics p x2
             in min x1' x2')
 
+    [<CompiledName ("IfThenElse")>]
+    let ifThenElse cond thenPart elsePart =
+        Dynamics (fun p ->
+            if invokeDynamics p cond then
+                invokeDynamics p thenPart
+            else
+                invokeDynamics p elsePart)
+
     [<CompiledName ("Trace")>]
     let trace message (m: Dynamics<'a>) =
         Dynamics (fun p ->

@@ -328,6 +328,14 @@ module Parameter =
     [<CompiledName ("RandomFalse")>]
     let randomFalse prob =
         Parameter (fun r -> r.Generator.NextUniform () > prob)
+
+    [<CompiledName ("IfThenElse")>]
+    let ifThenElse cond thenPart elsePart =
+        Parameter (fun r ->
+            if invokeParameter r cond then
+                invokeParameter r thenPart
+            else
+                invokeParameter r elsePart)
    
 type Parameter<'a> with
 

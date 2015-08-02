@@ -366,6 +366,10 @@ module Dynamics =
     [<CompiledName ("Min")>]
     val min: comp1:Dynamics<'a> -> comp2:Dynamics<'a> -> Dynamics<'a> when 'a: comparison
     
+    /// Implements the if-then-else operator.
+    [<CompiledName ("IfThenElse")>]
+    val ifThenElse: cond:Dynamics<bool> -> thenPart:Dynamics<'a> -> elsePart:Dynamics<'a> -> Dynamics<'a>
+    
     /// Shows the debug message with the current simulation time.
     [<CompiledName ("Trace")>]
     val trace: message:string -> comp:Dynamics<'a> -> Dynamics<'a>

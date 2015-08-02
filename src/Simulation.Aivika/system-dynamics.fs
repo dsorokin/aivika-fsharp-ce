@@ -43,12 +43,7 @@ module SD =
     let inline (.<=.) x y = Dynamics.lift2 (<=) x y
 
     [<CompiledName ("IfThenElse")>]
-    let ifThenElse cond thenPart elsePart =
-        Dynamics (fun p ->
-            if invokeDynamics p cond then
-                invokeDynamics p thenPart
-            else
-                invokeDynamics p elsePart)
+    let ifThenElse cond thenPart elsePart = Dynamics.ifThenElse cond thenPart elsePart
 
     type IntegImpl =
     

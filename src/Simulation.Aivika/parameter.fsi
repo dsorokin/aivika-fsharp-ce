@@ -335,3 +335,7 @@ module Parameter =
     /// Computation that returns false with the specified probability.
     [<CompiledName ("RandomFalse")>]
     val randomFalse: prob:float -> Parameter<bool>
+    
+    /// Implements the if-then-else operator.
+    [<CompiledName ("IfThenElse")>]
+    val ifThenElse: cond:Parameter<bool> -> thenPart:Parameter<'a> -> elsePart:Parameter<'a> -> Parameter<'a>
