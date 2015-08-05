@@ -263,6 +263,14 @@ module Simulation =
                         dict := Some (r.UniqueId, a)
                         a))
 
+    [<CompiledName ("IfThenElse")>]
+    let ifThenElse cond thenPart elsePart =
+        Simulation (fun r ->
+            if invokeSimulation r cond then
+                invokeSimulation r thenPart
+            else
+                invokeSimulation r elsePart)
+
 type SimulationException (message) =
     inherit Exception (message)
 

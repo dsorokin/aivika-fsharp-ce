@@ -158,6 +158,10 @@ module Simulation =
     /// Memoizes the computation so that a new computation would always return the same result within the simulation run.
     [<CompiledName ("Memo")>]
     val memo: comp:Simulation<'a> -> Simulation<'a>
+    
+    /// Implements the if-then-else operator.
+    [<CompiledName ("IfThenElse")>]
+    val ifThenElse: cond:Simulation<bool> -> thenPart:Simulation<'a> -> elsePart:Simulation<'a> -> Simulation<'a>
 
 /// A root of all simulation exceptions.
 type SimulationException =
