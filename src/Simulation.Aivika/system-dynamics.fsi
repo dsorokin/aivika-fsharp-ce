@@ -169,3 +169,39 @@ module SD =
                 -> init:Dynamics<float>
                 -> factor:Dynamics<float>
                 -> Dynamics<float>
+
+/// Represents an integral.
+type Integ =
+
+    /// Initializes a new instance.
+    new: init:Dynamics<float> -> Integ
+
+    /// Returns the initial value of the integral.
+    member InitValue: Dynamics<float>
+
+    /// Returns the value of the integral.
+    member Value: Dynamics<float>
+
+    /// Gets the derivative of the integral.
+    member Diff: Dynamics<float>
+
+    /// Sets the derivative of the integral. 
+    member Diff: Dynamics<float> with set
+
+/// Represents a summator.
+type DiffSum =
+
+    /// Initializes a new instance.
+    new: init:Dynamics<float> -> DiffSum
+
+    /// Returns the initial value of the summator.
+    member InitValue: Dynamics<float>
+
+    /// Returns the sum of values.
+    member Value: Dynamics<float>
+
+    /// Gets the difference value.
+    member Diff: Dynamics<float>
+
+    /// Sets the difference value. 
+    member Diff: Dynamics<float> with set

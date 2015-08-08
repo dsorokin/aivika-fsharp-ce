@@ -488,3 +488,21 @@ module SD =
                     (num 1.0 / (num 1.0 + rate * dt'))
         and accum = integ (lazy (stream * df)) init
         in (accum + dt' * stream * df) * factor
+
+type Integ (init) =
+
+    let diff = ref (SD.num 0.0)
+    let value = SD.integ (lazy !diff) init
+
+    member x.InitValue = Dynamics.init init
+    member x.Value = value
+    member x.Diff with get () = !diff and set (v) = diff := v
+
+type DiffSum (init) =
+
+    let diff = ref (SD.num 0.0)
+    let value = SD.diffsum (lazy !diff) init
+
+    member x.InitValue = Dynamics.init init
+    member x.Value = value
+    member x.Diff with get () = !diff and set (v) = diff := v
