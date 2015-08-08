@@ -228,6 +228,17 @@ module Dynamics =
     let ofSeq (ms: #seq<Dynamics<_>>) = Dynamics (fun p ->
         seq { for m in ms -> invokeDynamics p m })
     
+    [<CompiledName ("Init")>]
+    let init m = Dynamics (fun p -> 
+    
+        if (p.Iteration = 0) && (p.Phase = 0) then
+            invokeDynamics p m
+        else 
+            let p' = { p with Time = p.Specs.StartTime;
+                              Iteration = 0;
+                              Phase = 0 }
+            invokeDynamics p' m)
+    
     [<CompiledName ("Discrete")>]
     let discrete m = Dynamics (fun p -> 
     

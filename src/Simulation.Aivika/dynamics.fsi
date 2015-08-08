@@ -298,6 +298,10 @@ module Dynamics =
     [<CompiledName ("OfEnumerable")>]
     val ofSeq: comps:#seq<Dynamics<'b>> -> Dynamics<seq<'b>>
 
+    /// Always returns the initial value of the computation at start time.
+    [<CompiledName ("Init")>]
+    val init: comp:Dynamics<'a> -> Dynamics<'a>
+
     /// Discretizes the input computation in the sense that the resulting computation changes only in the integration time points.
     [<CompiledName ("Discrete")>]
     val discrete: comp:Dynamics<'a> -> Dynamics<'a>
