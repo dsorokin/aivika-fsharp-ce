@@ -209,8 +209,8 @@ type DiffSum =
 /// The exponential smooth of the input.
 type SmoothN =
 
-    /// Initializes a new instance by the order and initial value.
-    new: n:int * init:Dynamics<float> -> SmoothN
+    /// Initializes a new instance by the input, delay time, order and initial value.
+    new: input:Dynamics<float> * delayTime:Dynamics<float> * n:int * init:Dynamics<float> -> SmoothN
 
     /// Gets the initial value.
     member InitValue: Dynamics<float>

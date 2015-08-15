@@ -507,10 +507,10 @@ type DiffSum (init) =
     member x.Value = value
     member x.Diff with get () = !diff and set (v) = diff := v
 
-type SmoothN (n, init) =
+type SmoothN (input, delayTime, n, init) =
 
-    let input = ref (SD.num 0.0)
-    let delayTime = ref (SD.num 0.0)
+    let input = ref (input)
+    let delayTime = ref (delayTime)
     let value = SD.smoothNI (lazy !input) (lazy !delayTime) n init
 
     member x.InitValue = init
