@@ -73,5 +73,7 @@ type Table (ps: (float * float) []) =
                 elif left = 0 then snd ps.[left]
                 else failwithf "Invalid index."
 
+    new (xs: float[], ys: float[]) = Table (Array.zip xs ys)
+
     member tbl.Lookup (x: float) = find 0 last x
     member tbl.LookupStepwise (x: float) = findStepwise 0 last x

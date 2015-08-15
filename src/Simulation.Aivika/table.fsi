@@ -27,8 +27,11 @@ open System
 [<Sealed>]
 type Table =
 
-    /// Intializes a new table.
+    /// Initializes a new table.
     new: xys:(float * float) [] -> Table
+
+    /// Initializes a new table.
+    new: xs:float [] * ys:float [] -> Table
 
     /// Look up the specified x using linear interpolation.
     member Lookup: x:float -> float
