@@ -489,9 +489,9 @@ module SD =
         and accum = integ (lazy (stream * df)) init
         in (accum + dt' * stream * df) * factor
 
-type Integ (init) =
+type Integ (diff, init) =
 
-    let diff = ref (SD.num 0.0)
+    let diff = ref (diff)
     let value = SD.integ (lazy !diff) init
 
     member x.InitValue = Dynamics.init init

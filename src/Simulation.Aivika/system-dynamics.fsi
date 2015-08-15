@@ -174,7 +174,7 @@ module SD =
 type Integ =
 
     /// Initializes a new instance.
-    new: init:Dynamics<float> -> Integ
+    new: diff:Dynamics<float> * init:Dynamics<float> -> Integ
 
     /// Returns the initial value of the integral.
     member InitValue: Dynamics<float>
