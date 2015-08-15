@@ -506,3 +506,14 @@ type DiffSum (init) =
     member x.InitValue = Dynamics.init init
     member x.Value = value
     member x.Diff with get () = !diff and set (v) = diff := v
+
+type SmoothN (n, init) =
+
+    let input = ref (SD.num 0.0)
+    let delayTime = ref (SD.num 0.0)
+    let value = SD.smoothNI (lazy !input) (lazy !delayTime) n init
+
+    member x.InitValue = init
+    member x.Value = value
+    member x.Input with get () = !input and set (v) = input := v
+    member x.DelayTime with get () = !delayTime and set (v) = delayTime := v

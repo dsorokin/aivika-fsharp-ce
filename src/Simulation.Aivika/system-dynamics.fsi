@@ -205,3 +205,27 @@ type DiffSum =
 
     /// Sets the difference value. 
     member Diff: Dynamics<float> with set
+
+/// The exponential smooth of the input.
+type SmoothN =
+
+    /// Initializes a new instance by the order and initial value.
+    new: n:int * init:Dynamics<float> -> SmoothN
+
+    /// Gets the initial value.
+    member InitValue: Dynamics<float>
+
+    /// Gets the exponential smooth of the input.
+    member Value: Dynamics<float>
+
+    /// Gets the input.
+    member Input: Dynamics<float>
+
+    /// Sets the input.
+    member Input: Dynamics<float> with set
+
+    /// Gets the delay time.
+    member DelayTime: Dynamics<float>
+
+    /// Sets the delay time.
+    member DelayTime: Dynamics<float> with set
