@@ -498,9 +498,9 @@ type Integ (init) =
     member x.Value = value
     member x.Diff with get () = !diff and set (v) = diff := v
 
-type DiffSum (init) =
+type DiffSum (diff, init) =
 
-    let diff = ref (SD.num 0.0)
+    let diff = ref (diff)
     let value = SD.diffsum (lazy !diff) init
 
     member x.InitValue = Dynamics.init init

@@ -192,7 +192,7 @@ type Integ =
 type DiffSum =
 
     /// Initializes a new instance.
-    new: init:Dynamics<float> -> DiffSum
+    new: diff:Dynamics<float> * init:Dynamics<float> -> DiffSum
 
     /// Returns the initial value of the summator.
     member InitValue: Dynamics<float>
