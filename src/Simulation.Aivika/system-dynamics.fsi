@@ -229,3 +229,24 @@ type SmoothN =
 
     /// Sets the delay time.
     member DelayTime: Dynamics<float> with set
+
+/// The exponential delay of the input.
+type DelayN =
+
+    /// Initializes a new instance by the input, delay time, order and initial value.
+    new: input:Dynamics<float> * delayTime:Dynamics<float> * n:int * init:Dynamics<float> -> DelayN
+
+    /// Gets the initial value.
+    member InitValue: Dynamics<float>
+
+    /// Gets the exponential delay of the input.
+    member Value: Dynamics<float>
+
+    /// Gets the input.
+    member Input: Dynamics<float>
+
+    /// Sets the input.
+    member Input: Dynamics<float> with set
+
+    /// Gets the delay time.
+    member DelayTime: Dynamics<float>

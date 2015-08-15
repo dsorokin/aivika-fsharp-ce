@@ -517,3 +517,13 @@ type SmoothN (n, init) =
     member x.Value = value
     member x.Input with get () = !input and set (v) = input := v
     member x.DelayTime with get () = !delayTime and set (v) = delayTime := v
+
+type DelayN (input, delayTime, n, init) =
+
+    let input = ref (input)
+    let value = SD.delayNI (lazy !input) delayTime n init
+
+    member x.InitValue = init
+    member x.Value = value
+    member x.Input with get () = !input and set (v) = input := v
+    member x.DelayTime = delayTime
