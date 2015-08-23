@@ -1846,6 +1846,12 @@ module ResultSourceExtensions =
         member x.Signal = ResultSource.signal x
         member x.Summary () = ResultSource.summary x
 
+        static member From (name: ResultName, items: ResultSource array, subscript: ResultName array, id:ResultId) =
+            BasicResultArray (name, items, subscript, id) :> ResultArray |> ResultArraySource
+
+        static member From (name: ResultName, items: ResultSource array, subscript: ResultName array, ?descr: ResultDescription) =
+            ResultSource.From (name, items, subscript, CustomResultId descr)
+
         static member From (name: ResultName, x: Parameter<_>, id: ResultId) =
             match box x with
             | :? Parameter<int> as z ->

@@ -709,6 +709,12 @@ module ResultSourceExtensions =
         /// Returns the summary.
         member Summary: unit -> ResultSource
 
+        /// Converts the array to a result source.
+        static member From: name:ResultName * items:ResultSource array * subscript:ResultName array * id:ResultId -> ResultSource
+
+        /// Converts the array to a result source.
+        static member From: name:ResultName * items:ResultSource array * subscript:ResultName array * ?descr:ResultDescription -> ResultSource
+
         /// Converts the computation to a result source.
         static member From: name:ResultName * comp:Parameter<'a> * id:ResultId -> ResultSource
 
