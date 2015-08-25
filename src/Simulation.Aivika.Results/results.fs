@@ -692,6 +692,17 @@ module ResultSource =
             override x.TypeId = SeparatorId
         } |> ResultSeparatorSource
 
+    [<CompiledName ("Empty")>]
+    let rec empty name id =
+        { new ResultObject () with
+            override x.Name       = name
+            override x.Id         = id
+            override x.TypeId     = EmptyId
+            override x.Signal     = lazy ResultSignal.empty
+            override x.Summary () = empty name id 
+            override x.Properties = []
+        } |> ResultObjectSource
+
 [<AutoOpen>]
 module ResultObjectExtensions =
 

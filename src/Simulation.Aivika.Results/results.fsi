@@ -541,6 +541,10 @@ module ResultSource =
     [<CompiledName ("Text")>]
     val text: name:string -> ResultSource
 
+    /// Returns an empty object without properties.
+    [<CompiledName ("Empty")>]
+    val empty: name:ResultName -> id:ResultId -> ResultSource
+
 /// Defines extension methods.
 [<AutoOpen>]
 module ResultObjectExtensions =
