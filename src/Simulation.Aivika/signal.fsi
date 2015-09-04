@@ -119,6 +119,14 @@ module Signal =
     [<CompiledName ("ToArrival")>]
     val toArrival: comp:Signal<'a> -> Signal<Arrival<'a>>
 
+    /// Delays the signal values for the specified time interval.
+    [<CompiledName ("Delay")>]
+    val delay: interval:float -> comp:Signal<'a> -> Signal<'a>
+
+    /// Delays the signal values for time intervals recalculated for each value.
+    [<CompiledName ("DelayC")>]
+    val delayc: interval:Eventive<float> -> comp:Signal<'a> -> Signal<'a>
+
 /// The module contains useful functions for working with the signal source.
 [<RequireQualifiedAccess>]
 [<CompilationRepresentation (CompilationRepresentationFlags.ModuleSuffix)>]

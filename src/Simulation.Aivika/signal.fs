@@ -227,6 +227,49 @@ module Signal =
                                 |> invokeEventive p))
             }
         }
+
+    [<CompiledName ("Delay")>]
+    let delay interval (s: Signal<_>) =
+        { new Signal<_>() with
+            member x.Subscribe (h) = eventive {
+
+                let r = ref false
+                let! h = s.Subscribe (fun a ->
+                    Eventive (fun p ->
+                        let t = p.Time
+                        eventive {
+                            if not !r then return! h a
+                        } |> Eventive.enqueue (t + interval)
+                          |> invokeEventive p))
+
+                return { new IDisposable with
+                            member x.Dispose () = 
+                                h.Dispose ()
+                                r := true }
+            }
+        }
+
+    [<CompiledName ("DelayC")>]
+    let delayc (interval: Eventive<_>) (s: Signal<_>) =
+        { new Signal<_>() with
+            member x.Subscribe (h) = eventive {
+
+                let r = ref false
+                let! h = s.Subscribe (fun a ->
+                    Eventive (fun p ->
+                        let t = p.Time
+                        let interval' = invokeEventive p interval
+                        eventive {
+                            if not !r then return! h a
+                        } |> Eventive.enqueue (t + interval')
+                          |> invokeEventive p))
+
+                return { new IDisposable with
+                            member x.Dispose () = 
+                                h.Dispose ()
+                                r := true }
+            }
+        }
                 
 [<RequireQualifiedAccess>]
 [<CompilationRepresentation (CompilationRepresentationFlags.ModuleSuffix)>]
