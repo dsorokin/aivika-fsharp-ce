@@ -138,6 +138,18 @@ module Simulation =
         
         invokeSimulation r m       
 
+    [<CompiledName ("RunBySeriesIndex")>]
+    let runBySeriesIndex count index specs m =
+
+        let r = { Specs = specs;
+                  Index = index;
+                  Count = count;
+                  EventQueue = EventQueue (specs.StartTime);
+                  UniqueId = UniqueIdGenerator.Next ();
+                  Generator = Generator.Create (specs.GeneratorType) }
+        
+        invokeSimulation r m       
+
     [<CompiledName ("RunSeries")>]
     let runSeries count specs m = seq {
 
