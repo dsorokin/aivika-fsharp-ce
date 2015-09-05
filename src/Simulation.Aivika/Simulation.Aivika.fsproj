@@ -11,8 +11,8 @@
     <SignAssembly>true</SignAssembly>
     <AssemblyName>Simulation.Aivika</AssemblyName>
     <AssemblyOriginatorKeyFile>..\..\Simulation.Aivika.snk</AssemblyOriginatorKeyFile>
-    <TargetFSharpCoreVersion>4.3.0.0</TargetFSharpCoreVersion>
-    <MinimumVisualStudioVersion Condition="'$(MinimumVisualStudioVersion)' == ''">11</MinimumVisualStudioVersion>
+    <TargetFSharpCoreVersion>4.3.1.0</TargetFSharpCoreVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -30,6 +30,9 @@
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>bin\Release\Simulation.Aivika.XML</DocumentationFile>
     <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+  <PropertyGroup>
+    <MinimumVisualStudioVersion Condition="'$(MinimumVisualStudioVersion)' == ''">11</MinimumVisualStudioVersion>
   </PropertyGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '11.0'">
@@ -52,11 +55,11 @@
 	</Target>
 	-->
   <ItemGroup>
-    <Reference Include="mscorlib" />
-    <Reference Include="System" />
-    <Reference Include="FSharp.Core">
+    <Reference Include="FSharp.Core, Version=$(TargetFSharpCoreVersion), Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
       <Private>True</Private>
     </Reference>
+    <Reference Include="mscorlib" />
+    <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="assembly.fs" />
