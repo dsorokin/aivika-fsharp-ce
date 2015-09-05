@@ -85,6 +85,9 @@ type [<Class>] Experiment =
 /// Defines an experiment context.
 and [<Class>] ExperimentContext<'a> =
 
+    /// Initializes a new instance.
+    new: exp:Experiment * dir:string * resolve:(string -> ExperimentFilePath -> string) * writer:'a -> ExperimentContext<'a>
+
     /// The simulation experiment.
     member Experiment: Experiment
       
