@@ -99,7 +99,7 @@ module Simulation =
     [<CompiledName ("Run")>]
     val run: specs:Specs -> comp:Simulation<'a> -> 'a
 
-    /// Runs a computation by the specified specs and simulation index from series.
+    /// Runs a computation by the specified specs and simulation index in series.
     [<CompiledName ("RunBySeriesIndex")>]
     val runBySeriesIndex: n:int -> index:int -> specs:Specs -> comp:Simulation<'a> -> 'a
     
