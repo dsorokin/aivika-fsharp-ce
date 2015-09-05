@@ -183,6 +183,10 @@ module ExperimentFilePath =
     [<CompiledName ("ChangeExtension")>]
     val changeExtension: ext:string -> path:ExperimentFilePath -> ExperimentFilePath
 
+    /// Returns a function that resolves the file path.
+    [<CompiledName ("Resolve")>]
+    val resolve: unit -> (string -> ExperimentFilePath -> string)
+
 /// Defines extension methods.
 [<AutoOpen>]
 module ExperimentExtensions =

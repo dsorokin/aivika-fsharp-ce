@@ -135,6 +135,37 @@ module ExperimentFilePath =
         | WritableFilePath x -> WritableFilePath (Path.ChangeExtension (x, ext))
         | UniqueFilePath x -> UniqueFilePath (Path.ChangeExtension (x, ext))
 
+    [<CompiledName ("Resolve")>]
+    let resolve () =
+
+        let dictlock = obj ()
+        let dict = ref Set.empty
+
+        fun dir path ->
+            match path with
+            | WritableFilePath path ->
+                Path.Combine (dir, path)
+            | UniqueFilePath path ->
+                let name = Path.GetFileNameWithoutExtension (path)
+                let ext  = Path.GetExtension (path)
+                let rec loop y i =
+                    let n  = Path.Combine (dir, if ext.Length > 0 then Path.ChangeExtension (y, ext) else y)
+                    let nextName () = name + "(" + string i + ")"
+                    if File.Exists (n) || Directory.Exists (n) then 
+                        loop (nextName ()) (i + 1)
+                    else 
+                        let n' = 
+                            lock dictlock <| fun () ->
+                                if Set.contains n !dict then
+                                    None
+                                else
+                                    dict := Set.add n !dict 
+                                    Some n
+                        match n' with
+                        | None -> loop (nextName ()) (i + 1)
+                        | Some n' -> n'
+                loop name 2
+
 [<AutoOpen>]
 module ExperimentExtensions =
 
@@ -185,33 +216,7 @@ module ExperimentExtensions =
         member x.RenderHtml (model: Simulation<ResultSet>, providers: IExperimentProvider<HtmlTextWriter> list) =
             async {
 
-                let dictlock = obj ()
-                let dict = ref Set.empty
-
-                let resolve dir path =
-                    match path with
-                    | WritableFilePath path ->
-                        Path.Combine (dir, path)
-                    | UniqueFilePath path ->
-                        let name = Path.GetFileNameWithoutExtension (path)
-                        let ext  = Path.GetExtension (path)
-                        let rec loop y i =
-                            let n  = Path.Combine (dir, if ext.Length > 0 then Path.ChangeExtension (y, ext) else y)
-                            let nextName () = name + "(" + string i + ")"
-                            if File.Exists (n) || Directory.Exists (n) then 
-                                loop (nextName ()) (i + 1)
-                            else 
-                                let n' = 
-                                    lock dictlock <| fun () ->
-                                        if Set.contains n !dict then
-                                            None
-                                        else
-                                            dict := Set.add n !dict 
-                                            Some n
-                                match n' with
-                                | None -> loop (nextName ()) (i + 1)
-                                | Some n' -> n'
-                        loop name 2
+                let resolve = ExperimentFilePath.resolve ()
 
                 let dir = resolve "" x.Directory
 
