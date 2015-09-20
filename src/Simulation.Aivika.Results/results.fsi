@@ -1125,6 +1125,54 @@ module ResultSet =
     [<CompiledName ("FormatStringValues")>]
     val formatStringValues: provider:IFormatProvider -> results:ResultSet -> seq<ResultValue<string>>
 
+    /// Tries to return the integer values by the specified the result set.
+    [<CompiledName ("TryGetIntValues")>]
+    val tryGetIntValues: results:ResultSet -> seq<ResultValue<int> option>
+
+    /// Tries to return the lists of integer values by the specified the result set.
+    [<CompiledName ("TryGetIntListValues")>]
+    val tryGetIntListValues: results:ResultSet -> seq<ResultValue<int list> option>
+
+    /// Tries to return the statistics based on integer values by the specified the result set.
+    [<CompiledName ("TryGetIntStatsValues")>]
+    val tryGetIntStatsValues: results:ResultSet -> seq<ResultValue<SamplingStats<int>> option>
+
+    /// Tries to return the statistics based on integer values by the specified the result set.
+    [<CompiledName ("TryGetIntStatsChoiceValues")>]
+    val tryGetIntStatsChoiceValues: results:ResultSet -> seq<ResultValue<Choice<int, SamplingStats<int>>> option>
+
+    /// Tries to return the timing statistics based on integer values by the specified the result set.
+    [<CompiledName ("TryGetIntTimingStatsValues")>]
+    val tryGetIntTimingStatsValues: results:ResultSet -> seq<ResultValue<TimingStats<int>> option>
+
+    /// Tries to return the floating point values by the specified the result set.
+    [<CompiledName ("TryGetDoubleValues")>]
+    val tryGetFloatValues: results:ResultSet -> seq<ResultValue<float> option>
+
+    /// Tries to return the lists of floating point values by the specified the result set.
+    [<CompiledName ("TryGetDoubleListValues")>]
+    val tryGetFloatListValues: results:ResultSet -> seq<ResultValue<float list> option>
+
+    /// Tries to return the statistics based on floating point values by the specified the result set.
+    [<CompiledName ("TryGetDoubleStatsValues")>]
+    val tryGetFloatStatsValues: results:ResultSet -> seq<ResultValue<SamplingStats<float>> option>
+
+    /// Tries to return the statistics based on floating point values by the specified the result set.
+    [<CompiledName ("TryGetDoubleStatsChoiceValues")>]
+    val tryGetFloatStatsChoiceValues: results:ResultSet -> seq<ResultValue<Choice<float, SamplingStats<float>>> option>
+
+    /// Tries to return the timing statistics based on floating point values by the specified the result set.
+    [<CompiledName ("TryGetDoubleTimingStatsValues")>]
+    val tryGetFloatTimingStatsValues: results:ResultSet -> seq<ResultValue<TimingStats<float>> option>
+
+    /// Tries to return the string values by the specified the result set.
+    [<CompiledName ("TryGetStringValues")>]
+    val tryGetStringValues: results:ResultSet -> seq<ResultValue<string> option>
+
+    /// Tries to return the string values by the specified format provider and result set.
+    [<CompiledName ("TryFormatStringValues")>]
+    val tryFormatStringValues: provider:IFormatProvider -> results:ResultSet -> seq<ResultValue<string> option>
+
     /// Runs a simulation and prints the results in start time.
     [<CompiledName ("PrintInStartTime")>]
     val printInStartTime: specs:Specs -> model:Simulation<ResultSet> -> unit

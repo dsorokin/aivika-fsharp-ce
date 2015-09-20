@@ -2689,6 +2689,78 @@ module ResultSet =
             yield x.GetStringValue (provider) 
     }
 
+    [<CompiledName ("TryGetIntValues")>]
+    let tryGetIntValues results = seq {
+        for x in items results do
+            yield x.TryGetIntValue () 
+    }
+
+    [<CompiledName ("TryGetIntListValues")>]
+    let tryGetIntListValues results = seq {
+        for x in items results do
+            yield x.TryGetIntListValue () 
+    }
+
+    [<CompiledName ("TryGetIntStatsValues")>]
+    let tryGetIntStatsValues results = seq {
+        for x in items results do
+            yield x.TryGetIntStatsValue () 
+    }
+
+    [<CompiledName ("TryGetIntStatsChoiceValues")>]
+    let tryGetIntStatsChoiceValues results = seq {
+        for x in items results do
+            yield x.TryGetIntStatsChoiceValue () 
+    }
+
+    [<CompiledName ("TryGetIntTimingStatsValues")>]
+    let tryGetIntTimingStatsValues results = seq {
+        for x in items results do
+            yield x.TryGetIntTimingStatsValue () 
+    }
+
+    [<CompiledName ("TryGetDoubleValues")>]
+    let tryGetFloatValues results = seq {
+        for x in items results do
+            yield x.TryGetDoubleValue () 
+    }
+
+    [<CompiledName ("TryGetDoubleListValues")>]
+    let tryGetFloatListValues results = seq {
+        for x in items results do
+            yield x.TryGetDoubleListValue () 
+    }
+
+    [<CompiledName ("TryGetDoubleStatsValues")>]
+    let tryGetFloatStatsValues results = seq {
+        for x in items results do
+            yield x.TryGetDoubleStatsValue () 
+    }
+
+    [<CompiledName ("TryGetDoubleStatsChoiceValues")>]
+    let tryGetFloatStatsChoiceValues results = seq {
+        for x in items results do
+            yield x.TryGetDoubleStatsChoiceValue () 
+    }
+
+    [<CompiledName ("TryGetDoubleTimingStatsValues")>]
+    let tryGetFloatTimingStatsValues results = seq {
+        for x in items results do
+            yield x.TryGetDoubleTimingStatsValue () 
+    }
+
+    [<CompiledName ("TryGetStringValues")>]
+    let tryGetStringValues results = seq {
+        for x in items results do
+            yield x.TryGetStringValue () 
+    }
+
+    [<CompiledName ("TryFormatStringValues")>]
+    let tryFormatStringValues provider results = seq {
+        for x in items results do
+            yield x.TryGetStringValue (provider) 
+    }
+
     [<CompiledName ("PrintInStartTime")>]
     let printInStartTime specs model =
         ResultSet.WriteInStartTime (System.Console.Out, specs, model)
