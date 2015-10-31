@@ -641,7 +641,7 @@ module Proc =
                             |> Eventive.toDisposable
                             |> Eventive.lift
                 
-                let! h2 = SignalSource.trigger !r s
+                let! h2 = eventive.Delay (fun () -> SignalSource.trigger !r s)
                             |> Eventive.toDisposable
                             |> Eventive.lift
                 
