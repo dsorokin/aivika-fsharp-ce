@@ -627,22 +627,21 @@ module Proc =
         
         do! proc {
         
-                let! h = cancelUsingId pid 
-                            |> Eventive.toDisposable
-                            |> Eventive.lift
-        
-                try
-                    return! hold timeout
-                finally
-                    h.Dispose ()
+                do! hold timeout
+                do! cancelUsingId pid
+                        |> Eventive.lift
 
             } |> spawnUsingIdWith CancelChildAfterParent timeoutPid
 
         do! proc {
         
                 let r = ref None
+
+                let! h1 = cancelUsingId timeoutPid
+                            |> Eventive.toDisposable
+                            |> Eventive.lift
                 
-                let! h = SignalSource.trigger !r s
+                let! h2 = SignalSource.trigger !r s
                             |> Eventive.toDisposable
                             |> Eventive.lift
                 
@@ -653,7 +652,8 @@ module Proc =
                     with
                     | e -> r := Some (Choice1Of2 e)
                 finally
-                    h.Dispose ()
+                    h1.Dispose ()
+                    h2.Dispose ()
             
             } |> spawnUsingIdWith CancelChildAfterParent pid
             
