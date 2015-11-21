@@ -540,6 +540,38 @@ module Stream =
     [<CompiledName ("Split")>]
     let split number stream = splitQueueing QueueStrategy.FCFS number stream
 
+    [<CompiledName ("SplitFilteringQueueing")>]
+    let splitFilteringQueueing (strat: #IQueueStrategy) preds stream =
+        let stream = ref stream
+        let r = Resource.create strat 1 |> Simulation.memo
+        let rec output pred = 
+            Stream (proc {
+                let! r = r |> Simulation.lift
+                let! z = proc {
+                    use! h = Resource.take r
+                    let! x = invokeStream !stream
+                    match x with
+                    | StreamNil ->
+                        stream := empty
+                        return Some StreamNil
+                    | StreamCons (a, m) ->
+                        let! f = pred a |> Eventive.lift
+                        if f then
+                            stream := m
+                            return Some (StreamCons (a, output pred))
+                        else
+                            stream := Stream (proc.Return (StreamCons (a, m)))
+                            return None 
+                }
+                match z with
+                | Some z -> return z
+                | None   -> return! (output pred |> invokeStream)
+            })
+        List.map output preds
+
+    [<CompiledName ("SplitFiltering")>]
+    let splitFiltering preds stream = splitFilteringQueueing QueueStrategy.FCFS preds stream
+
     [<CompiledName ("Split2")>]
     let split2 stream =
         match split 2 stream with

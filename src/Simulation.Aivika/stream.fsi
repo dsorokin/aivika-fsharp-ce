@@ -263,6 +263,14 @@ module Stream =
     [<CompiledName ("Split")>]
     val split: number:int -> stream:Stream<'a> -> Stream<'a> list
 
+    /// Splits the input stream into the specified number of output streams after filtering and using the given strategy to enqueue the concurrent output requests (demultiplexing).
+    [<CompiledName ("SplitFilteringQueueing")>]
+    val splitFilteringQueueing: strat:#IQueueStrategy -> preds:('a -> Eventive<bool>) list -> stream:Stream<'a> -> Stream<'a> list
+
+    /// Splits the input stream into the specified number of output streams after filtering and applying strategy FCFS (First Come - First Served).
+    [<CompiledName ("SplitFiltering")>]
+    val splitFiltering: preds:('a -> Eventive<bool>) list -> stream:Stream<'a> -> Stream<'a> list
+
     /// Splits the input stream into two output streams applying strategy FCFS (First Come - First Served).
     [<CompiledName ("Split2")>]
     val split2: stream:Stream<'a> -> Stream<'a> * Stream<'a>
