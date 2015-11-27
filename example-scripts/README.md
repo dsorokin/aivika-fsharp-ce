@@ -20,4 +20,7 @@ The usual rule is as follows:
   Internet browser;
 
 * script `RunExperimentGtk.fsx` does the same that the script above does,
-  but only it is destined for OS X and Linux.
+  but only it is destined for OS X and Linux;
+
+* on OS X you have to make a link to file libcairo.2.dylib and put this link
+  in each of the directories, where you are going to run the third script.
