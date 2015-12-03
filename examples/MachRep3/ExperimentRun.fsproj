@@ -12,7 +12,7 @@
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <TargetFSharpCoreVersion>4.3.1.0</TargetFSharpCoreVersion>
-    <Name>ExperimentRun</Name>
+    <Name>Experiment</Name>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -52,6 +52,16 @@
     <Compile Include="ExperimentRun.fs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\src\Simulation.Aivika.Charting\Simulation.Aivika.Charting.fsproj">
+      <Name>Simulation.Aivika.Charting</Name>
+      <Project>{d347eca1-93c9-4b93-941d-47e1e5035a65}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\Simulation.Aivika.Experiments\Simulation.Aivika.Experiments.fsproj">
+      <Name>Simulation.Aivika.Experiments</Name>
+      <Project>{1185cdcf-0ff6-4238-a277-6d4ab520583e}</Project>
+      <Private>True</Private>
+    </ProjectReference>
     <ProjectReference Include="..\..\src\Simulation.Aivika.Results\Simulation.Aivika.Results.fsproj">
       <Name>Simulation.Aivika.Results</Name>
       <Project>{e9623d17-aaa3-4580-b17e-9e4b9229fca4}</Project>
