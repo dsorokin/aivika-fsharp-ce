@@ -8,7 +8,7 @@
     <ProjectGuid>811df3a0-9e96-48f9-a9ca-c30b234efa1b</ProjectGuid>
     <OutputType>Exe</OutputType>
     <RootNamespace>Simulation.Aivika.Examples</RootNamespace>
-    <AssemblyName>ExperimentRun</AssemblyName>
+    <AssemblyName>Run</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <TargetFSharpCoreVersion>4.3.1.0</TargetFSharpCoreVersion>
@@ -23,7 +23,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <WarningLevel>3</WarningLevel>
     <PlatformTarget>AnyCPU</PlatformTarget>
-    <DocumentationFile>bin\Debug\ExperimentRun.XML</DocumentationFile>
+    <DocumentationFile>bin\Debug\Run.XML</DocumentationFile>
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -34,7 +34,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <WarningLevel>3</WarningLevel>
     <PlatformTarget>AnyCPU</PlatformTarget>
-    <DocumentationFile>bin\Release\ExperimentRun.XML</DocumentationFile>
+    <DocumentationFile>bin\Release\Run.XML</DocumentationFile>
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
@@ -49,7 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Model.fs" />
-    <Compile Include="ExperimentRun.fs" />
+    <Compile Include="Run.fs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\Simulation.Aivika.Results\Simulation.Aivika.Results.fsproj">
