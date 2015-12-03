@@ -1,29 +1,27 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>811df3a0-9e96-48f9-a9ca-c30b234efa1b</ProjectGuid>
+    <ProjectGuid>{811DF3A0-9E96-48F9-A9CA-C30B234EFA1B}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <RootNamespace>Simulation.Aivika.Examples</RootNamespace>
-    <AssemblyName>Experiment</AssemblyName>
+    <AssemblyName>ExperimentGtkRun</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <TargetFSharpCoreVersion>4.3.1.0</TargetFSharpCoreVersion>
-    <Name>Experiment</Name>
+    <Name>ExperimentGtk</Name>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <Tailcalls>false</Tailcalls>
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <WarningLevel>3</WarningLevel>
     <PlatformTarget>AnyCPU</PlatformTarget>
-    <DocumentationFile>bin\Debug\Experiment.XML</DocumentationFile>
+    <DocumentationFile>bin\Debug\ExperimentGtkRun.XML</DocumentationFile>
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -34,44 +32,46 @@
     <DefineConstants>TRACE</DefineConstants>
     <WarningLevel>3</WarningLevel>
     <PlatformTarget>AnyCPU</PlatformTarget>
-    <DocumentationFile>bin\Release\Experiment.XML</DocumentationFile>
+    <DocumentationFile>bin\Release\ExperimentGtkRun.XML</DocumentationFile>
     <Prefer32Bit>true</Prefer32Bit>
+    <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="mscorlib" />
-    <Reference Include="FSharp.Core, Version=$(TargetFSharpCoreVersion), Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Drawing" />
     <Reference Include="System.Numerics" />
     <Reference Include="System.Web" />
+    <Reference Include="FSharp.Core">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="OxyPlot">
+      <HintPath>packages\OxyPlot.Core.2014.1.546\lib\portable-net4+sl4+wp71+win8\OxyPlot.dll</HintPath>
+    </Reference>
+    <Reference Include="OxyPlot.GtkSharp">
+      <HintPath>packages\OxyPlot.GtkSharp.2014.1.546\lib\net40\OxyPlot.GtkSharp.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Model.fs" />
-    <Compile Include="Experiment.fs" />
+    <Compile Include="ExperimentGtkRun.fs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Simulation.Aivika.Charting\Simulation.Aivika.Charting.fsproj">
-      <Name>Simulation.Aivika.Charting</Name>
-      <Project>{d347eca1-93c9-4b93-941d-47e1e5035a65}</Project>
-      <Private>True</Private>
+    <ProjectReference Include="..\..\src\Simulation.Aivika.Charting.Gtk\Simulation.Aivika.Charting.Gtk.fsproj">
+      <Name>Simulation.Aivika.Charting.Gtk</Name>
+      <Project>{A79D654C-0B28-4BB6-A4CE-C45FEE350239}</Project>
     </ProjectReference>
     <ProjectReference Include="..\..\src\Simulation.Aivika.Experiments\Simulation.Aivika.Experiments.fsproj">
       <Name>Simulation.Aivika.Experiments</Name>
-      <Project>{1185cdcf-0ff6-4238-a277-6d4ab520583e}</Project>
-      <Private>True</Private>
+      <Project>{1185CDCF-0FF6-4238-A277-6D4AB520583E}</Project>
     </ProjectReference>
     <ProjectReference Include="..\..\src\Simulation.Aivika.Results\Simulation.Aivika.Results.fsproj">
       <Name>Simulation.Aivika.Results</Name>
-      <Project>{e9623d17-aaa3-4580-b17e-9e4b9229fca4}</Project>
-      <Private>True</Private>
+      <Project>{E9623D17-AAA3-4580-B17E-9E4B9229FCA4}</Project>
     </ProjectReference>
     <ProjectReference Include="..\..\src\Simulation.Aivika\Simulation.Aivika.fsproj">
       <Name>Simulation.Aivika</Name>
-      <Project>{eca8ecaf-15e7-4ab9-b816-f90aa007410b}</Project>
-      <Private>True</Private>
+      <Project>{ECA8ECAF-15E7-4AB9-B816-F90AA007410B}</Project>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
@@ -97,4 +97,7 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
 </Project>

@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "ExperimentGtk", "ExperimentGtk.fsproj", "{811DF3A0-9E96-48F9-A9CA-C30B234EFA1B}"
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "ExperimentGtkRun", "ExperimentGtkRun.fsproj", "{811DF3A0-9E96-48F9-A9CA-C30B234EFA1B}"
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Simulation.Aivika", "..\..\src\Simulation.Aivika\Simulation.Aivika.fsproj", "{ECA8ECAF-15E7-4AB9-B816-F90AA007410B}"
 EndProject
