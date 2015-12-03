@@ -7,7 +7,7 @@
     <ProjectGuid>{811DF3A0-9E96-48F9-A9CA-C30B234EFA1B}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <RootNamespace>Simulation.Aivika.Examples</RootNamespace>
-    <AssemblyName>ExperimentGtk</AssemblyName>
+    <AssemblyName>ExperimentGtkRun</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <TargetFSharpCoreVersion>4.3.1.0</TargetFSharpCoreVersion>
@@ -21,7 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <WarningLevel>3</WarningLevel>
     <PlatformTarget>AnyCPU</PlatformTarget>
-    <DocumentationFile>bin\Debug\ExperimentGtk.XML</DocumentationFile>
+    <DocumentationFile>bin\Debug\ExperimentGtkRun.XML</DocumentationFile>
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -32,7 +32,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <WarningLevel>3</WarningLevel>
     <PlatformTarget>AnyCPU</PlatformTarget>
-    <DocumentationFile>bin\Release\ExperimentGtk.XML</DocumentationFile>
+    <DocumentationFile>bin\Release\ExperimentGtkRun.XML</DocumentationFile>
     <Prefer32Bit>true</Prefer32Bit>
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
@@ -54,7 +54,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Model.fs" />
-    <Compile Include="ExperimentGtk.fs" />
+    <Compile Include="ExperimentGtkRun.fs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\Simulation.Aivika.Charting.Gtk\Simulation.Aivika.Charting.Gtk.fsproj">
