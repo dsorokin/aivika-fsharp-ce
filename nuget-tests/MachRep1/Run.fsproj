@@ -8,11 +8,11 @@
     <ProjectGuid>811df3a0-9e96-48f9-a9ca-c30b234efa1b</ProjectGuid>
     <OutputType>Exe</OutputType>
     <RootNamespace>Simulation.Aivika.Examples</RootNamespace>
-    <AssemblyName>Experiment</AssemblyName>
+    <AssemblyName>Run</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <TargetFSharpCoreVersion>4.3.1.0</TargetFSharpCoreVersion>
-    <Name>Experiment</Name>
+    <Name>ExperimentRun</Name>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -23,7 +23,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <WarningLevel>3</WarningLevel>
     <PlatformTarget>AnyCPU</PlatformTarget>
-    <DocumentationFile>bin\Debug\Experiment.XML</DocumentationFile>
+    <DocumentationFile>bin\Debug\Run.XML</DocumentationFile>
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -34,7 +34,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <WarningLevel>3</WarningLevel>
     <PlatformTarget>AnyCPU</PlatformTarget>
-    <DocumentationFile>bin\Release\Experiment.XML</DocumentationFile>
+    <DocumentationFile>bin\Release\Run.XML</DocumentationFile>
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
@@ -55,7 +55,7 @@
   <Import Project="$(FSharpTargetsPath)" />
   <ItemGroup>
     <Compile Include="Model.fs" />
-    <Compile Include="Experiment.fs" />
+    <Compile Include="Run.fs" />
     <None Include="packages.config" />
     <None Include="app.config" />
   </ItemGroup>
@@ -66,10 +66,6 @@
     </Reference>
     <Reference Include="Simulation.Aivika">
       <HintPath>packages\Simulation.Aivika.3.1.16.0\lib\net40\Simulation.Aivika.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Simulation.Aivika.Charting">
-      <HintPath>packages\Simulation.Aivika.Charting.3.1.16.0\lib\net40\Simulation.Aivika.Charting.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Simulation.Aivika.Experiments">
