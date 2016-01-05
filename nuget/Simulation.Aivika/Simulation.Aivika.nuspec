@@ -7,7 +7,7 @@
     <owners>David Sorokin</owners>
     <!-- <licenseUrl>http://www.gnu.org/licenses/gpl-3.0.html</licenseUrl> -->
     <licenseUrl>https://github.com/dsorokin/aivika-fsharp-ce/blob/master/LICENSE</licenseUrl>
-    <projectUrl>https://github.com/dsorokin/aivika-fsharp-ce</projectUrl>
+    <projectUrl>http://www.aivikasoft.com/en/products/aivika-fsharp.html</projectUrl>
     <requireLicenseAcceptance>true</requireLicenseAcceptance>
     <summary>The F# library for discrete event simulation, system dynamics and agent-based modeling.</summary>
     <description>Aivika is a multi-paradigm simulation library focused primarily on discrete event simulation.

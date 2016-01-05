@@ -7,7 +7,7 @@
     <owners>David Sorokin</owners>
     <!-- <licenseUrl>http://www.gnu.org/licenses/gpl-3.0.html</licenseUrl> -->
     <licenseUrl>https://github.com/dsorokin/aivika-fsharp-ce/blob/master/LICENSE</licenseUrl>
-    <projectUrl>https://github.com/dsorokin/aivika-fsharp-ce</projectUrl>
+    <projectUrl>http://www.aivikasoft.com/en/products/aivika-fsharp.html</projectUrl>
     <requireLicenseAcceptance>true</requireLicenseAcceptance>
     <summary>Charting components of the Aivika simulation library for Linux and OS X.</summary>
     <description>The charting components allow visualizing the results of simulation on Linux and OS X. You can plot the deviation chart, histogram, time series and XY chart.</description>
