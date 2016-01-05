@@ -45,23 +45,23 @@
     <Reference Include="FSharp.Core">
       <Private>True</Private>
     </Reference>
-    <Reference Include="Simulation.Aivika">
-      <HintPath>packages\Simulation.Aivika.3.1.16.0\lib\net40\Simulation.Aivika.dll</HintPath>
-    </Reference>
-    <Reference Include="Simulation.Aivika.Experiments">
-      <HintPath>packages\Simulation.Aivika.3.1.16.0\lib\net40\Simulation.Aivika.Experiments.dll</HintPath>
-    </Reference>
-    <Reference Include="Simulation.Aivika.Results">
-      <HintPath>packages\Simulation.Aivika.3.1.16.0\lib\net40\Simulation.Aivika.Results.dll</HintPath>
-    </Reference>
     <Reference Include="OxyPlot">
       <HintPath>packages\OxyPlot.Core.2014.1.546\lib\portable-net4+sl4+wp71+win8\OxyPlot.dll</HintPath>
     </Reference>
     <Reference Include="OxyPlot.GtkSharp">
       <HintPath>packages\OxyPlot.GtkSharp.2014.1.546\lib\net40\OxyPlot.GtkSharp.dll</HintPath>
     </Reference>
+    <Reference Include="Simulation.Aivika">
+      <HintPath>packages\Simulation.Aivika.3.1.17.0\lib\net40\Simulation.Aivika.dll</HintPath>
+    </Reference>
+    <Reference Include="Simulation.Aivika.Experiments">
+      <HintPath>packages\Simulation.Aivika.3.1.17.0\lib\net40\Simulation.Aivika.Experiments.dll</HintPath>
+    </Reference>
+    <Reference Include="Simulation.Aivika.Results">
+      <HintPath>packages\Simulation.Aivika.3.1.17.0\lib\net40\Simulation.Aivika.Results.dll</HintPath>
+    </Reference>
     <Reference Include="Simulation.Aivika.Charting.Gtk">
-      <HintPath>packages\Simulation.Aivika.Charting.Gtk.3.1.16.0\lib\net40\Simulation.Aivika.Charting.Gtk.dll</HintPath>
+      <HintPath>packages\Simulation.Aivika.Charting.Gtk.3.1.17.0\lib\net40\Simulation.Aivika.Charting.Gtk.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
