@@ -9,10 +9,11 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>Simulation.Aivika.Examples</RootNamespace>
     <AssemblyName>Run</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <TargetFSharpCoreVersion>4.3.1.0</TargetFSharpCoreVersion>
     <Name>ExperimentRun</Name>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -56,8 +57,8 @@
   <ItemGroup>
     <Compile Include="Model.fs" />
     <Compile Include="Run.fs" />
-    <None Include="packages.config" />
     <None Include="app.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="mscorlib" />
@@ -65,15 +66,15 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Simulation.Aivika">
-      <HintPath>packages\Simulation.Aivika.3.1.16.0\lib\net40\Simulation.Aivika.dll</HintPath>
+      <HintPath>packages\Simulation.Aivika.3.1.17.0\lib\net45\Simulation.Aivika.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Simulation.Aivika.Experiments">
-      <HintPath>packages\Simulation.Aivika.3.1.16.0\lib\net40\Simulation.Aivika.Experiments.dll</HintPath>
+      <HintPath>packages\Simulation.Aivika.3.1.17.0\lib\net45\Simulation.Aivika.Experiments.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Simulation.Aivika.Results">
-      <HintPath>packages\Simulation.Aivika.3.1.16.0\lib\net40\Simulation.Aivika.Results.dll</HintPath>
+      <HintPath>packages\Simulation.Aivika.3.1.17.0\lib\net45\Simulation.Aivika.Results.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
