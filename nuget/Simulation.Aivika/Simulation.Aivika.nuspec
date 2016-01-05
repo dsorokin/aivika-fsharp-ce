@@ -12,7 +12,9 @@
     <summary>The F# library for discrete event simulation, system dynamics and agent-based modeling.</summary>
     <description>Aivika is a multi-paradigm simulation library focused primarily on discrete event simulation.
 
-The main idea is that many modeling activities can actually be represented as abstract computations. We can create and combine such computations to model the discontinuous processes and streams of orders. The operations with queues and resources are just actions within these computations. All computations are interconnected and they are ultimately reduced to a run function of the simulation specs, which allows combining different paradigms within one simulation model.</description>
+The main idea is that many modeling activities can actually be represented as abstract computations. We can create and combine such computations to model the discontinuous processes and streams of orders. The operations with queues and resources are just actions within these computations. All computations are interconnected and they are ultimately reduced to a run function of the simulation specs, which allows combining different paradigms within one simulation model.
+
+There is a documentation in the PDF format.</description>
     <releaseNotes>A new version of the package.</releaseNotes>
     <copyright>Copyright 2009-2016</copyright>
     <tags>discrete-event simulation system-dynamics agent-based modeling</tags>
