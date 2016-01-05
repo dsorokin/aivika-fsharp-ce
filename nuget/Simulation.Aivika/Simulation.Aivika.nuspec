@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>Simulation.Aivika</id>
-    <version>3.1.16.0</version>
+    <version>3.1.17.0</version>
     <authors>David Sorokin</authors>
     <owners>David Sorokin</owners>
     <!-- <licenseUrl>http://www.gnu.org/licenses/gpl-3.0.html</licenseUrl> -->
@@ -10,11 +10,11 @@
     <projectUrl>https://github.com/dsorokin/aivika-fsharp-ce</projectUrl>
     <requireLicenseAcceptance>true</requireLicenseAcceptance>
     <summary>The F# library for discrete event simulation, system dynamics and agent-based modeling.</summary>
-    <description>Aivika for .NET is a multi-paradigm simulation library, a port of the Haskell library of the same name and created by the same author.
+    <description>Aivika is a multi-paradigm simulation library focused primarily on discrete event simulation.
 
-The main idea is that many simulation activities can actually be represented as abstract computations. Functional programming has a developed apparatus for creating such computations, combining them, reasoning about them and so on. This is monads, streams, arrows etc. It is important that F# provides an easy-to-use syntactic sugar for working with such computations, which is a clue to practical usability of the method.</description>
+The main idea is that many modeling activities can actually be represented as abstract computations. We can create and combine such computations to model the discontinuous processes and streams of orders. The operations with queues and resources are just actions within these computations. All computations are interconnected and they are ultimately reduced to a run function of the simulation specs, which allows combining different paradigms within one simulation model.</description>
     <releaseNotes>A new version of the package.</releaseNotes>
-    <copyright>Copyright 2009-2015</copyright>
+    <copyright>Copyright 2009-2016</copyright>
     <tags>discrete-event simulation system-dynamics agent-based modeling</tags>
     <dependencies />
     <!--

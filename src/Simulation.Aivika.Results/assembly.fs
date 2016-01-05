@@ -1,6 +1,6 @@
 
 // Aivika for .NET
-// Copyright (c) 2009-2015  David Sorokin. All rights reserved.
+// Copyright (c) 2009-2016  David Sorokin. All rights reserved.
 //
 // This file is a part of Aivika for .NET
 //
@@ -27,11 +27,11 @@ open System.Reflection
 [<assembly: AssemblyProductAttribute("Aivika Simulation Results")>]
 [<assembly: AssemblyDescriptionAttribute("A module for preparing the simulation results.")>]
 [<assembly: AssemblyInformationalVersionAttribute ("3.1")>]
-[<assembly: AssemblyVersionAttribute ("3.1.16.0")>]
-[<assembly: AssemblyFileVersionAttribute("3.1.16.0")>]
-[<assembly: AssemblyCopyrightAttribute("Copyright (C) 2009-2015 David Sorokin. All rights reserved.")>]
+[<assembly: AssemblyVersionAttribute ("3.1.17.0")>]
+[<assembly: AssemblyFileVersionAttribute("3.1.17.0")>]
+[<assembly: AssemblyCopyrightAttribute("Copyright (C) 2009-2016 David Sorokin. All rights reserved.")>]
 
 do ()
 
 module internal AssemblyVersionInformation =
-    let [<Literal>] Version = "3.1.16.0"
+    let [<Literal>] Version = "3.1.17.0"

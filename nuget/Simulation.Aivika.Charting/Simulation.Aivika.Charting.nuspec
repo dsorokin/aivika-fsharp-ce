@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>Simulation.Aivika.Charting</id>
-    <version>3.1.16.0</version>
+    <version>3.1.17.0</version>
     <authors>David Sorokin</authors>
     <owners>David Sorokin</owners>
     <!-- <licenseUrl>http://www.gnu.org/licenses/gpl-3.0.html</licenseUrl> -->
@@ -12,10 +12,10 @@
     <summary>Charting components of the Aivika simulation library for Windows.</summary>
     <description>The charting components allow visualizing the results of simulation on Windows. You can plot the deviation chart, histogram, time series and XY chart.</description>
     <releaseNotes>A new version of the package.</releaseNotes>
-    <copyright>Copyright 2009-2015</copyright>
+    <copyright>Copyright 2009-2016</copyright>
     <tags>discrete-event simulation system-dynamics agent-based modeling</tags>
     <dependencies>
-      <dependency id="Simulation.Aivika" version="3.1.16.0" />
+      <dependency id="Simulation.Aivika" version="3.1.17.0" />
     </dependencies>
     <!--
     <files>
