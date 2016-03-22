@@ -144,7 +144,7 @@ module PreemptibleResource =
                             |> invokeEventive p
                     | Some c ->
                         r.ActingQueue.Enqueue (- priority, { Priority = priority; Id = pid })
-                        resumeCont c ()
+                        reenterCont c ()
                             |> Eventive.enqueue p.Time
                             |> invokeEventive p
                 | Choice2Of2 { Priority = priority; Id = pid } ->

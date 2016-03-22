@@ -262,7 +262,7 @@ module internal ContInvoke =
             else
                 invokeEventive p (c.Aux.ECont e)) 
 
-    let internal sleepCont c (a: 'a) =
+    let rec internal sleepCont c (a: 'a) =
         Eventive (fun p ->
             let rh = ref None
             let handle e =
@@ -281,12 +281,32 @@ module internal ContInvoke =
                         | ContPreemptionBeginning ->
                             failwithf "The computation was already preempted."
                         | ContPreemptionEnding ->
-                            resumeCont c a
+                            reenterCont c a
                                 |> Eventive.enqueue p.Time
                                 |> invokeEventive p)
             let h = Signal.subscribe handle c.Aux.Id.Signal
                         |> invokeEventive p
             rh := Some h)
+
+    and internal reenterCont c (a: 'a) =
+        Eventive (fun p ->
+            let f = c.Aux.Id.PreemptionBegun
+                        |> invokeEventive p
+            if not f then
+                Eventive (fun p ->
+                    let f = c.Aux.Id.PreemptionBegun
+                                |> invokeEventive p
+                    if not f then
+                        resumeCont c a
+                            |> invokeEventive p
+                    else
+                        sleepCont c a
+                            |> invokeEventive p)
+                                |> Eventive.enqueue p.Time
+                                |> invokeEventive p
+            else
+                sleepCont c a
+                    |> invokeEventive p)
 
     let internal freezeCont c =
         Eventive (fun p ->
@@ -354,18 +374,6 @@ module internal ContInvoke =
                         None)))
 
     let inline internal unfreezeCont (c: FrozenCont<'a>) = c.Comp
-
-    let internal reenterCont c (a: 'a) =
-        Eventive (fun p ->
-            let f = c.Aux.Id.PreemptionBegun
-                        |> invokeEventive p
-            if not f then
-                resumeCont c a
-                    |> Eventive.enqueue p.Time
-                    |> invokeEventive p
-            else
-                sleepCont c a
-                    |> invokeEventive p)
 
     let internal substituteCont c f = { c with Cont = f }
 

@@ -293,7 +293,7 @@ module PreemptibleResource =
                             |> invokeEventive p
                         updateUtilisationCount r 1 
                             |> invokeEventive p
-                        resumeCont c ()
+                        reenterCont c ()
                             |> Eventive.enqueue p.Time
                             |> invokeEventive p
                 | Choice2Of2 { Priority = priority; Time = t; Id = pid } ->
