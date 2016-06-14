@@ -164,6 +164,14 @@ module Eventive =
     [<CompiledName ("EnqueueWithPoints")>]
     val internal enqueueWithPoints: points:#seq<Point> -> handler:Eventive<unit> -> Eventive<unit>
 
+    /// Actuates the event handler in the start time.
+    [<CompiledName ("EnqueueWithStartTime")>]
+    val enqueueWithStartTime: handler:Eventive<unit> -> Eventive<unit>
+
+    /// Actuates the event handler in the final time.
+    [<CompiledName ("EnqueueWithStopTime")>]
+    val enqueueWithStopTime: handler:Eventive<unit> -> Eventive<unit>
+
     /// Actuates the event handler in the integration time points.
     [<CompiledName ("EnqueueWithIntegTimes")>]
     val enqueueWithIntegTimes: handler:Eventive<unit> -> Eventive<unit>

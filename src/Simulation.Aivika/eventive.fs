@@ -239,6 +239,20 @@ module Eventive =
                 eventive.Zero ()
         loop (xs.GetEnumerator ())
 
+    [<CompiledName ("EnqueueWithStartTime")>]
+    let enqueueWithStartTime m =
+        Eventive (fun p ->
+            let x = p.Run.IntegStartPoint
+            enqueueWithPoints [x] m
+                |> invokeEventive p)
+
+    [<CompiledName ("EnqueueWithStopTime")>]
+    let enqueueWithStopTime m =
+        Eventive (fun p ->
+            let x = p.Run.IntegStopPoint
+            enqueueWithPoints [x] m
+                |> invokeEventive p)
+
     [<CompiledName ("EnqueueWithIntegTimes")>]
     let enqueueWithIntegTimes m =
         Eventive (fun p ->
