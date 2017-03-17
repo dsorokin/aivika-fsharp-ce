@@ -237,6 +237,8 @@ module PreemptibleResource =
                                 r.ActingQueue.Dequeue ()
                                 r.ActingQueue.Enqueue (- priority, { Priority = priority; Id = pid })
                                 r.WaitQueue.Enqueue (p0, Choice2Of2 { Priority = p0; Time = p.Time; Id = pid0 })
+                                updateWaitTime r 0.0 
+                                    |> invokeEventive p
                                 updateQueueCount r 1 
                                     |> invokeEventive p
                                 Proc.beginPreemption pid0 
