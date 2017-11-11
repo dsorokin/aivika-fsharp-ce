@@ -1,9 +1,13 @@
 **Aivika for .NET** 
 
-This is an F# port of the Haskell simulation [library] (http://hackage.haskell.org/package/aivika)
+This is an F# port of the Haskell simulation [library](http://hackage.haskell.org/package/aivika)
 of the same name by the same author, David Sorokin, who developed
-the original library. It supports discrete event simulation, system
-dynamics and partially agent-based modeling.
+the original library. This port supports discrete event simulation, system
+dynamics and partially agent-based modeling. 
+
+Only the Haskell version is much more fast and much more functional as it belongs to 
+the Aivika simulation framework that also supports distributed simulation, nested simulation, 
+GPSS-like DSL and so on.
 
 ### Idea
 
@@ -118,7 +122,7 @@ the name is destined for OS X and Linux.
 
 The PDF documentation is available by the following link:
 
-[Aivika 3 User Guide: Version for .NET Framework and Mono] (https://github.com/dsorokin/aivika/wiki/pdf/aivika-user-guide.pdf)
+[Aivika 3 User Guide: Version for .NET Framework and Mono](https://github.com/dsorokin/aivika/wiki/pdf/aivika-user-guide.pdf)
 
 This document describes the simulation API and contains examples 
 with graphical illustrations.
